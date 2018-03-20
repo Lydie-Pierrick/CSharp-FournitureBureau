@@ -97,7 +97,6 @@
             this.RadioButton_Update.TabStop = true;
             this.RadioButton_Update.Text = "Update";
             this.RadioButton_Update.UseVisualStyleBackColor = true;
-            this.RadioButton_Update.CheckedChanged += new System.EventHandler(this.RadioButton_Update_CheckedChanged);
             // 
             // GroupBox_TwoModes
             // 
@@ -119,7 +118,6 @@
             this.RadioButton_New.TabStop = true;
             this.RadioButton_New.Text = "New";
             this.RadioButton_New.UseVisualStyleBackColor = true;
-            this.RadioButton_New.CheckedChanged += new System.EventHandler(this.RadioButton_New_CheckedChanged);
             // 
             // Dialog_SelectionXML
             // 

@@ -1,55 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
+using Mercure.Controller;
 
-namespace Mercure
+namespace Mercure.Controller
 {
-    public partial class Dialog_SelectionXML : Form
+    class ControllerFurniture
     {
-        // 1 = New integration
-        // 2 = Update
-        public static int ChoiceMode = -1;
-
-        public static string PathXML;
-
         private List<Article> ListArticles;
+        private static string PathXML;
 
-        public Dialog_SelectionXML()
+        public static string GetterSetterPathXML
         {
-            InitializeComponent();
+            get
+            {
+                return PathXML;
+            }
+
+            set
+            {
+                PathXML = value;
+            }
+        }
+
+        public ControllerFurniture()
+        {
             ListArticles = new List<Article>();
         }
 
-        private void Btn_BrowseXML_Click(object sender, EventArgs e)
-        {
-            if (OpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                System.IO.StreamReader StreamReader = new System.IO.StreamReader(OpenFileDialog.FileName);
-                // faire qqch
-                StreamReader.Close();
-            }
-
-            PathXML = TxtBox_PathXML.Text = OpenFileDialog.FileName;
-        }
-
-        private void RadioButton_New_CheckedChanged(object sender, EventArgs e)
-        {
-            ChoiceMode = 1;
-        }
-
-        private void RadioButton_Update_CheckedChanged(object sender, EventArgs e)
-        {
-            ChoiceMode = 2;
-        }
-
-        private void Btn_ImportXML_Click(object sender, EventArgs e)
+        public bool LoadXML()
         {
             XmlDocument XMLDoc = new XmlDocument();
 
@@ -60,7 +46,8 @@ namespace Mercure
             }
             catch (System.IO.FileNotFoundException)
             {
-
+                MessageBox.Show("Error XMLfile not found !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
 
             // Read XML
@@ -86,12 +73,25 @@ namespace Mercure
                 ListArticles.Add(Article);
             }
 
-            NewOrUpdateDB();
+            if (ListArticles.Count != 0)
+                return true;
+
+            return false;
         }
 
-        private void NewOrUpdateDB()
+        public void NewXMLImport()
         {
+            Console.WriteLine("New BD XML IMPORT");
 
+            SQLiteConnection M_dbConnection = SingletonBD.GetInstanceBD;
+
+
+            string SqlInsert = "insert into highscores (name, score) values ('Me', 9001)";
+        }
+
+        public void UpdateXMLImport()
+        {
+            Console.WriteLine("Update BD XML IMPORT");
         }
     }
 }
