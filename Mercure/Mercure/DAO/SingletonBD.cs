@@ -22,7 +22,6 @@ public class SingletonBD
             if (Instance == null)
             {
                 Instance = new SingletonBD();
-                Open();
             }
             return M_dbConnection;
         }

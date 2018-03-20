@@ -15,9 +15,11 @@ namespace Mercure.Controller
     class ControllerFurniture
     {
         private List<Article> ListArticles;
-        private static string PathXML;
+        private string PathXML;
+        private static SQLiteConnection DbConnection;
+        private List<String> ListNameTables;
 
-        public static string GetterSetterPathXML
+        public string GetterSetterPathXML
         {
             get
             {
@@ -33,6 +35,7 @@ namespace Mercure.Controller
         public ControllerFurniture()
         {
             ListArticles = new List<Article>();
+            DbConnection = SingletonBD.GetInstanceBD;
         }
 
         public bool LoadXML()
@@ -79,19 +82,55 @@ namespace Mercure.Controller
             return false;
         }
 
+        public void GetAllNameTables()
+        {
+            String DeleteSQL = "SELECT name FROM my_db.sqlite_master WHERE type='table';";
+            SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+
+            Delete.Connection.Open();
+
+            SQLiteDataReader DeleteReader = Delete.ExecuteReader();
+
+            try
+            {
+                while (DeleteReader.Read())
+                {
+                    ListNameTables.Add(DeleteReader.GetString(0));
+                }
+            }
+            finally
+            {
+                DeleteReader.Close();
+                Delete.Connection.Close();
+            }
+        }
+
         public void NewXMLImport()
         {
             Console.WriteLine("New BD XML IMPORT");
 
-            SQLiteConnection M_dbConnection = SingletonBD.GetInstanceBD;
+            String DeleteSQL = "";
+            SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
 
+            Delete.Connection.Open();
+            Delete.ExecuteNonQuery();
 
-            string SqlInsert = "insert into highscores (name, score) values ('Me', 9001)";
+            String InsertSQL = "";
+            SQLiteCommand Insert = new SQLiteCommand(InsertSQL, DbConnection);
+
+            Insert.Connection.Open();
+            Insert.ExecuteNonQuery();
         }
 
         public void UpdateXMLImport()
         {
             Console.WriteLine("Update BD XML IMPORT");
+
+            String UpdateSQL = "";
+            SQLiteCommand Update = new SQLiteCommand(UpdateSQL, DbConnection);
+
+            Update.Connection.Open();
+            Update.ExecuteNonQuery();
         }
     }
 }
