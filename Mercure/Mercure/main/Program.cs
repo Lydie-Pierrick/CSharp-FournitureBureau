@@ -17,6 +17,8 @@ namespace Mercure
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainWindow());
+
+            SingletonBD.Close();
         }
     }
 }

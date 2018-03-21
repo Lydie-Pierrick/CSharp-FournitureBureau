@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
+using System.Data.SqlClient;
 
 namespace Mercure.Controller
 {
@@ -18,6 +19,13 @@ namespace Mercure.Controller
         private string PathXML;
         private static SQLiteConnection DbConnection;
         private List<String> ListNameTables;
+
+        public ControllerFurniture()
+        {
+            DbConnection = SingletonBD.GetInstance.GetDB();
+            ListArticles = new List<Article>();
+            ListNameTables = GetAllNameTables();           
+        }
 
         public string GetterSetterPathXML
         {
@@ -30,12 +38,6 @@ namespace Mercure.Controller
             {
                 PathXML = value;
             }
-        }
-
-        public ControllerFurniture()
-        {
-            ListArticles = new List<Article>();
-            DbConnection = SingletonBD.GetInstanceBD;
         }
 
         public bool LoadXML()
@@ -51,7 +53,7 @@ namespace Mercure.Controller
             {
                 MessageBox.Show("Error XMLfile not found !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
-            }
+            }            
 
             // Read XML
             XmlNode NodeRoot = XMLDoc.SelectSingleNode("materiels");
@@ -82,44 +84,89 @@ namespace Mercure.Controller
             return false;
         }
 
-        public void GetAllNameTables()
+        private List<String> GetAllNameTables()
         {
-            String DeleteSQL = "SELECT name FROM my_db.sqlite_master WHERE type='table';";
-            SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+            List<string> List = new List<string>();
+            string DeleteSQL = "SELECT name FROM sqlite_master WHERE type='table';";            
 
-            Delete.Connection.Open();
-
-            SQLiteDataReader DeleteReader = Delete.ExecuteReader();
-
-            try
+            using (DbConnection)
             {
-                while (DeleteReader.Read())
+                SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+
+                try
                 {
-                    ListNameTables.Add(DeleteReader.GetString(0));
+                    if (DbConnection == null || DbConnection.State != System.Data.ConnectionState.Open)
+                        throw new Exception("Error database !");
+                } catch (Exception e)
+                {
+                    MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                SQLiteDataReader DeleteReader = Delete.ExecuteReader();
+
+                if (DeleteReader.HasRows)
+                {
+                    try
+                    {
+                        while (DeleteReader.Read())
+                        {
+                            List.Add(DeleteReader.GetString(0));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
-            finally
-            {
-                DeleteReader.Close();
-                Delete.Connection.Close();
-            }
+
+            return List;
         }
 
         public void NewXMLImport()
         {
-            Console.WriteLine("New BD XML IMPORT");
+            using (DbConnection)
+            {
+                try
+                {
+                    if (!DeleteAllEntriesTables())
+                    {
+                        throw new Exception("Reset database failed");
+                    }
 
-            String DeleteSQL = "";
-            SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+                    String InsertSQL = "";
+                    SQLiteCommand Insert = new SQLiteCommand(InsertSQL, DbConnection);
 
-            Delete.Connection.Open();
-            Delete.ExecuteNonQuery();
+                    Insert.Connection.Open();
+                    Insert.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
-            String InsertSQL = "";
-            SQLiteCommand Insert = new SQLiteCommand(InsertSQL, DbConnection);
+        private bool DeleteAllEntriesTables()
+        {
+            int countResetTable = 0;
+            String DeleteSQL;
+            SQLiteCommand Delete;
 
-            Insert.Connection.Open();
-            Insert.ExecuteNonQuery();
+            foreach (String tableName in ListNameTables)
+            {
+                DeleteSQL = "DELETE FROM " + tableName + ";";
+                Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+                Delete.ExecuteNonQuery();
+                countResetTable++;
+            }
+
+            if(countResetTable == ListNameTables.Count)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public void UpdateXMLImport()

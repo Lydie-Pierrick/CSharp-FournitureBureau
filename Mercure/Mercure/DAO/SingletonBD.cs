@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 public class SingletonBD
 {
@@ -11,11 +12,14 @@ public class SingletonBD
     private static SQLiteConnection M_dbConnection;
 
     private SingletonBD() {
-        M_dbConnection = new SQLiteConnection("Data Source=mercure.sqlite;Version=3;");
+        M_dbConnection = new SQLiteConnection("Data Source=./Resources/Mercure.SQLITE;Version=3;");
+        Open();
     }
 
+
+
     // Getter Instance BD Singleton
-    public static SQLiteConnection GetInstanceBD
+    public static SingletonBD GetInstance
     {
         get
         {
@@ -23,17 +27,44 @@ public class SingletonBD
             {
                 Instance = new SingletonBD();
             }
-            return M_dbConnection;
+            return Instance;
         }
     }
 
-    private static void Open()
+    public SQLiteConnection GetDB()
     {
-        M_dbConnection.Open();
+        return M_dbConnection;
+    }
+
+    public void Open()
+    {
+        try
+        {
+            M_dbConnection.Open();
+        }
+        catch (SQLiteException e)
+        {
+            MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     public static void Close()
     {
-        M_dbConnection.Close();
+        try
+        {
+            if (M_dbConnection != null || M_dbConnection.State == System.Data.ConnectionState.Open)
+            {
+                M_dbConnection.Close();
+            }
+            else
+            {
+                throw new Exception("Database already close or does not exist !");
+            }
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        
     }
 }
