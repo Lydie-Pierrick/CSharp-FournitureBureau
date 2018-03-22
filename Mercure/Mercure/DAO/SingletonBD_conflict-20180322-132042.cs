@@ -15,7 +15,7 @@ public class SingletonBD
         try
         {
             M_dbConnection = new SQLiteConnection();
-            M_dbConnection.ConnectionString = @"Data Source=./Mercure.SQLITE; Version=3;";
+            M_dbConnection.ConnectionString = @"Data Source=./Mercure.SQLite; Version=3;";
             M_dbConnection.Open();
         }
         catch (SQLiteException e)
@@ -47,9 +47,13 @@ public class SingletonBD
     {
         try
         {
-            if (M_dbConnection != null && M_dbConnection.State == System.Data.ConnectionState.Open)
+            if (M_dbConnection != null || M_dbConnection.State == System.Data.ConnectionState.Open)
             {
                 M_dbConnection.Close();
+            }
+            else
+            {
+                throw new Exception("Database already close or does not exist !");
             }
         }
         catch (Exception e)

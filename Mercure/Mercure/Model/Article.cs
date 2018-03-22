@@ -9,12 +9,38 @@ namespace Mercure
     {
         public Article()
         { }
+
+        public Article(int getSetRefArticle, string getSetDescription, int getSetRefSubFamily, int getSetRefBrand, double getSetPriceHT, int getSetAmount, int getSetRefFamily)
+        {
+            GetSetRefArticle = getSetRefArticle;
+            GetSetDescription = getSetDescription;
+            GetSetRefSubFamily = getSetRefSubFamily;
+            GetSetRefBrand = getSetRefBrand;
+            GetSetPriceHT = getSetPriceHT;
+            GetSetAmount = getSetAmount;
+            GetSetRefFamily = getSetRefFamily;
+        }
+
+        private int RefArticle;
         private string Description;
-        private string Reference;
-        private string Brand;
-        private string Familly;
-        private string SubFamilly;
+        private int RefFamily;
+        private int RefSubFamily;
+        private int RefBrand;
         private double PriceHT;
+        private int Amount;
+
+        public int GetSetRefArticle
+        {
+            get
+            {
+                return RefArticle;
+            }
+
+            set
+            {
+                RefArticle = value;
+            }
+        }
 
         public string GetSetDescription
         {
@@ -29,55 +55,29 @@ namespace Mercure
             }
         }
 
-        public string GetSetReference
+        public int GetSetRefSubFamily
         {
             get
             {
-                return Reference;
+                return RefSubFamily;
             }
 
             set
             {
-                Reference = value;
+                RefSubFamily = value;
             }
         }
 
-        public string GetSetBrand
+        public int GetSetRefBrand
         {
             get
             {
-                return Brand;
+                return RefBrand;
             }
 
             set
             {
-                Brand = value;
-            }
-        }
-
-        public string GetSetFamilly
-        {
-            get
-            {
-                return Familly;
-            }
-
-            set
-            {
-                Familly = value;
-            }
-        }
-
-        public string GetSetSubFamilly
-        {
-            get
-            {
-                return SubFamilly;
-            }
-
-            set
-            {
-                SubFamilly = value;
+                RefBrand = value;
             }
         }
 
@@ -93,5 +93,31 @@ namespace Mercure
                 PriceHT = value;
             }
         }
-    }
+
+        public int GetSetAmount
+        {
+            get
+            {
+                return Amount;
+            }
+
+            set
+            {
+                Amount = value;
+            }
+        }
+
+        public int GetSetRefFamily
+        {
+            get
+            {
+                return RefFamily;
+            }
+
+            set
+            {
+                RefFamily = value;
+            }
+        }
+    }        
 }

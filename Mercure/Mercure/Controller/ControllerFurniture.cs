@@ -15,16 +15,12 @@ namespace Mercure.Controller
 {
     class ControllerFurniture
     {
-        private List<Article> ListArticles;
         private string PathXML;
-        private static SQLiteConnection DbConnection;
         private List<String> ListNameTables;
 
         public ControllerFurniture()
-        {
-            DbConnection = SingletonBD.GetInstance.GetDB();
-            ListArticles = new List<Article>();
-            ListNameTables = GetAllNameTables();           
+        {         
+            ListNameTables = GetAllNameTables();
         }
 
         public string GetterSetterPathXML
@@ -47,12 +43,10 @@ namespace Mercure.Controller
             try
             {
                 XMLDoc.Load(PathXML);
-
             }
             catch (System.IO.FileNotFoundException)
             {
-                MessageBox.Show("Error XMLfile not found !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw new Exception("Error XMLfile not found !");
             }            
 
             // Read XML
@@ -64,104 +58,127 @@ namespace Mercure.Controller
             {
                 Article Article = new Article();
 
-                XmlElement XMLElement = (XmlElement)Node;
+                Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
+                Article.GetSetRefArticle = Convert.ToInt32(Node.SelectSingleNode("refArticle").InnerText);
+                Article.GetSetRefBrand = Convert.ToInt32(Node.SelectSingleNode("marque").InnerText);
+                Article.GetSetRefFamily = Convert.ToInt32(Node.SelectSingleNode("famille").InnerText);
+                Article.GetSetRefSubFamily = Convert.ToInt32(Node.SelectSingleNode("sousFamille").InnerText);
+                Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
-                XmlNodeList NodeList = XMLElement.ChildNodes;
-
-                Article.GetSetDescription = NodeList.Item(0).InnerText;
-                Article.GetSetReference = NodeList.Item(1).InnerText;
-                Article.GetSetBrand = NodeList.Item(2).InnerText;
-                Article.GetSetFamilly = NodeList.Item(3).InnerText;
-                Article.GetSetSubFamilly = NodeList.Item(4).InnerText;
-                Article.GetSetPriceHT = Convert.ToDouble(NodeList.Item(5).InnerText);
-
-                ListArticles.Add(Article);
+                // SQL Query Insert Article
+                InsertArticles(Article);
             }
 
-            if (ListArticles.Count != 0)
-                return true;
+            return true;
+        }
 
-            return false;
+        // Insert Article into database
+        private void InsertArticles(Article article)
+        {
+            SQLiteCommand InsertDescription = new SQLiteCommand();
+            InsertDescription.CommandText = "";
+            InsertDescription.Parameters.Add(1);
+            InsertDescription.Parameters.Add(1);
+            InsertDescription.Parameters.Add(1);
+            InsertDescription.Connection = SingletonBD.GetInstance.GetDB();
+            InsertDescription.ExecuteNonQuery();
+
+            SQLiteCommand InsertRefArticle = new SQLiteCommand();
+            InsertRefArticle.CommandText = "";
+            InsertRefArticle.Parameters.Add(1);
+            InsertRefArticle.Parameters.Add(1);
+            InsertRefArticle.Parameters.Add(1);
+            InsertRefArticle.Connection = SingletonBD.GetInstance.GetDB();
+            InsertRefArticle.ExecuteNonQuery();
+
+            SQLiteCommand InsertBrand = new SQLiteCommand();
+            InsertBrand.CommandText = "";
+            InsertBrand.Parameters.Add(1);
+            InsertBrand.Parameters.Add(1);
+            InsertBrand.Parameters.Add(1);
+            InsertBrand.Connection = SingletonBD.GetInstance.GetDB();
+            InsertBrand.ExecuteNonQuery();
+
+            SQLiteCommand InsertFamily = new SQLiteCommand();
+            InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
+            InsertFamily.Parameters.Add(1);
+            InsertFamily.Parameters.Add(1);
+            InsertFamily.Parameters.Add(1);
+            InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
+            InsertFamily.ExecuteNonQuery();
+
+            SQLiteCommand InsertSubFamily = new SQLiteCommand();
+            InsertSubFamily.CommandText = "";
+            InsertSubFamily.Parameters.Add(1);
+            InsertSubFamily.Parameters.Add(1);
+            InsertSubFamily.Parameters.Add(1);
+            InsertSubFamily.Connection = SingletonBD.GetInstance.GetDB();
+            InsertSubFamily.ExecuteNonQuery();
+
+            SQLiteCommand InsertPrice = new SQLiteCommand();
+            InsertPrice.CommandText = "";
+            InsertPrice.Parameters.Add(1);
+            InsertPrice.Parameters.Add(1);
+            InsertPrice.Parameters.Add(1);
+            InsertPrice.Connection = SingletonBD.GetInstance.GetDB();
+            InsertPrice.ExecuteNonQuery();
+
+            try
+            {
+                InsertSubFamily.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error during insert article. " + ex.Message);
+            }
         }
 
         private List<String> GetAllNameTables()
         {
             List<string> List = new List<string>();
-            string DeleteSQL = "SELECT name FROM sqlite_master WHERE type='table';";            
+            string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";            
 
-            using (DbConnection)
+            SQLiteCommand NameTableCommand = new SQLiteCommand(NameTableSQL, SingletonBD.GetInstance.GetDB());
+            SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
+
+            if (NameTableReader.HasRows)
             {
-                SQLiteCommand Delete = new SQLiteCommand(DeleteSQL, DbConnection);
-
                 try
                 {
-                    if (DbConnection == null || DbConnection.State != System.Data.ConnectionState.Open)
-                        throw new Exception("Error database !");
-                } catch (Exception e)
-                {
-                    MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    while (NameTableReader.Read())
+                    {
+                        List.Add(NameTableReader.GetString(0));
+                    }
                 }
-
-                SQLiteDataReader DeleteReader = Delete.ExecuteReader();
-
-                if (DeleteReader.HasRows)
+                catch (Exception e)
                 {
-                    try
-                    {
-                        while (DeleteReader.Read())
-                        {
-                            List.Add(DeleteReader.GetString(0));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    NameTableReader.Close();
                 }
             }
 
             return List;
         }
 
-        public void NewXMLImport()
-        {
-            using (DbConnection)
-            {
-                try
-                {
-                    if (!DeleteAllEntriesTables())
-                    {
-                        throw new Exception("Reset database failed");
-                    }
-
-                    String InsertSQL = "";
-                    SQLiteCommand Insert = new SQLiteCommand(InsertSQL, DbConnection);
-
-                    Insert.Connection.Open();
-                    Insert.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
         private bool DeleteAllEntriesTables()
         {
             int countResetTable = 0;
-            String DeleteSQL;
             SQLiteCommand Delete;
 
             foreach (String tableName in ListNameTables)
-            {
-                DeleteSQL = "DELETE FROM " + tableName + ";";
-                Delete = new SQLiteCommand(DeleteSQL, DbConnection);
+            {                
+                Delete = new SQLiteCommand();
+                Delete.CommandText = "DELETE FROM " + tableName + ";";
+                Delete.Connection = SingletonBD.GetInstance.GetDB();
                 Delete.ExecuteNonQuery();
+
                 countResetTable++;
             }
 
-            if(countResetTable == ListNameTables.Count)
+            if (countResetTable == ListNameTables.Count)
             {
                 return true;
             }
@@ -169,14 +186,38 @@ namespace Mercure.Controller
             return false;
         }
 
+        public void NewXMLImport()
+        {
+            int countInsert = 0;
+            try
+            {
+                // Need to remove all entries in the database
+                if (!DeleteAllEntriesTables())
+                {
+                    throw new Exception("Reset database failed");
+                }
+
+                SQLiteCommand Insert = new SQLiteCommand();
+                Insert.CommandText = "INSERT ";
+                Insert.Connection = SingletonBD.GetInstance.GetDB();
+                Insert.ExecuteNonQuery();
+
+                countInsert++;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         public void UpdateXMLImport()
         {
             Console.WriteLine("Update BD XML IMPORT");
 
-            String UpdateSQL = "";
-            SQLiteCommand Update = new SQLiteCommand(UpdateSQL, DbConnection);
-
-            Update.Connection.Open();
+            SQLiteCommand Update = new SQLiteCommand();
+            Update = new SQLiteCommand();
+            Update.CommandText = ";";
+            Update.Connection = SingletonBD.GetInstance.GetDB();
             Update.ExecuteNonQuery();
         }
     }
