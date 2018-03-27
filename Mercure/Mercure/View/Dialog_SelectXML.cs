@@ -43,10 +43,7 @@ namespace Mercure
                 MessageBox.Show("Empty path XML", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
-            {
-                ControllerFurniture.LoadXML();
-                
-                /*
+            {                                               
                 if (RadioButton_New.Checked)
                 {
                     ControllerFurniture.NewXMLImport();
@@ -58,8 +55,7 @@ namespace Mercure
                 else
                 {
                     MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                 * */
+                }                
             }            
         }
 
