@@ -59,10 +59,10 @@ namespace Mercure.Controller
                 Article Article = new Article();
 
                 Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
-                Article.GetSetRefArticle = Convert.ToInt32(Node.SelectSingleNode("refArticle").InnerText);
-                Article.GetSetRefBrand = Convert.ToInt32(Node.SelectSingleNode("marque").InnerText);
-                Article.GetSetRefFamily = Convert.ToInt32(Node.SelectSingleNode("famille").InnerText);
-                Article.GetSetRefSubFamily = Convert.ToInt32(Node.SelectSingleNode("sousFamille").InnerText);
+                Article.GetSetRefArticle = Node.SelectSingleNode("refArticle").InnerText;
+                Article.GetSetRefBrand = Node.SelectSingleNode("marque").InnerText;
+                Article.GetSetRefFamily = Node.SelectSingleNode("famille").InnerText;
+                Article.GetSetRefSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
                 Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
                 // SQL Query Insert Article
