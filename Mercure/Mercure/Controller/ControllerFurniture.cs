@@ -80,7 +80,7 @@ namespace Mercure.Controller
             CreateOrInsertArticle(Article);            
         }
 
-        private bool CreateOrInsertArticle(Article Article)
+        private void CreateOrInsertArticle(Article Article)
         {
             List<string> List = new List<string>();
             string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";
@@ -145,15 +145,24 @@ namespace Mercure.Controller
                     throw new Exception("Error during insert article. " + ex.Message);
                 }*/
             }
-
-            return false;
         }
 
-        // --- Create Or Insert ...
+        // --- Create Or Insert Brand
 
-        private bool CreateOrInsertBrand(string Brand)
+        private void CreateOrInsertBrand(string Brand)
         {
-            return false;
+            int LastId = 0;
+            string QueryLastInsertId ="SELECT last_insert_rowid();";
+            SQLiteCommand LastInsertCommand = new SQLiteCommand(QueryLastInsertId, SingletonBD.GetInstance.GetDB());
+            SQLiteDataReader BrandTableReader = LastInsertCommand.ExecuteReader();
+            LastId = BrandTableReader.GetInt32(0);
+            
+            SQLiteCommand InsertFamily = new SQLiteCommand();
+            InsertFamily.CommandText = "INSERT OR IGNORE INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
+            InsertFamily.Parameters.AddWithValue("@RefMarque", LastId + 1);
+            InsertFamily.Parameters.AddWithValue("@RefNom", Brand);
+            InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
+            InsertFamily.ExecuteNonQuery();
         }
 
         private bool CreateOrInsertFamily(string family)
