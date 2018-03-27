@@ -77,6 +77,7 @@
             // OpenFileDialog
             // 
             this.OpenFileDialog.FileName = "OpenFileDialog";
+            this.OpenFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog_FileOk);
             // 
             // Label_Progress
             // 

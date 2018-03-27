@@ -36,7 +36,7 @@ namespace Mercure.Controller
             }
         }
 
-        public bool LoadXML()
+        private void LoadXML()
         {
             XmlDocument XMLDoc = new XmlDocument();
 
@@ -68,13 +68,13 @@ namespace Mercure.Controller
                 // SQL Query Insert Article
                 InsertArticles(Article);
             }
-
-            return true;
         }
 
         // Insert Article into database
         private void InsertArticles(Article article)
         {
+            //SELECT refArticle FROM Articles WHERE Article.GetSetRefArticle
+
             SQLiteCommand InsertDescription = new SQLiteCommand();
             InsertDescription.CommandText = "";
             InsertDescription.Parameters.Add(1);
@@ -186,9 +186,8 @@ namespace Mercure.Controller
             return false;
         }
 
-        public void NewXMLImport()
+        public bool NewXMLImport()
         {
-            int countInsert = 0;
             try
             {
                 // Need to remove all entries in the database
@@ -197,28 +196,22 @@ namespace Mercure.Controller
                     throw new Exception("Reset database failed");
                 }
 
-                SQLiteCommand Insert = new SQLiteCommand();
-                Insert.CommandText = "INSERT ";
-                Insert.Connection = SingletonBD.GetInstance.GetDB();
-                Insert.ExecuteNonQuery();
-
-                countInsert++;
+                LoadXML();
             }
             catch (Exception e)
             {
                 MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
+
+            return true;
         }
 
         public void UpdateXMLImport()
         {
             Console.WriteLine("Update BD XML IMPORT");
 
-            SQLiteCommand Update = new SQLiteCommand();
-            Update = new SQLiteCommand();
-            Update.CommandText = ";";
-            Update.Connection = SingletonBD.GetInstance.GetDB();
-            Update.ExecuteNonQuery();
+            // TODO
         }
     }
 }

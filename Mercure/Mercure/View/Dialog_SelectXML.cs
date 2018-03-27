@@ -46,23 +46,22 @@ namespace Mercure
             {          
                 if (RadioButton_New.Checked)
                 {
-                    if (ControllerFurniture.LoadXML())
-                    {
-                        ControllerFurniture.NewXMLImport();
-                    }
+                    ControllerFurniture.NewXMLImport();
                 }
                 else if (RadioButton_Update.Checked)
                 {
-                    if (ControllerFurniture.LoadXML())
-                    {
-                        ControllerFurniture.UpdateXMLImport();
-                    }
+                    ControllerFurniture.UpdateXMLImport();
                 }
                 else
                 {
                     MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }            
+        }
+
+        private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+
         }
     }
 }

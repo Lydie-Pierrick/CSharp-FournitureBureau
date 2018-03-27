@@ -53,6 +53,9 @@
   <ItemGroup>
     <Compile Include="Controller\ControllerFurniture.cs" />
     <Compile Include="Model\Article.cs" />
+    <Compile Include="Model\Brand.cs" />
+    <Compile Include="Model\Family.cs" />
+    <Compile Include="Model\SubFamily.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
