@@ -71,67 +71,102 @@ namespace Mercure.Controller
         }
 
         // Insert Article into database
-        private void InsertArticles(Article article)
+        private void InsertArticles(Article Article)
         {
             //SELECT refArticle FROM Articles WHERE Article.GetSetRefArticle
-
-            SQLiteCommand InsertDescription = new SQLiteCommand();
-            InsertDescription.CommandText = "";
-            InsertDescription.Parameters.Add(1);
-            InsertDescription.Parameters.Add(1);
-            InsertDescription.Parameters.Add(1);
-            InsertDescription.Connection = SingletonBD.GetInstance.GetDB();
-            InsertDescription.ExecuteNonQuery();
-
-            SQLiteCommand InsertRefArticle = new SQLiteCommand();
-            InsertRefArticle.CommandText = "";
-            InsertRefArticle.Parameters.Add(1);
-            InsertRefArticle.Parameters.Add(1);
-            InsertRefArticle.Parameters.Add(1);
-            InsertRefArticle.Connection = SingletonBD.GetInstance.GetDB();
-            InsertRefArticle.ExecuteNonQuery();
-
-            SQLiteCommand InsertBrand = new SQLiteCommand();
-            InsertBrand.CommandText = "";
-            InsertBrand.Parameters.Add(1);
-            InsertBrand.Parameters.Add(1);
-            InsertBrand.Parameters.Add(1);
-            InsertBrand.Connection = SingletonBD.GetInstance.GetDB();
-            InsertBrand.ExecuteNonQuery();
-
-            SQLiteCommand InsertFamily = new SQLiteCommand();
-            InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
-            InsertFamily.Parameters.Add(1);
-            InsertFamily.Parameters.Add(1);
-            InsertFamily.Parameters.Add(1);
-            InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
-            InsertFamily.ExecuteNonQuery();
-
-            SQLiteCommand InsertSubFamily = new SQLiteCommand();
-            InsertSubFamily.CommandText = "";
-            InsertSubFamily.Parameters.Add(1);
-            InsertSubFamily.Parameters.Add(1);
-            InsertSubFamily.Parameters.Add(1);
-            InsertSubFamily.Connection = SingletonBD.GetInstance.GetDB();
-            InsertSubFamily.ExecuteNonQuery();
-
-            SQLiteCommand InsertPrice = new SQLiteCommand();
-            InsertPrice.CommandText = "";
-            InsertPrice.Parameters.Add(1);
-            InsertPrice.Parameters.Add(1);
-            InsertPrice.Parameters.Add(1);
-            InsertPrice.Connection = SingletonBD.GetInstance.GetDB();
-            InsertPrice.ExecuteNonQuery();
-
-            try
-            {
-                InsertSubFamily.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error during insert article. " + ex.Message);
-            }
+            CreateOrInsertBrand(Article.GetSetRefBrand);
+            CreateOrInsertFamily(Article.GetSetRefFamily);
+            CreateOrInsertSubFamily(Article.GetSetRefFamily, Article.GetSetRefSubFamily);
+            CreateOrInsertArticle(Article);            
         }
+
+        private bool CreateOrInsertArticle(Article Article)
+        {
+            List<string> List = new List<string>();
+            string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";
+
+            SQLiteCommand NameTableCommand = new SQLiteCommand(NameTableSQL, SingletonBD.GetInstance.GetDB());
+            SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
+
+            if (NameTableReader.HasRows)
+            {
+                try
+                {
+                    while (NameTableReader.Read())
+                    {
+                        List.Add(NameTableReader.GetString(0));
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    NameTableReader.Close();
+                }
+            }
+
+            if (exist)
+            {
+                /*SQLiteCommand InsertFamily = new SQLiteCommand();
+                InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
+                InsertFamily.ExecuteNonQuery();
+
+                try
+                {
+                    InsertSubFamily.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error during insert article. " + ex.Message);
+                }*/
+            }
+            else
+            {
+                /*SQLiteCommand InsertFamily = new SQLiteCommand();
+                InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Parameters.Add(1);
+                InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
+                InsertFamily.ExecuteNonQuery();
+
+                try
+                {
+                    InsertSubFamily.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error during insert article. " + ex.Message);
+                }*/
+            }
+
+            return false;
+        }
+
+        // --- Create Or Insert ...
+
+        private bool CreateOrInsertBrand(string Brand)
+        {
+            return false;
+        }
+
+        private bool CreateOrInsertFamily(string family)
+        {
+            return false;
+        }
+
+        private bool CreateOrInsertSubFamily(string family, string subFamily)
+        {
+            return false;
+        }
+
+        // ---
 
         private List<String> GetAllNameTables()
         {
