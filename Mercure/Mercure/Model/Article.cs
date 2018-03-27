@@ -10,26 +10,26 @@ namespace Mercure
         public Article()
         { }
 
-        public Article(int getSetRefArticle, string getSetDescription, int getSetRefSubFamily, int getSetRefBrand, double getSetPriceHT, int getSetAmount, int getSetRefFamily)
+        public Article(string RefArticle, string Description, string RefSubFamily, string RefBrand, double PriceHT, int Amount, string RefFamily)
         {
-            GetSetRefArticle = getSetRefArticle;
-            GetSetDescription = getSetDescription;
-            GetSetRefSubFamily = getSetRefSubFamily;
-            GetSetRefBrand = getSetRefBrand;
-            GetSetPriceHT = getSetPriceHT;
-            GetSetAmount = getSetAmount;
-            GetSetRefFamily = getSetRefFamily;
+            GetSetRefArticle = RefArticle;
+            GetSetDescription = Description;
+            GetSetRefSubFamily = RefSubFamily;
+            GetSetRefBrand = RefBrand;
+            GetSetPriceHT = PriceHT;
+            GetSetAmount = Amount;
+            GetSetRefFamily = RefFamily;
         }
 
-        private int RefArticle;
+        private string RefArticle;
         private string Description;
-        private int RefFamily;
-        private int RefSubFamily;
-        private int RefBrand;
+        private string RefFamily;
+        private string RefSubFamily;
+        private string RefBrand;
         private double PriceHT;
         private int Amount;
 
-        public int GetSetRefArticle
+        public string GetSetRefArticle
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Mercure
             }
         }
 
-        public int GetSetRefSubFamily
+        public string GetSetRefSubFamily
         {
             get
             {
@@ -68,7 +68,7 @@ namespace Mercure
             }
         }
 
-        public int GetSetRefBrand
+        public string GetSetRefBrand
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Mercure
             }
         }
 
-        public int GetSetRefFamily
+        public string GetSetRefFamily
         {
             get
             {
