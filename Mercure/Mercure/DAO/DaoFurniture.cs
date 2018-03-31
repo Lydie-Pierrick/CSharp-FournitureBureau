@@ -100,9 +100,11 @@ namespace Mercure.DAO
         }
 
         /*  
-         *  Create or modify a brand
+         *  Get or create a brand
+         *  
+         *  @return id of brand
          */
-        private int CreateOrModifyBrand(string Brand)
+        private int GetOrCreateBrand(string Brand)
         {
             // Get brand if it exists
             int IdBrand;
@@ -144,11 +146,11 @@ namespace Mercure.DAO
         }
 
         /*  
-         *  Create or modify a brand
+         *  Get or create a family
          *  
          *  @return id of family
          */
-        private int CreateOrModifyFamily(string FamilyName)
+        private int GetOrCreateFamily(string FamilyName)
         {
             // Get last id for autoincrement
             int IdFamily = 0;
@@ -190,11 +192,11 @@ namespace Mercure.DAO
         }
 
         /*  
-         *  Create or modify a brand
+         *  Get or create a sub family
          *  
          *  @return id of sub family
          */
-        private int CreateOrModifySubFamily(string SubFamilyName, string FamilyName)
+        private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
         {
             // Get family if exists
             int IdSubFamily = 0;
@@ -216,7 +218,7 @@ namespace Mercure.DAO
                 LastId = LastInsertReader.GetInt32(0);
 
                 // Get Family for this SubFamily
-                int IdFamily = CreateOrModifyFamily(FamilyName);
+                int IdFamily = GetOrCreateFamily(FamilyName);
 
                 // Insert new sub family
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();

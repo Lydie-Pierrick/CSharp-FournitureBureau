@@ -1,3 +1,4 @@
-Mercure/Mercure/bin/Debug/Mercure.vshost.exe
+*.exe
 Mercure/.vs/Mercure/v14/.suo
 Mercure/Mercure/Mercure.csproj
+*.TMP
