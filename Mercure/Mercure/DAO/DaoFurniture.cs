@@ -102,20 +102,45 @@ namespace Mercure.DAO
         /*  
          *  Create or modify a brand
          */
-        private void CreateOrModifyBrand(string Brand)
+        private int CreateOrModifyBrand(string Brand)
         {
-            int LastId = 0;
-            string QueryLastInsertId = "SELECT last_insert_rowid();";
-            SQLiteCommand LastInsertCommand = new SQLiteCommand(QueryLastInsertId, SingletonBD.GetInstance.GetDB());
-            SQLiteDataReader BrandTableReader = LastInsertCommand.ExecuteReader();
-            LastId = BrandTableReader.GetInt32(0);
+            // Get brand if it exists
+            int IdBrand;
+            SQLiteCommand QueryGetBrand= new SQLiteCommand();
+            QueryGetBrand.Connection = SingletonBD.GetInstance.GetDB();
+            QueryGetBrand.CommandText = "SELECT RefMarque FROM Marques WHERE Nom = @Nom;";
+            QueryGetBrand.Parameters.AddWithValue("@Nom", Brand);
+            SQLiteDataReader GetBrandReader = QueryGetBrand.ExecuteReader();   
 
-            SQLiteCommand InsertFamily = new SQLiteCommand();
-            InsertFamily.CommandText = "INSERT OR IGNORE INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
-            InsertFamily.Parameters.AddWithValue("@RefMarque", LastId + 1);
-            InsertFamily.Parameters.AddWithValue("@RefNom", Brand);
-            InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
-            InsertFamily.ExecuteNonQuery();
+            // Create if it does not exist
+            if (!GetBrandReader.HasRows)
+            {
+                // Get last id for autoincrement
+                int LastId = 0;
+                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
+                QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
+                QueryLastInsertId.CommandText = "SELECT last_insert_rowid() FROM Marques;";
+                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
+                LastId = LastInsertReader.GetInt32(0);
+                LastInsertReader.Close();
+
+                // Insert new brand
+                SQLiteCommand QueryInsertBrand = new SQLiteCommand();
+                QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
+                QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastId + 1);
+                QueryInsertBrand.Parameters.AddWithValue("@RefNom", Brand);
+                QueryInsertBrand.Connection = SingletonBD.GetInstance.GetDB();
+                QueryInsertBrand.ExecuteNonQuery();
+
+                return LastId;
+            }
+            else
+            {
+                IdBrand = GetBrandReader.GetInt32(0);
+            }
+
+            GetBrandReader.Close();
+            return IdBrand;
         }
 
         /*  
