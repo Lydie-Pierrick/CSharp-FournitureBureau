@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
+using Mercure.DAO;
 using System.Data.SqlClient;
 
 namespace Mercure.Controller
@@ -16,13 +17,19 @@ namespace Mercure.Controller
     class ControllerFurniture
     {
         private string PathXML;
-        private List<String> ListNameTables;
+        private static DaoFurniture DaoFurniture;
+        private static int CounterInsertArticle;
 
         public ControllerFurniture()
-        {         
-            ListNameTables = GetAllNameTables();
+        {
+            this.PathXML = null;
+            DaoFurniture = new DaoFurniture();
+            ControllerFurniture.CounterInsertArticle = 0;
         }
 
+        /*
+         * Getter Setter of path XML
+         */
         public string GetterSetterPathXML
         {
             get
@@ -36,6 +43,9 @@ namespace Mercure.Controller
             }
         }
 
+        /*
+         * Load XML
+         */
         private void LoadXML()
         {
             XmlDocument XMLDoc = new XmlDocument();
@@ -66,163 +76,25 @@ namespace Mercure.Controller
                 Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
                 // SQL Query Insert Article
-                InsertArticles(Article);
+                CounterInsertArticle += CreateOrModifyArticle(Article);
             }
         }
 
-        // Insert Article into database
-        private void InsertArticles(Article Article)
+        /*  
+         *  Create or modify a brand
+         */
+        private int CreateOrModifyArticle(Article Article)
         {
-            //SELECT refArticle FROM Articles WHERE Article.GetSetRefArticle
-            CreateOrInsertBrand(Article.GetSetRefBrand);
-            CreateOrInsertFamily(Article.GetSetRefFamily);
-            CreateOrInsertSubFamily(Article.GetSetRefFamily, Article.GetSetRefSubFamily);
-            CreateOrInsertArticle(Article);            
-        }
+            return DaoFurniture.CreateOrModifyArticle(Article);
+        }      
 
-        private void CreateOrInsertArticle(Article Article)
-        {
-            List<string> List = new List<string>();
-            string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";
-
-            SQLiteCommand NameTableCommand = new SQLiteCommand(NameTableSQL, SingletonBD.GetInstance.GetDB());
-            SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
-
-            if (NameTableReader.HasRows)
-            {
-                try
-                {
-                    while (NameTableReader.Read())
-                    {
-                        List.Add(NameTableReader.GetString(0));
-                    }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    NameTableReader.Close();
-                }
-            }
-
-            if (exist)
-            {
-                /*SQLiteCommand InsertFamily = new SQLiteCommand();
-                InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
-                InsertFamily.ExecuteNonQuery();
-
-                try
-                {
-                    InsertSubFamily.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error during insert article. " + ex.Message);
-                }*/
-            }
-            else
-            {
-                /*SQLiteCommand InsertFamily = new SQLiteCommand();
-                InsertFamily.CommandText = "INSERT OR IGNORE INTO Familles (RefFamille,Nom) VALUES (1,'');";
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Parameters.Add(1);
-                InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
-                InsertFamily.ExecuteNonQuery();
-
-                try
-                {
-                    InsertSubFamily.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Error during insert article. " + ex.Message);
-                }*/
-            }
-        }
-
-        // --- Create Or Insert Brand
-
-        private void CreateOrInsertBrand(string Brand)
-        {
-            int LastId = 0;
-            string QueryLastInsertId ="SELECT last_insert_rowid();";
-            SQLiteCommand LastInsertCommand = new SQLiteCommand(QueryLastInsertId, SingletonBD.GetInstance.GetDB());
-            SQLiteDataReader BrandTableReader = LastInsertCommand.ExecuteReader();
-            LastId = BrandTableReader.GetInt32(0);
-            
-            SQLiteCommand InsertFamily = new SQLiteCommand();
-            InsertFamily.CommandText = "INSERT OR IGNORE INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
-            InsertFamily.Parameters.AddWithValue("@RefMarque", LastId + 1);
-            InsertFamily.Parameters.AddWithValue("@RefNom", Brand);
-            InsertFamily.Connection = SingletonBD.GetInstance.GetDB();
-            InsertFamily.ExecuteNonQuery();
-        }
-
-        private bool CreateOrInsertFamily(string family)
-        {
-            return false;
-        }
-
-        private bool CreateOrInsertSubFamily(string family, string subFamily)
-        {
-            return false;
-        }
-
-        // ---
-
-        private List<String> GetAllNameTables()
-        {
-            List<string> List = new List<string>();
-            string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";            
-
-            SQLiteCommand NameTableCommand = new SQLiteCommand(NameTableSQL, SingletonBD.GetInstance.GetDB());
-            SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
-
-            if (NameTableReader.HasRows)
-            {
-                try
-                {
-                    while (NameTableReader.Read())
-                    {
-                        List.Add(NameTableReader.GetString(0));
-                    }
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Error during delete row database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    NameTableReader.Close();
-                }
-            }
-
-            return List;
-        }
+        // ---     
 
         private bool DeleteAllEntriesTables()
         {
-            int countResetTable = 0;
-            SQLiteCommand Delete;
 
-            foreach (String tableName in ListNameTables)
-            {                
-                Delete = new SQLiteCommand();
-                Delete.CommandText = "DELETE FROM " + tableName + ";";
-                Delete.Connection = SingletonBD.GetInstance.GetDB();
-                Delete.ExecuteNonQuery();
 
-                countResetTable++;
-            }
-
-            if (countResetTable == ListNameTables.Count)
+            if (DaoFurniture.DeleteAllEntriesTables())
             {
                 return true;
             }
