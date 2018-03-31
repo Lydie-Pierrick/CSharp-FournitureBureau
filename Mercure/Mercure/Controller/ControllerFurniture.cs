@@ -76,24 +76,26 @@ namespace Mercure.Controller
                 Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
                 // SQL Query Insert Article
-                CounterInsertArticle += CreateOrModifyArticle(Article);
+                CreateOrModifyArticle(Article);
+                CounterInsertArticle++;
             }
         }
 
         /*  
          *  Create or modify a brand
          */
-        private int CreateOrModifyArticle(Article Article)
+        private string CreateOrModifyArticle(Article Article)
         {
-            return DaoFurniture.CreateOrModifyArticle(Article);
+            string RefArticle = DaoFurniture.CreateOrModifyArticle(Article);
+
+            Console.WriteLine(RefArticle);
+            return RefArticle;
         }      
 
         // ---     
 
         private bool DeleteAllEntriesTables()
         {
-
-
             if (DaoFurniture.DeleteAllEntriesTables())
             {
                 return true;
@@ -123,11 +125,19 @@ namespace Mercure.Controller
             return true;
         }
 
-        public void UpdateXMLImport()
+        public bool UpdateXMLImport()
         {
-            Console.WriteLine("Update BD XML IMPORT");
+            try
+            {
+                LoadXML();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
-            // TODO
+            return true;
         }
     }
 }

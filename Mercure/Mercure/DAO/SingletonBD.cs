@@ -12,16 +12,7 @@ public class SingletonBD
     private static SQLiteConnection M_dbConnection;
 
     private SingletonBD() {
-        try
-        {
-            M_dbConnection = new SQLiteConnection();
-            M_dbConnection.ConnectionString = @"Data Source=./Mercure.SQLITE; Version=3;";
-            M_dbConnection.Open();
-        }
-        catch (SQLiteException e)
-        {
-            MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        InitDB();
     }
 
 
@@ -41,6 +32,25 @@ public class SingletonBD
     public SQLiteConnection GetDB()
     {
         return M_dbConnection;
+    }
+
+    private static void InitDB()
+    {
+        try
+        {
+            M_dbConnection = new SQLiteConnection();
+            M_dbConnection.ConnectionString = @"Data Source=./Mercure.SQLITE; Version=3;";
+            M_dbConnection.Open();
+        }
+        catch (SQLiteException e)
+        {
+            MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
+    public static void Open()
+    {
+        InitDB();
     }
 
     public static void Close()
