@@ -16,10 +16,6 @@ namespace Mercure.DAO
     class DaoFurniture
     {
         private List<String> ListNameTables;
-        private int countInsertRowArticle = 0;
-        private int countInsertRowBrand = 0;
-        private int countInsertRowFamily = 0;
-        private int countInsertRowSubFamily = 0;
 
         public DaoFurniture()
         {
@@ -35,6 +31,7 @@ namespace Mercure.DAO
         {
             List<string> List = new List<string>();
             string NameTableSQL = "SELECT name FROM sqlite_master WHERE type='table';";
+            int countInsertRow = 0;
 
             SQLiteCommand NameTableCommand = new SQLiteCommand(NameTableSQL, SingletonBD.GetInstance.GetDB());
             SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
@@ -120,99 +117,33 @@ namespace Mercure.DAO
 
         /*  
          *  Create or modify a brand
-         *  
-         *  @return id of family
          */
-        private int CreateOrModifyFamily(string FamilyName)
+        private bool CreateOrModifyFamily(string family)
         {
             // Get last id for autoincrement
-            int IdFamily = 0;
-            SQLiteCommand QueryGetFamily = new SQLiteCommand();
-            QueryGetFamily.CommandText = "SELECT * FROM Familles WHERE Nom = @Nom;";
-            QueryGetFamily.Connection = SingletonBD.GetInstance.GetDB();
-            QueryGetFamily.Parameters.AddWithValue("@Nom", FamilyName);
-            SQLiteDataReader GetFamilyReader = QueryGetFamily.ExecuteReader();
+            int LastId = 0;
+            SQLiteCommand QueryLastInsertId = new SQLiteCommand();
+            QueryLastInsertId.CommandText = "SELECT last_insert_rowid() FROM Familles;";
+            QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
+            LastId = LastInsertReader.GetInt32(0);
 
-            // Create if does not exist
-            if (!GetFamilyReader.HasRows)
+            if (!LastInsertReader.HasRows)
             {
-                // Get last id for autoincrement
-                int LastId = 0;
-                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                QueryLastInsertId.CommandText = "SELECT last_insert_rowid() FROM Familles;";
-                QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
-                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
-                LastId = LastInsertReader.GetInt32(0);
-
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
                 QueryCreateModify.CommandText = "INSERT INTO Familles (RefFamille, Nom) VALUES (@RefFamille, @RefNom);";
                 QueryCreateModify.Connection = SingletonBD.GetInstance.GetDB();
-                QueryCreateModify.Parameters.AddWithValue("@RefFamille", LastId + 1);
-                QueryCreateModify.Parameters.AddWithValue("@RefNom", FamilyName);
-                countInsertRowFamily = QueryCreateModify.ExecuteNonQuery();
-
-                LastInsertReader.Close();
-                return LastId;
-            }
-            else
-            {
-                IdFamily = GetFamilyReader.GetInt32(0);
             }
 
-            GetFamilyReader.Close();
-
-            return IdFamily;
+            return false;
         }
 
         /*  
          *  Create or modify a brand
-         *  
-         *  @return id of sub family
          */
-        private int CreateOrModifySubFamily(string SubFamilyName, string FamilyName)
+        private bool CreateOrModifySubFamily(string family, string subFamily)
         {
-            // Get family if exists
-            int IdSubFamily = 0;
-            SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
-            QueryGetSubFamily.CommandText = "SELECT RefSousFamille FROM SousFamilles WHERE Nom = @Nom;";
-            QueryGetSubFamily.Connection = SingletonBD.GetInstance.GetDB();
-            QueryGetSubFamily.Parameters.AddWithValue("@Nom", SubFamilyName);
-            SQLiteDataReader GetSubFamilyReader = QueryGetSubFamily.ExecuteReader();
-
-            // Create if does not exists
-            if (!GetSubFamilyReader.HasRows)
-            {
-                // Get last id for autoincrement
-                int LastId = 0;
-                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                QueryLastInsertId.CommandText = "SELECT last_insert_rowid() FROM SousFamilles;";
-                QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
-                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
-                LastId = LastInsertReader.GetInt32(0);
-
-                // Get Family for this SubFamily
-                int IdFamily = CreateOrModifyFamily(FamilyName);
-
-                // Insert new sub family
-                SQLiteCommand QueryCreateModify = new SQLiteCommand();
-                QueryCreateModify.CommandText = "INSERT INTO SousFamilles (RefSousFamille, RefFamille, Nom) VALUES (@RefSousFamille, @RefFamille, @RefNom);";
-                QueryCreateModify.Connection = SingletonBD.GetInstance.GetDB();
-                QueryCreateModify.Parameters.AddWithValue("@RefSousFamille", LastId + 1);
-                QueryCreateModify.Parameters.AddWithValue("@RefFamille", IdFamily);
-                QueryCreateModify.Parameters.AddWithValue("@RefNom", SubFamilyName);
-                countInsertRowSubFamily = QueryCreateModify.ExecuteNonQuery();
-
-                LastInsertReader.Close();
-                return LastId;
-            }
-            else
-            {
-                IdSubFamily = GetSubFamilyReader.GetInt32(0);
-            }
-
-            GetSubFamilyReader.Close();
-
-            return IdSubFamily;
+            return false;
         }
 
         // Delete

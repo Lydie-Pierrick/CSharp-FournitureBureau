@@ -126,12 +126,14 @@ namespace Mercure.DAO
         private int CreateOrModifyFamily(string FamilyName)
         {
             // Get last id for autoincrement
-            int IdFamily = 0;
+            int id = 0;
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
             QueryGetFamily.CommandText = "SELECT * FROM Familles WHERE Nom = @Nom;";
             QueryGetFamily.Connection = SingletonBD.GetInstance.GetDB();
-            QueryGetFamily.Parameters.AddWithValue("@Nom", FamilyName);
+            QueryGetFamily.Parameters.AddWithValue("@Nom", Family);
             SQLiteDataReader GetFamilyReader = QueryGetFamily.ExecuteReader();
+            id = GetFamilyReader.GetInt32(0);
+            GetFamilyReader.Close();
 
             // Create if does not exist
             if (!GetFamilyReader.HasRows)
@@ -154,14 +156,8 @@ namespace Mercure.DAO
                 LastInsertReader.Close();
                 return LastId;
             }
-            else
-            {
-                IdFamily = GetFamilyReader.GetInt32(0);
-            }
-
-            GetFamilyReader.Close();
-
-            return IdFamily;
+            
+            return id;
         }
 
         /*  
@@ -169,17 +165,18 @@ namespace Mercure.DAO
          *  
          *  @return id of sub family
          */
-        private int CreateOrModifySubFamily(string SubFamilyName, string FamilyName)
+        private int CreateOrModifySubFamily(string Family, string SubFamily, string Nom)
         {
-            // Get family if exists
-            int IdSubFamily = 0;
+            // Get last id for autoincrement
+            int id = 0;
             SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
-            QueryGetSubFamily.CommandText = "SELECT RefSousFamille FROM SousFamilles WHERE Nom = @Nom;";
+            QueryGetSubFamily.CommandText = "SELECT * FROM Familles WHERE Nom = @Nom;";
             QueryGetSubFamily.Connection = SingletonBD.GetInstance.GetDB();
-            QueryGetSubFamily.Parameters.AddWithValue("@Nom", SubFamilyName);
+            QueryGetSubFamily.Parameters.AddWithValue("@Nom", Family);
             SQLiteDataReader GetSubFamilyReader = QueryGetSubFamily.ExecuteReader();
+            id = GetSubFamilyReader.GetInt32(0);
 
-            // Create if does not exists
+            // Create if does not exist
             if (!GetSubFamilyReader.HasRows)
             {
                 // Get last id for autoincrement
@@ -190,29 +187,21 @@ namespace Mercure.DAO
                 SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
                 LastId = LastInsertReader.GetInt32(0);
 
-                // Get Family for this SubFamily
-                int IdFamily = CreateOrModifyFamily(FamilyName);
-
-                // Insert new sub family
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
                 QueryCreateModify.CommandText = "INSERT INTO SousFamilles (RefSousFamille, RefFamille, Nom) VALUES (@RefSousFamille, @RefFamille, @RefNom);";
                 QueryCreateModify.Connection = SingletonBD.GetInstance.GetDB();
-                QueryCreateModify.Parameters.AddWithValue("@RefSousFamille", LastId + 1);
-                QueryCreateModify.Parameters.AddWithValue("@RefFamille", IdFamily);
-                QueryCreateModify.Parameters.AddWithValue("@RefNom", SubFamilyName);
+                QueryCreateModify.Parameters.AddWithValue("@RefSousFamille", SubFamily);
+                QueryCreateModify.Parameters.AddWithValue("@RefFamille", Family);
+                QueryCreateModify.Parameters.AddWithValue("@RefNom", Nom);
                 countInsertRowSubFamily = QueryCreateModify.ExecuteNonQuery();
 
                 LastInsertReader.Close();
                 return LastId;
             }
-            else
-            {
-                IdSubFamily = GetSubFamilyReader.GetInt32(0);
-            }
 
             GetSubFamilyReader.Close();
 
-            return IdSubFamily;
+            return id;
         }
 
         // Delete
