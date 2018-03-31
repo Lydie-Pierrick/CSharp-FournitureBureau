@@ -70,9 +70,9 @@ namespace Mercure.Controller
 
                 Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
                 Article.GetSetRefArticle = Node.SelectSingleNode("refArticle").InnerText;
-                Article.GetSetRefBrand = Node.SelectSingleNode("marque").InnerText;
-                Article.GetSetRefFamily = Node.SelectSingleNode("famille").InnerText;
-                Article.GetSetRefSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
+                Article.GetSetBrand = Node.SelectSingleNode("marque").InnerText;
+                Article.GetSetFamily = Node.SelectSingleNode("famille").InnerText;
+                Article.GetSetSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
                 Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
                 // SQL Query Insert Article
@@ -104,6 +104,11 @@ namespace Mercure.Controller
             return false;
         }
 
+        public List<Article> GetAllArticles()
+        {
+            return DaoFurniture.GetAllArticles();
+        }
+
         public bool NewXMLImport()
         {
             try
@@ -115,6 +120,7 @@ namespace Mercure.Controller
                 }
 
                 LoadXML();
+                //RefreshListView();
             }
             catch (Exception e)
             {
@@ -138,6 +144,28 @@ namespace Mercure.Controller
             }
 
             return true;
+        }
+
+        public ListViewItem AddItemToListView(Article Article)
+        {
+            ListViewItem Line = new ListViewItem(Article.GetSetRefArticle);
+            Line.SubItems.Add(Article.GetSetDescription);
+            Line.SubItems.Add(Article.GetSetBrand);
+            Line.SubItems.Add(Article.GetSetSubFamily);
+            Line.SubItems.Add(Article.GetSetPriceHT.ToString());
+            Line.SubItems.Add(Article.GetSetQuantity.ToString());
+            return Line;
+        }
+
+        public void RefreshListView()
+        {       
+            int NumArticle;
+            List<Article> ListArticles = GetAllArticles();
+            for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
+            {
+                 ListViewItem Line =  AddItemToListView(ListArticles[NumArticle]);
+                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Mercure.DAO
 
         // --- Create or modify section
 
-        /*  
+        /*
          *  Create or modify a brand
          *  @return article reference
          */
@@ -66,8 +66,8 @@ namespace Mercure.DAO
                 QueryGetArticle.CommandText = "SELECT RefArticle FROM Articles WHERE RefArticle = @RefArticle AND Description = @RefDescription AND RefSousFamille = @RefSousFamille AND RefMarque = @RefMarque AND PrixHT = @RefPrixHT AND Quantite = @RefQuantite";
                 QueryGetArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
                 QueryGetArticle.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
-                QueryGetArticle.Parameters.AddWithValue("@RefSousFamille", Article.GetSetRefSubFamily);
-                QueryGetArticle.Parameters.AddWithValue("@RefMarque", Article.GetSetRefBrand);
+                QueryGetArticle.Parameters.AddWithValue("@RefSousFamille", Article.GetSetSubFamily);
+                QueryGetArticle.Parameters.AddWithValue("@RefMarque", Article.GetSetBrand);
                 QueryGetArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
                 QueryGetArticle.Parameters.AddWithValue("@RefQuantite", QuantiteArticle + 1);
                 SQLiteDataReader GetArticleReader = QueryGetArticle.ExecuteReader();
@@ -75,8 +75,8 @@ namespace Mercure.DAO
                 // Create if it does not exist
                 if (!GetArticleReader.HasRows)
                 {
-                    int idSubFamily = GetOrCreateSubFamily(Article.GetSetRefSubFamily, Article.GetSetRefFamily);
-                    int idBrand = GetOrCreateBrand(Article.GetSetRefBrand);
+                    int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
+                    int idBrand = GetOrCreateBrand(Article.GetSetBrand);
 
                     // Insert new brand
                     SQLiteCommand QueryInsertBrand = new SQLiteCommand();
@@ -88,7 +88,7 @@ namespace Mercure.DAO
                     QueryInsertBrand.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
                     QueryInsertBrand.Parameters.AddWithValue("@RefMarque", idBrand);
                     QueryInsertBrand.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
-                    QueryInsertBrand.Parameters.AddWithValue("@RefQuantite", Article.GetSetAmount);
+                    QueryInsertBrand.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
 
                     CountInsertRowArticle += QueryInsertBrand.ExecuteNonQuery();
 
@@ -104,9 +104,9 @@ namespace Mercure.DAO
             return Article.GetSetRefArticle;
         }
 
-        /*  
+        /*
          *  Get or create a brand
-         *  
+         *
          *  @return id of brand
          */
         private int GetOrCreateBrand(string Brand)
@@ -163,9 +163,9 @@ namespace Mercure.DAO
             return IdBrand;
         }
 
-        /*  
+        /*
          *  Get or create a family
-         *  
+         *
          *  @return id of family
          */
         private int GetOrCreateFamily(string FamilyName)
@@ -212,13 +212,13 @@ namespace Mercure.DAO
                 GetFamilyReader.Read();
                 IdFamily = GetFamilyReader.GetInt32(0);
             }
-          
+
             return IdFamily;
         }
 
-        /*  
+        /*
          *  Get or create a sub family
-         *  
+         *
          *  @return id of sub family
          */
         private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
@@ -333,5 +333,60 @@ namespace Mercure.DAO
 
             return List;
         }
+
+        public List<Article> GetAllArticles()
+        {
+            List<Article> ListArticles = new List<Article>();
+
+            SQLiteCommand QueryGetAllArticles = new SQLiteCommand();
+            QueryGetAllArticles.CommandText = "SELECT * FROM Articles;";
+            QueryGetAllArticles.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader ArticlesReader = QueryGetAllArticles.ExecuteReader();
+
+            while (ArticlesReader.Read())
+            {
+                string RefArticle = ArticlesReader.GetString(0);
+                string Description = ArticlesReader.GetString(1);
+                int RefSubFamily =  ArticlesReader.GetInt32(2);
+                int RefBrand = ArticlesReader.GetInt32(3);
+                float PriceHT = ArticlesReader.GetFloat(4);
+                int Quantity =  ArticlesReader.GetInt32(5);
+
+                // Get the name of this SubFamily
+                SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
+                QueryGetSubFamily.CommandText = "SELECT Nom FROM SousFamilles WHERE RefSousFamille = @RefSousFamille;";
+                QueryGetSubFamily.Parameters.AddWithValue("@RefSousFamille", RefSubFamily);
+                QueryGetSubFamily.Connection = SingletonBD.GetInstance.GetDB();
+                SQLiteDataReader SubFamilyReader = QueryGetSubFamily.ExecuteReader();
+                string SubFamily = null;
+                if (SubFamilyReader.Read())
+                {
+                    SubFamily = SubFamilyReader.GetString(0);
+                }
+
+                // Get the name of this SubFamily
+                SQLiteCommand QueryGetBrand = new SQLiteCommand();
+                QueryGetBrand.CommandText = "SELECT Nom FROM Marques WHERE RefMarque= @RefMarque;";
+                QueryGetBrand.Parameters.AddWithValue("@RefMarque", RefBrand);
+                QueryGetBrand.Connection = SingletonBD.GetInstance.GetDB();
+                SQLiteDataReader BrandReader = QueryGetBrand.ExecuteReader();
+
+                string Brand = null;
+                if (BrandReader.Read())
+                {
+                    Brand = BrandReader.GetString(0);
+                }
+
+                // Create a new object Article
+                Article Article = new Article(RefArticle, Description, SubFamily, Brand, PriceHT, Quantity);
+
+                // Add this article into the list
+                ListArticles.Add(Article);
+            }
+
+            return ListArticles;
+        }
     }
+
+
 }

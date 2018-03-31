@@ -55,8 +55,10 @@ namespace Mercure
                 else
                 {
                     MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }                
-            }            
+                }
+
+                ControllerFurniture.RefreshListView();
+            }           
         }
 
         private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
