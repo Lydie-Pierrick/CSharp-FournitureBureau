@@ -68,6 +68,7 @@
     <Compile Include="View\Dialog_SelectXML.Designer.cs">
       <DependentUpon>Dialog_SelectXML.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\ListViewItemComparator.cs" />
     <Compile Include="View\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
