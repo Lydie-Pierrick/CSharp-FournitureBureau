@@ -92,8 +92,7 @@ namespace Mercure.Controller
             {
                 TextBoxStatusImport.AppendText(e.Message);
                 throw new Exception(e.Message);
-}
-
+            }
         }
 
         // ---     
