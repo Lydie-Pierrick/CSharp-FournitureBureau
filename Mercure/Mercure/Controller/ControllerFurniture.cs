@@ -54,41 +54,46 @@ namespace Mercure.Controller
             try
             {
                 XMLDoc.Load(PathXML);
+                // Read XML
+                XmlNode NodeRoot = XMLDoc.SelectSingleNode("materiels");
+
+                XmlNodeList NodeListRoot = NodeRoot.ChildNodes;
+
+                foreach (XmlNode Node in NodeListRoot)
+                {
+                    Article Article = new Article();
+
+                    Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
+                    Article.GetSetRefArticle = Node.SelectSingleNode("refArticle").InnerText;
+                    Article.GetSetBrand = Node.SelectSingleNode("marque").InnerText;
+                    Article.GetSetFamily = Node.SelectSingleNode("famille").InnerText;
+                    Article.GetSetSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
+                    Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
+
+                    // Create or modify a brand
+                    if (DaoFurniture.CreateOrModifyArticle(Article))
+                    {
+                        CounterInsertOrUpdate++;
+
+                        TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
+                        TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
+                        TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
+                        TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
+                        TextBoxStatusImport.AppendText("------------------\n");
+                    }
+                }
             }
             catch (System.IO.FileNotFoundException)
             {
+                TextBoxStatusImport.AppendText("Error XMLfile not found !");
                 throw new Exception("Error XMLfile not found !");
-            }            
-
-            // Read XML
-            XmlNode NodeRoot = XMLDoc.SelectSingleNode("materiels");
-
-            XmlNodeList NodeListRoot = NodeRoot.ChildNodes;
-
-            foreach (XmlNode Node in NodeListRoot)
-            {
-                Article Article = new Article();
-
-                Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
-                Article.GetSetRefArticle = Node.SelectSingleNode("refArticle").InnerText;
-                Article.GetSetBrand = Node.SelectSingleNode("marque").InnerText;
-                Article.GetSetFamily = Node.SelectSingleNode("famille").InnerText;
-                Article.GetSetSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
-                Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
-
-                // Create or modify a brand
-                if(DaoFurniture.CreateOrModifyArticle(Article))
-                {
-                    CounterInsertOrUpdate++;
-                    Console.WriteLine("count inser/update :" + CounterInsertOrUpdate);
-
-                    TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
-                    TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
-                    TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
-                    TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
-                    TextBoxStatusImport.AppendText("------------------\n");
-                }                
             }
+            catch (Exception e)
+            {
+                TextBoxStatusImport.AppendText(e.Message);
+                throw new Exception(e.Message);
+}
+
         }
 
         // ---     
