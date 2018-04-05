@@ -18,13 +18,13 @@ namespace Mercure.Controller
     {
         private string PathXML;
         private static DaoFurniture DaoFurniture;
-        private static int CounterInsertArticle;
+        private static int CounterInsertOrUpdate;
 
         public ControllerFurniture()
         {
             this.PathXML = null;
             DaoFurniture = new DaoFurniture();
-            ControllerFurniture.CounterInsertArticle = 0;
+            ControllerFurniture.CounterInsertOrUpdate = 0;
         }
 
         /*
@@ -75,22 +75,14 @@ namespace Mercure.Controller
                 Article.GetSetSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
                 Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
-                // SQL Query Insert Article
-                CreateOrModifyArticle(Article);
-                CounterInsertArticle++;
+                // Create or modify a brand
+                if(DaoFurniture.CreateOrModifyArticle(Article))
+                {
+                    CounterInsertOrUpdate++;
+                    Console.WriteLine("count inser/update :" + CounterInsertOrUpdate);
+                }                
             }
         }
-
-        /*  
-         *  Create or modify a brand
-         */
-        private string CreateOrModifyArticle(Article Article)
-        {
-            string RefArticle = DaoFurniture.CreateOrModifyArticle(Article);
-
-            Console.WriteLine(RefArticle);
-            return RefArticle;
-        }      
 
         // ---     
 

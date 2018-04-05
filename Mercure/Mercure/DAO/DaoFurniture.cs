@@ -37,9 +37,9 @@ namespace Mercure.DAO
 
         /*
          *  Create or modify a brand
-         *  @return article reference
+         *  @return true if article is updated/inserted
          */
-        public string CreateOrModifyArticle(Article Article)
+        public bool CreateOrModifyArticle(Article Article)
         {
             SQLiteCommand QueryGetQuantiteArticle = new SQLiteCommand();
             QueryGetQuantiteArticle.Connection = M_dbConnection;
@@ -92,7 +92,7 @@ namespace Mercure.DAO
 
                     CountInsertRowArticle += QueryInsertBrand.ExecuteNonQuery();
 
-                    return Article.GetSetRefArticle;
+                    return true;
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Mercure.DAO
                 }
             }
 
-            return Article.GetSetRefArticle;
+            return false;
         }
 
         /*
