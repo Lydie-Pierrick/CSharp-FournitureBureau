@@ -46,8 +46,9 @@ namespace Mercure.Controller
         /*
          * Load XML
          */
-        private void LoadXML(TextBox textBoxStatusImport)
+        private void LoadXML(TextBox TextBoxStatusImport)
         {
+            TextBoxStatusImport.Clear();
             XmlDocument XMLDoc = new XmlDocument();
 
             try
@@ -81,7 +82,11 @@ namespace Mercure.Controller
                     CounterInsertOrUpdate++;
                     Console.WriteLine("count inser/update :" + CounterInsertOrUpdate);
 
-                    textBoxStatusImport.AppendText("test\n");
+                    TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
+                    TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
+                    TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
+                    TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
+                    TextBoxStatusImport.AppendText("------------------\n");
                 }                
             }
         }
