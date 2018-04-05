@@ -46,7 +46,7 @@ namespace Mercure.Controller
         /*
          * Load XML
          */
-        private void LoadXML()
+        private void LoadXML(TextBox textBoxStatusImport)
         {
             XmlDocument XMLDoc = new XmlDocument();
 
@@ -80,6 +80,8 @@ namespace Mercure.Controller
                 {
                     CounterInsertOrUpdate++;
                     Console.WriteLine("count inser/update :" + CounterInsertOrUpdate);
+
+                    textBoxStatusImport.AppendText("test\n");
                 }                
             }
         }
@@ -101,7 +103,7 @@ namespace Mercure.Controller
             return DaoFurniture.GetAllArticles();
         }
 
-        public bool NewXMLImport()
+        public bool NewXMLImport(TextBox textBoxStatusImport)
         {
             try
             {
@@ -111,7 +113,7 @@ namespace Mercure.Controller
                     throw new Exception("Reset database failed");
                 }
 
-                LoadXML();
+                LoadXML(textBoxStatusImport);
                 //RefreshListView();
             }
             catch (Exception e)
@@ -123,11 +125,11 @@ namespace Mercure.Controller
             return true;
         }
 
-        public bool UpdateXMLImport()
+        public bool UpdateXMLImport(TextBox textBoxStatusImport)
         {
             try
             {
-                LoadXML();
+                LoadXML(textBoxStatusImport);
             }
             catch (Exception e)
             {

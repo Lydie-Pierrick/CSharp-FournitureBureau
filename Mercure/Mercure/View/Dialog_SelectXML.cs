@@ -46,11 +46,11 @@ namespace Mercure
             {                                               
                 if (RadioButton_New.Checked)
                 {
-                    ControllerFurniture.NewXMLImport();
+                    ControllerFurniture.NewXMLImport(textBoxStatusImport);
                 }
                 else if (RadioButton_Update.Checked)
                 {
-                    ControllerFurniture.UpdateXMLImport();
+                    ControllerFurniture.UpdateXMLImport(textBoxStatusImport);
                 }
                 else
                 {
@@ -77,6 +77,11 @@ namespace Mercure
         }
 
         private void tableLayoutPanel6_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void textBoxStatusImport_TextChanged(object sender, EventArgs e)
         {
 
         }
