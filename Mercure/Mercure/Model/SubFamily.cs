@@ -41,5 +41,10 @@ namespace Mercure.Model
                 SubFamilyName = value;
             }
         }
+
+        public override string ToString()
+        {
+            return SubFamilyName;
+        }
     }
 }

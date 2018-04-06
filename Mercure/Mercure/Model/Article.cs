@@ -10,10 +10,11 @@ namespace Mercure
         public Article()
         { }
 
-        public Article(string RefArticle, string Description, string SubFamily, string Brand, double PriceHT, int Quantity)
+        public Article(string RefArticle, string Description, string Family, string SubFamily, string Brand, double PriceHT, int Quantity)
         {
             GetSetRefArticle = RefArticle;
             GetSetDescription = Description;
+            GetSetFamily = Family;
             GetSetSubFamily = SubFamily;
             GetSetBrand = Brand;
             GetSetPriceHT = PriceHT;
@@ -22,9 +23,9 @@ namespace Mercure
 
         private string RefArticle;
         private string Description;
+        private string Brand;
         private string Family;
         private string SubFamily;
-        private string Brand;
         private double PriceHT;
         private int Quantity;
 
@@ -117,6 +118,11 @@ namespace Mercure
             {
                 Quantity = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return RefArticle;
         }
     }        
 }

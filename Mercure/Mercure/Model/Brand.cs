@@ -41,5 +41,10 @@ namespace Mercure.Model
                 NameBrand = value;
             }
         }
+
+        public override string ToString()
+        {
+            return NameBrand;
+        }
     }
 }

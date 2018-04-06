@@ -24,3 +24,4 @@ C:\Users\Bebo\Documents\Documents\INGPolytech\DI4\CSharp\git\CSharp-FournitureBu
 C:\Users\Bebo\Documents\Documents\INGPolytech\DI4\CSharp\git\CSharp-FournitureBureau\Mercure\Mercure\obj\Debug\Mercure.exe
 C:\Users\Bebo\Documents\Documents\INGPolytech\DI4\CSharp\git\CSharp-FournitureBureau\Mercure\Mercure\obj\Debug\Mercure.pdb
 C:\Users\Bebo\Documents\Documents\INGPolytech\DI4\CSharp\git\CSharp-FournitureBureau\Mercure\Mercure\obj\Debug\Mercure.csprojResolveAssemblyReference.cache
+C:\Users\Bebo\Documents\Documents\INGPolytech\DI4\CSharp\git\CSharp-FournitureBureau\Mercure\Mercure\obj\Debug\Mercure.View.AddEditWindow.resources

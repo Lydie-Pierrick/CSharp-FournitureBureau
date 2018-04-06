@@ -10,6 +10,7 @@ using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
 using Mercure.DAO;
+using Mercure.Model;
 using System.Data.SqlClient;
 
 namespace Mercure.Controller
@@ -107,11 +108,6 @@ namespace Mercure.Controller
             return false;
         }
 
-        public List<Article> GetAllArticles()
-        {
-            return DaoFurniture.GetAllArticles();
-        }
-
         public bool NewXMLImport(TextBox textBoxStatusImport)
         {
             try
@@ -161,14 +157,35 @@ namespace Mercure.Controller
         }
 
         public void RefreshListView()
-        {       
+        {
             int NumArticle;
             List<Article> ListArticles = GetAllArticles();
-            for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
+            for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle++)
             {
-                 ListViewItem Line =  AddItemToListView(ListArticles[NumArticle]);
-                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
+                ListViewItem Line = AddItemToListView(ListArticles[NumArticle]);
+                MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
         }
+
+        public List<Article> GetAllArticles()
+        {
+            return DaoFurniture.GetAllArticles();
+        }
+
+        public List<Brand> GetAllBrands()
+        {
+            return DaoFurniture.GetAllBrands();
+        }
+
+        public List<Family> GetAllFamily()
+        {
+            return DaoFurniture.GetAllFamily();
+        }
+
+        public List<SubFamily> GetAllSubFamily()
+        {
+            return DaoFurniture.GetAllSubFamily();
+        }
+
     }
 }

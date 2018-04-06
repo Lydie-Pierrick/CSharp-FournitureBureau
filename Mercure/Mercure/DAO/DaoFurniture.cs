@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
+using Mercure.Model;
 using System.Data.SqlClient;
 
 namespace Mercure.DAO
@@ -105,11 +106,11 @@ namespace Mercure.DAO
         }
 
         /*
-         *  Get or create a brand
+         *  Get Brand id
          *
-         *  @return id of brand
+         *  @return id of brand or -1 if it does not exist
          */
-        private int GetOrCreateBrand(string Brand)
+        private int GetBrandId(string Brand)
         {
             // Get brand if it exists
             int IdBrand = 0;
@@ -123,6 +124,51 @@ namespace Mercure.DAO
 
             // Create if it does not exist
             if (!GetBrandReader.HasRows)
+            {
+                return -1;
+            }
+
+            GetBrandReader.Read();
+            IdBrand = GetBrandReader.GetInt32(0);
+
+            return IdBrand;
+        }
+
+        /*
+         *  Get Brand name
+         *
+         *  @return name of brand or null if it does not exist
+         */
+        private string GetBrandName(int RefBrand)
+        {
+            SQLiteCommand QueryGetBrand = new SQLiteCommand();
+            QueryGetBrand.CommandText = "SELECT Nom FROM Marques WHERE RefMarque= @RefMarque;";
+            QueryGetBrand.Parameters.AddWithValue("@RefMarque", RefBrand);
+            QueryGetBrand.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader BrandReader = QueryGetBrand.ExecuteReader();
+
+            string Brand = null;
+            if (BrandReader.Read())
+            {
+                Brand = BrandReader.GetString(0);
+            }
+
+            return Brand;
+        }
+
+        /*
+         *  Get or create a brand
+         *
+         *  @return id of brand
+         */
+        private int GetOrCreateBrand(string Brand)
+        {
+            int IdBrand = 0;
+
+            IdBrand = GetBrandId(Brand);
+
+            // Create if it does not exist
+            if (IdBrand == -1)
             {
                 // Get last id for autoincrement
                 int LastId = 0;
@@ -154,21 +200,16 @@ namespace Mercure.DAO
 
                 return LastId + 1;
             }
-            else
-            {
-                GetBrandReader.Read();
-                IdBrand = GetBrandReader.GetInt32(0);
-            }
 
             return IdBrand;
         }
 
         /*
-         *  Get or create a family
+         *  Get Family id
          *
-         *  @return id of family
+         *  @return id of family or -1 if it does not exist
          */
-        private int GetOrCreateFamily(string FamilyName)
+        private int GetFamilyId(string FamilyName)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
             QueryGetFamily.Connection = M_dbConnection;
@@ -179,8 +220,77 @@ namespace Mercure.DAO
             QueryGetFamily.Parameters.AddWithValue("@Nom", FamilyName);
             SQLiteDataReader GetFamilyReader = QueryGetFamily.ExecuteReader();
 
-            // Create if it does not exist
             if (!GetFamilyReader.HasRows)
+            {
+                return -1;
+            }
+
+            GetFamilyReader.Read();
+            IdFamily = GetFamilyReader.GetInt32(0);
+
+            return IdFamily;
+        }
+
+        /*
+         *  Get Name of Family
+         *
+         *  @return string of family or null if it does not exist
+         */
+        private string GetFamilyName(int RefFamily)
+        {
+            SQLiteCommand QueryGetFamily = new SQLiteCommand();
+            QueryGetFamily.CommandText = "SELECT Nom FROM Familles WHERE RefFamille = @RefFamille;";
+            QueryGetFamily.Parameters.AddWithValue("@RefFamille", RefFamily);
+            QueryGetFamily.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader FamilyReader = QueryGetFamily.ExecuteReader();
+            string Family = null;
+            if (FamilyReader.Read())
+            {
+                Family = FamilyReader.GetString(0);
+            }
+
+            return Family;
+        }
+
+        /*
+         *  Get Family id of SubFamily
+         *
+         *  @return id of family or -1 if it does not exist
+         */
+        private int GetFamilyIdOfSubFamily(int RefSubFamily)
+        {
+            SQLiteCommand QueryGetFamily = new SQLiteCommand();
+            QueryGetFamily.Connection = M_dbConnection;
+
+            // Get family if it exists
+            int IdFamily = 0;
+            QueryGetFamily.CommandText = "SELECT RefFamille FROM SousFamilles WHERE RefSousFamille = @RefSubFamily;";
+            QueryGetFamily.Parameters.AddWithValue("@RefSubFamily", RefSubFamily);
+            SQLiteDataReader GetFamilyReader = QueryGetFamily.ExecuteReader();
+
+            if (!GetFamilyReader.HasRows)
+            {
+                return -1;
+            }
+
+            GetFamilyReader.Read();
+            IdFamily = GetFamilyReader.GetInt32(0);
+
+            return IdFamily;
+        }
+
+        /*
+         *  Get or create a family
+         *
+         *  @return id of family
+         */
+        private int GetOrCreateFamily(string FamilyName)
+        {
+            int IdFamily = 0;
+            IdFamily = GetFamilyId(FamilyName);
+
+            // Create if it does not exist
+            if (IdFamily == -1)
             {
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
@@ -207,21 +317,16 @@ namespace Mercure.DAO
 
                 return LastRefFamily;
             }
-            else
-            {
-                GetFamilyReader.Read();
-                IdFamily = GetFamilyReader.GetInt32(0);
-            }
 
             return IdFamily;
         }
 
         /*
-         *  Get or create a sub family
+         *  Get Id of SubFamily
          *
-         *  @return id of sub family
+         *  @return id of subfamily or -1 if it does not exist
          */
-        private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
+        private int GetSubFamilyId(string SubFamilyName)
         {
             int IdSubFamily = 0;
 
@@ -233,8 +338,51 @@ namespace Mercure.DAO
             QueryGetSubFamily.Parameters.AddWithValue("@Nom", SubFamilyName);
             SQLiteDataReader GetSubFamilyReader = QueryGetSubFamily.ExecuteReader();
 
-            // Create if it does not exist
             if (!GetSubFamilyReader.HasRows)
+            {
+                return -1;
+            }
+
+            GetSubFamilyReader.Read();
+            IdSubFamily = GetSubFamilyReader.GetInt32(0);
+
+            return IdSubFamily;
+        }
+
+        /*
+         *  Get Name of SubFamily
+         *
+         *  @return string of subfamily or null if it does not exist
+         */
+        private string GetSubFamilyName(int RefSubFamily)
+        {
+            SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
+            QueryGetSubFamily.CommandText = "SELECT Nom FROM SousFamilles WHERE RefSousFamille = @RefSousFamille;";
+            QueryGetSubFamily.Parameters.AddWithValue("@RefSousFamille", RefSubFamily);
+            QueryGetSubFamily.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader SubFamilyReader = QueryGetSubFamily.ExecuteReader();
+            string SubFamily = null;
+            if (SubFamilyReader.Read())
+            {
+                SubFamily = SubFamilyReader.GetString(0);
+            }
+
+            return SubFamily;
+        }
+
+        /*
+         *  Get or create a sub family
+         *
+         *  @return id of sub family
+         */
+        private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
+        {
+            int IdSubFamily = 0;
+
+            IdSubFamily = GetSubFamilyId(SubFamilyName);
+
+            // Create if it does not exist
+            if (IdSubFamily == -1)
             {
                 // Get last id for autoincrement
                 int LastId = 0;
@@ -267,12 +415,6 @@ namespace Mercure.DAO
 
                 return LastId + 1;
             }
-            else
-            {
-                GetSubFamilyReader.Read();
-                IdSubFamily = GetSubFamilyReader.GetInt32(0);
-            }
-
 
             return IdSubFamily;
         }
@@ -347,44 +489,102 @@ namespace Mercure.DAO
             {
                 string RefArticle = ArticlesReader.GetString(0);
                 string Description = ArticlesReader.GetString(1);
-                int RefSubFamily =  ArticlesReader.GetInt32(2);
                 int RefBrand = ArticlesReader.GetInt32(3);
+                int RefFamily = 0;
+                int RefSubFamily =  ArticlesReader.GetInt32(2);                
                 float PriceHT = ArticlesReader.GetFloat(4);
                 int Quantity =  ArticlesReader.GetInt32(5);
 
-                // Get the name of this SubFamily
-                SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
-                QueryGetSubFamily.CommandText = "SELECT Nom FROM SousFamilles WHERE RefSousFamille = @RefSousFamille;";
-                QueryGetSubFamily.Parameters.AddWithValue("@RefSousFamille", RefSubFamily);
-                QueryGetSubFamily.Connection = SingletonBD.GetInstance.GetDB();
-                SQLiteDataReader SubFamilyReader = QueryGetSubFamily.ExecuteReader();
-                string SubFamily = null;
-                if (SubFamilyReader.Read())
-                {
-                    SubFamily = SubFamilyReader.GetString(0);
-                }
+                // Get the name of SubFamily
+                string SubFamily = GetSubFamilyName(RefSubFamily);
 
-                // Get the name of this SubFamily
-                SQLiteCommand QueryGetBrand = new SQLiteCommand();
-                QueryGetBrand.CommandText = "SELECT Nom FROM Marques WHERE RefMarque= @RefMarque;";
-                QueryGetBrand.Parameters.AddWithValue("@RefMarque", RefBrand);
-                QueryGetBrand.Connection = SingletonBD.GetInstance.GetDB();
-                SQLiteDataReader BrandReader = QueryGetBrand.ExecuteReader();
+                // Get the name of Family
+                RefFamily = GetFamilyIdOfSubFamily(RefSubFamily);
+                string Family = GetFamilyName(RefFamily);
 
-                string Brand = null;
-                if (BrandReader.Read())
-                {
-                    Brand = BrandReader.GetString(0);
-                }
+                // Get the name of Brand
+                string Brand = GetBrandName(RefBrand);
 
                 // Create a new object Article
-                Article Article = new Article(RefArticle, Description, SubFamily, Brand, PriceHT, Quantity);
+                Article Article = new Article(RefArticle, Description, Family, SubFamily, Brand, PriceHT, Quantity);
 
                 // Add this article into the list
                 ListArticles.Add(Article);
             }
 
             return ListArticles;
+        }
+
+        public List<Brand> GetAllBrands()
+        {
+            List<Brand> ListBrands = new List<Brand>();
+
+            SQLiteCommand QueryGetAllBrands = new SQLiteCommand();
+            QueryGetAllBrands.CommandText = "SELECT DISTINCT * FROM Marques;";
+            QueryGetAllBrands.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader BrandsReader = QueryGetAllBrands.ExecuteReader();
+
+            while (BrandsReader.Read())
+            {
+                int RefBrand = BrandsReader.GetInt32(0);
+                string Name = BrandsReader.GetString(1);
+
+                // Create a new object Article
+                Brand Brand = new Brand(RefBrand, Name);
+
+                // Add this article into the list
+                ListBrands.Add(Brand);
+            }
+
+            return ListBrands;
+        }
+
+        public List<Family> GetAllFamily()
+        {
+            List<Family> ListFamily = new List<Family>();
+
+            SQLiteCommand QueryGetAllFamily = new SQLiteCommand();
+            QueryGetAllFamily.CommandText = "SELECT DISTINCT * FROM Familles;";
+            QueryGetAllFamily.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader FamilyReader = QueryGetAllFamily.ExecuteReader();
+
+            while (FamilyReader.Read())
+            {
+                int RefFamily = FamilyReader.GetInt32(0);
+                string Name = FamilyReader.GetString(1);
+
+                // Create a new object Article
+                Family Family = new Family(RefFamily, Name);
+
+                // Add this article into the list
+                ListFamily.Add(Family);
+            }
+
+            return ListFamily;
+        }
+
+        public List<SubFamily> GetAllSubFamily()
+        {
+            List<SubFamily> ListSubFamily = new List<SubFamily>();
+
+            SQLiteCommand QueryGetAllSubFamily = new SQLiteCommand();
+            QueryGetAllSubFamily.CommandText = "SELECT DISTINCT * FROM SousFamilles;";
+            QueryGetAllSubFamily.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader SubFamilyReader = QueryGetAllSubFamily.ExecuteReader();
+
+            while (SubFamilyReader.Read())
+            {
+                int RefSubFamily = SubFamilyReader.GetInt32(0);
+                string Name = SubFamilyReader.GetString(2);
+
+                // Create a new object Article
+                SubFamily SubFamily = new SubFamily(RefSubFamily, Name);
+
+                // Add this article into the list
+                ListSubFamily.Add(SubFamily);
+            }
+
+            return ListSubFamily;
         }
     }
 

@@ -41,5 +41,10 @@ namespace Mercure.Model
                 FamilyName = value;
             }
         }
+
+        public override string ToString()
+        {
+            return FamilyName;
+        }
     }
 }
