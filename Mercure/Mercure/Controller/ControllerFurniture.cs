@@ -11,6 +11,7 @@ using System.Data.SQLite;
 using Mercure.Controller;
 using Mercure.DAO;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace Mercure.Controller
 {
@@ -18,7 +19,12 @@ namespace Mercure.Controller
     {
         private string PathXML;
         private static DaoFurniture DaoFurniture;
-        private static int CounterInsertOrUpdate;
+        public static int CounterInsertOrUpdate;
+        public static int NumberNodes;
+        private static XmlNodeList NodeListRoot;
+        private delegate void DelegateProgressBar();
+        private Thread ThreadUpdateStatus;
+        
 
         public ControllerFurniture()
         {
@@ -43,12 +49,31 @@ namespace Mercure.Controller
             }
         }
 
+        public void WriteEachArticleDB(int Index)
+        {
+            Article Article = new Article();
+            // Get infomations of all nodes form NodeListRoot
+            Article.GetSetDescription = NodeListRoot[Index].SelectSingleNode("description").InnerText;
+            Article.GetSetRefArticle = NodeListRoot[Index].SelectSingleNode("refArticle").InnerText;
+            Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
+            Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
+            Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
+            Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
+
+            // Write this Article into DB
+            if (DaoFurniture.CreateOrModifyArticle(Article))
+            {
+                // Start a new thread to update the status text
+                ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
+                ThreadUpdateStatus.Start(Article);
+            }
+        }
         /*
          * Load XML
          */
-        private void LoadXML(TextBox TextBoxStatusImport)
+        private void LoadXML()
         {
-            TextBoxStatusImport.Clear();
+            //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Clear();
             XmlDocument XMLDoc = new XmlDocument();
 
             try
@@ -56,41 +81,19 @@ namespace Mercure.Controller
                 XMLDoc.Load(PathXML);
                 // Read XML
                 XmlNode NodeRoot = XMLDoc.SelectSingleNode("materiels");
-
-                XmlNodeList NodeListRoot = NodeRoot.ChildNodes;
-
-                foreach (XmlNode Node in NodeListRoot)
-                {
-                    Article Article = new Article();
-
-                    Article.GetSetDescription = Node.SelectSingleNode("description").InnerText;
-                    Article.GetSetRefArticle = Node.SelectSingleNode("refArticle").InnerText;
-                    Article.GetSetBrand = Node.SelectSingleNode("marque").InnerText;
-                    Article.GetSetFamily = Node.SelectSingleNode("famille").InnerText;
-                    Article.GetSetSubFamily = Node.SelectSingleNode("sousFamille").InnerText;
-                    Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
-
-                    // Create or modify a brand
-                    if (DaoFurniture.CreateOrModifyArticle(Article))
-                    {
-                        CounterInsertOrUpdate++;
-
-                        TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
-                        TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
-                        TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
-                        TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
-                        TextBoxStatusImport.AppendText("------------------\n");
-                    }
-                }
+                // Get all the nodes
+                NodeListRoot = NodeRoot.ChildNodes;
+                // Get the number of nodes
+                NumberNodes = NodeListRoot.Count;
             }
             catch (System.IO.FileNotFoundException)
             {
-                TextBoxStatusImport.AppendText("Error XMLfile not found !");
+                //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("Error XMLfile not found !");
                 throw new Exception("Error XMLfile not found !");
             }
             catch (Exception e)
             {
-                TextBoxStatusImport.AppendText(e.Message);
+                //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
                 throw new Exception(e.Message);
             }
         }
@@ -112,7 +115,7 @@ namespace Mercure.Controller
             return DaoFurniture.GetAllArticles();
         }
 
-        public bool NewXMLImport(TextBox textBoxStatusImport)
+        public bool NewXMLImport()
         {
             try
             {
@@ -122,8 +125,7 @@ namespace Mercure.Controller
                     throw new Exception("Reset database failed");
                 }
 
-                LoadXML(textBoxStatusImport);
-                //RefreshListView();
+                LoadXML();
             }
             catch (Exception e)
             {
@@ -134,11 +136,11 @@ namespace Mercure.Controller
             return true;
         }
 
-        public bool UpdateXMLImport(TextBox textBoxStatusImport)
+        public bool UpdateXMLImport()
         {
             try
             {
-                LoadXML(textBoxStatusImport);
+                LoadXML();
             }
             catch (Exception e)
             {
@@ -157,18 +159,35 @@ namespace Mercure.Controller
             Line.SubItems.Add(Article.GetSetSubFamily);
             Line.SubItems.Add(Article.GetSetPriceHT.ToString());
             Line.SubItems.Add(Article.GetSetQuantity.ToString());
+
             return Line;
         }
 
         public void RefreshListView()
-        {       
+        {
             int NumArticle;
             List<Article> ListArticles = GetAllArticles();
+            // Show all the data on the ListView
             for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
             {
                  ListViewItem Line =  AddItemToListView(ListArticles[NumArticle]);
                  MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
+        }
+
+        public void UpdateStatusText(Object Article)
+        {
+            // Delegate for updating TextBoxStatusImport in another dialog
+            Action<Article> Delegate = delegate(Article ArticleDelegate) 
+            {
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("[Insert or update]: Article : " + ArticleDelegate.GetSetRefArticle);
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("\tBrand : " + ArticleDelegate.GetSetBrand);
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("\tFamily : " + ArticleDelegate.GetSetFamily);
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("\tSubFamily : " + ArticleDelegate.GetSetSubFamily + "\n");
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("------------------\n");
+            };
+            // Invoke this component
+            Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Invoke(Delegate, Article);
         }
     }
 }

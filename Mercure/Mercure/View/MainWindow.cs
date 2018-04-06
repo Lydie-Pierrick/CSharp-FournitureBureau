@@ -20,8 +20,15 @@ namespace Mercure
             InitializeComponent();
             MainWindowForm = this;
 
-            ControllerFurniture cf = new ControllerFurniture();
-            cf.RefreshListView();
+            ListViewArticles.Columns.Add("RefArticle");
+            ListViewArticles.Columns.Add("Description");
+            ListViewArticles.Columns.Add("Brand");
+            ListViewArticles.Columns.Add("SubFamily");
+            ListViewArticles.Columns.Add("Price");
+            ListViewArticles.Columns.Add("Quantity");
+
+            ControllerFurniture ControllerFurniture = new ControllerFurniture();
+            ControllerFurniture.RefreshListView();
         }
 
         private void openXMLToolStripMenuItem_Click(object sender, EventArgs e)
