@@ -62,19 +62,17 @@ namespace Mercure.Controller
             Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
             // Write this Article into DB
-            if (DaoFurniture.CreateOrModifyArticle(Article))
-            {
-                // Start a new thread to update the status text
-                ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
-                ThreadUpdateStatus.Start(Article);
-            }
+            DaoFurniture.CreateOrModifyArticle(Article);
+
+            // Start a new thread to update the status text
+            ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
+            ThreadUpdateStatus.Start(Article);
         }
         /*
          * Load XML
          */
         private void LoadXML()
         {
-            //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Clear();
             XmlDocument XMLDoc = new XmlDocument();
 
             try
@@ -109,11 +107,6 @@ namespace Mercure.Controller
             }
 
             return false;
-        }
-
-        public List<Article> GetAllArticles()
-        {
-            return DaoFurniture.GetAllArticles();
         }
 
         public bool NewXMLImport()
@@ -168,6 +161,9 @@ namespace Mercure.Controller
         {
             int NumArticle;
             List<Article> ListArticles = GetAllArticles();
+
+            MainWindow.MainWindowForm.ListViewArticles.Items.Clear();
+
             // Show all the data on the ListView
             for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
             {

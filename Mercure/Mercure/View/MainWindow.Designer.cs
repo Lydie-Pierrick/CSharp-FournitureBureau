@@ -10,7 +10,7 @@
         /// <summary>
         /// Nettoyage des ressources utilisées.
         /// </summary>
-        /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
+        /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -36,7 +36,6 @@
             this.ListViewArticles = new System.Windows.Forms.ListView();
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Menu_Container
@@ -45,7 +44,7 @@
             this.Menu_Choice1});
             this.Menu_Container.Location = new System.Drawing.Point(0, 0);
             this.Menu_Container.Name = "Menu_Container";
-            this.Menu_Container.Size = new System.Drawing.Size(796, 24);
+            this.Menu_Container.Size = new System.Drawing.Size(808, 24);
             this.Menu_Container.TabIndex = 0;
             this.Menu_Container.Text = "menuStrip";
             // 
@@ -70,7 +69,7 @@
             this.StatusSQL_Label});
             this.StatusSQL_Container.Location = new System.Drawing.Point(0, 380);
             this.StatusSQL_Container.Name = "StatusSQL_Container";
-            this.StatusSQL_Container.Size = new System.Drawing.Size(796, 22);
+            this.StatusSQL_Container.Size = new System.Drawing.Size(808, 22);
             this.StatusSQL_Container.TabIndex = 1;
             this.StatusSQL_Container.Text = "statusStrip1";
             // 
@@ -91,8 +90,6 @@
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
             this.ListViewArticles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewArticles_ColumnClick);
-            this.ListViewArticles.SelectedIndexChanged += new System.EventHandler(this.ListViewArticles_SelectedIndexChanged);
-            this.ListViewArticles.DoubleClick += new System.EventHandler(this.ListViewArticles_SelectedIndexChanged);
             // 
             // MainWindow
             // 
@@ -108,7 +105,6 @@
             this.Menu_Container.PerformLayout();
             this.StatusSQL_Container.ResumeLayout(false);
             this.StatusSQL_Container.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,4 +121,3 @@
 
     }
 }
-
