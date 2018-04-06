@@ -74,6 +74,9 @@ namespace Mercure.Controller
                     // Create or modify a brand
                     DaoFurniture.CreateOrModifyArticle(Article);
 
+                    // TODO
+                    // Faire une méthode qui analyse les fautes d'orthographe dans les Brands. Et s'il y a une similitude alors corriger
+
                     CounterInsertOrUpdate++;
 
                     TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
