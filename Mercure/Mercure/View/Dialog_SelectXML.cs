@@ -10,18 +10,23 @@ using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
 
+
 namespace Mercure
 {
     public partial class Dialog_SelectionXML : Form
     {
         private ControllerFurniture ControllerFurniture;
+        public static Dialog_SelectionXML DialogSelectionXML;
+        private BackgroundWorker BackgroundWorkerData;
 
         public Dialog_SelectionXML()
         {
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();
+            DialogSelectionXML = this;
         }
 
+       
         private void Btn_BrowseXML_Click(object sender, EventArgs e)
         {
             if (OpenFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -46,18 +51,27 @@ namespace Mercure
             {                                               
                 if (RadioButton_New.Checked)
                 {
-                    ControllerFurniture.NewXMLImport(textBoxStatusImport);
+                    ControllerFurniture.NewXMLImport();
                 }
                 else if (RadioButton_Update.Checked)
                 {
-                    ControllerFurniture.UpdateXMLImport(textBoxStatusImport);
+                    ControllerFurniture.UpdateXMLImport();
                 }
                 else
                 {
                     MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                ControllerFurniture.RefreshListView();
+
+                ProgressBar_ImportXML.Maximum = 100;
+                BackgroundWorkerData = new BackgroundWorker();
+                BackgroundWorkerData.WorkerReportsProgress = true;
+                // This event will be raised on the worker thread when the worker starts
+                BackgroundWorkerData.DoWork += BackgroundWorkerData_DoWork;
+                // This event will be raised when we call ReportProgress
+                BackgroundWorkerData.ProgressChanged += BackgroundWorkerData_ProgressChanged;
+                BackgroundWorkerData.RunWorkerCompleted += BackgroundWorkerData_RunWorkerCompleted;
+                BackgroundWorkerData.RunWorkerAsync();
             }           
         }
 
@@ -84,6 +98,42 @@ namespace Mercure
         private void textBoxStatusImport_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void BackgroundWorkerData_DoWork(object sender, DoWorkEventArgs e)
+        {
+            int RatioProgressBar = 100 / ControllerFurniture.NumberNodes;
+            for (int Index = 0; Index < ControllerFurniture.NumberNodes; Index++)
+            {
+                // Write every article into BD
+                ControllerFurniture.WriteEachArticleDB(Index);
+                // Report progress bar to change the value
+                BackgroundWorkerData.ReportProgress((Index+1) * RatioProgressBar);
+            }
+        }
+
+        private void BackgroundWorkerData_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            ProgressBar_ImportXML.Value = e.ProgressPercentage;
+        }
+
+        private void BackgroundWorkerData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show("Errors in importation XML !");
+            }
+            else if (e.Cancelled)
+            {
+                MessageBox.Show("Importation XML canceled !");
+            }
+            else
+            {
+                // Reset the progress bar
+                ProgressBar_ImportXML.Value = 0;
+                MessageBox.Show("Importation XML completed !");
+                ControllerFurniture.RefreshListView();
+            }        
         }
     }
 }

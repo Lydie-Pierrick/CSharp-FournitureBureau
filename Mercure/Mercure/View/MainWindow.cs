@@ -15,7 +15,14 @@ namespace Mercure
             InitializeComponent();
             MainWindowForm = this;
 
-            ControllerFurniture = new ControllerFurniture();
+            ListViewArticles.Columns.Add("RefArticle");
+            ListViewArticles.Columns.Add("Description");
+            ListViewArticles.Columns.Add("Brand");
+            ListViewArticles.Columns.Add("SubFamily");
+            ListViewArticles.Columns.Add("Price");
+            ListViewArticles.Columns.Add("Quantity");
+
+            ControllerFurniture ControllerFurniture = new ControllerFurniture();
             ControllerFurniture.RefreshListView();
         }
 
