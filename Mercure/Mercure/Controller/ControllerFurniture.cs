@@ -72,16 +72,15 @@ namespace Mercure.Controller
                     Article.GetSetPriceHT = Convert.ToDouble(Node.SelectSingleNode("prixHT").InnerText);
 
                     // Create or modify a brand
-                    if (DaoFurniture.CreateOrModifyArticle(Article))
-                    {
-                        CounterInsertOrUpdate++;
+                    DaoFurniture.CreateOrModifyArticle(Article);
 
-                        TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
-                        TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
-                        TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
-                        TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
-                        TextBoxStatusImport.AppendText("------------------\n");
-                    }
+                    CounterInsertOrUpdate++;
+
+                    TextBoxStatusImport.AppendText("[Insert or update]: Article : " + Article.GetSetRefArticle);
+                    TextBoxStatusImport.AppendText("\tBrand : " + Article.GetSetBrand);
+                    TextBoxStatusImport.AppendText("\tFamily : " + Article.GetSetFamily);
+                    TextBoxStatusImport.AppendText("\tSubFamily : " + Article.GetSetSubFamily + "\n");
+                    TextBoxStatusImport.AppendText("------------------\n");
                 }
             }
             catch (System.IO.FileNotFoundException)
