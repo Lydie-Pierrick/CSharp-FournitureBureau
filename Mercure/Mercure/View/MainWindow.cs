@@ -8,13 +8,15 @@ namespace Mercure
     public partial class MainWindow : Form
     {
         public static MainWindow MainWindowForm;
+        private ControllerFurniture ControllerFurniture;
+
         public MainWindow()
         {
             InitializeComponent();
             MainWindowForm = this;
 
-            ControllerFurniture Cf = new ControllerFurniture();
-            Cf.RefreshListView();
+            ControllerFurniture = new ControllerFurniture();
+            ControllerFurniture.RefreshListView();
         }
 
         private void openXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,11 +58,12 @@ namespace Mercure
                 Description = item.SubItems[1].Text;
                 Brand = item.SubItems[2].Text;
                 SubFamily = item.SubItems[3].Text;
+                Family = ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily);
                 Price = Double.Parse(item.SubItems[4].Text);
                 Quantity = Int32.Parse(item.SubItems[5].Text);
             }
 
-            AddEditWindow AddEditWindow = new AddEditWindow(RefArticle, Description, Brand, SubFamily, Price, Quantity);
+            AddEditWindow AddEditWindow = new AddEditWindow(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
             AddEditWindow.Show();
         }
     }

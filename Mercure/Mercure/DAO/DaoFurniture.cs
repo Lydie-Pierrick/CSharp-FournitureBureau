@@ -236,7 +236,7 @@ namespace Mercure.DAO
          *
          *  @return string of family or null if it does not exist
          */
-        private string GetFamilyName(int RefFamily)
+        public string GetFamilyName(int RefFamily)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
             QueryGetFamily.CommandText = "SELECT Nom FROM Familles WHERE RefFamille = @RefFamille;";
@@ -257,15 +257,15 @@ namespace Mercure.DAO
          *
          *  @return id of family or -1 if it does not exist
          */
-        private int GetFamilyIdOfSubFamily(int RefSubFamily)
+        public int GetFamilyIdOfSubFamily(string SubFamily)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
             QueryGetFamily.Connection = M_dbConnection;
 
             // Get family if it exists
             int IdFamily = 0;
-            QueryGetFamily.CommandText = "SELECT RefFamille FROM SousFamilles WHERE RefSousFamille = @RefSubFamily;";
-            QueryGetFamily.Parameters.AddWithValue("@RefSubFamily", RefSubFamily);
+            QueryGetFamily.CommandText = "SELECT RefFamille FROM SousFamilles WHERE Nom = @Nom;";
+            QueryGetFamily.Parameters.AddWithValue("@Nom", SubFamily);
             SQLiteDataReader GetFamilyReader = QueryGetFamily.ExecuteReader();
 
             if (!GetFamilyReader.HasRows)
@@ -499,7 +499,7 @@ namespace Mercure.DAO
                 string SubFamily = GetSubFamilyName(RefSubFamily);
 
                 // Get the name of Family
-                RefFamily = GetFamilyIdOfSubFamily(RefSubFamily);
+                RefFamily = GetFamilyIdOfSubFamily(SubFamily);
                 string Family = GetFamilyName(RefFamily);
 
                 // Get the name of Brand

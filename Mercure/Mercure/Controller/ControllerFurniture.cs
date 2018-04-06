@@ -119,7 +119,6 @@ namespace Mercure.Controller
                 }
 
                 LoadXML(textBoxStatusImport);
-                //RefreshListView();
             }
             catch (Exception e)
             {
@@ -160,6 +159,9 @@ namespace Mercure.Controller
         {
             int NumArticle;
             List<Article> ListArticles = GetAllArticles();
+
+            MainWindow.MainWindowForm.ListViewArticles.Items.Clear();
+
             for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle++)
             {
                 ListViewItem Line = AddItemToListView(ListArticles[NumArticle]);
@@ -187,5 +189,16 @@ namespace Mercure.Controller
             return DaoFurniture.GetAllSubFamily();
         }
 
+        /*
+         *  Get Family id of SubFamily
+         *
+         *  @return id of family or -1 if it does not exist
+         */
+        public string GetFamilyNameOfSubFamily(string SubFamily)
+        {
+            int IdFamilyName = DaoFurniture.GetFamilyIdOfSubFamily(SubFamily);
+
+            return DaoFurniture.GetFamilyName(IdFamilyName);
+        }
     }
 }

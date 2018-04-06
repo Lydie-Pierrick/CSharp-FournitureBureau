@@ -16,7 +16,7 @@ namespace Mercure.View
             InitTextBox();
         }
 
-        public AddEditWindow(string RefArticle, string Description, string Brand, string SubFamily, double Price, int Quantity)
+        public AddEditWindow(string RefArticle, string Description, string Brand, string Family, string SubFamily, double Price, int Quantity)
         {
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();
@@ -25,6 +25,7 @@ namespace Mercure.View
             TextBoxRefArticle.Text = RefArticle;
             TextBoxDescription.Text = Description;
             ComboBoxBrand.SelectedIndex = ComboBoxBrand.FindStringExact(Brand);
+            ComboBoxFamily.SelectedIndex = ComboBoxFamily.FindStringExact(Family);
             ComboBoxSubFamily.SelectedIndex = ComboBoxSubFamily.FindStringExact(SubFamily);
             TextBoxPrice.Text = Price.ToString();
             TextBoxQuantity.Text = Quantity.ToString();

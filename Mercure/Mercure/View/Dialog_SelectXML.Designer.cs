@@ -128,9 +128,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton_Update.AutoSize = true;
-            this.RadioButton_Update.Location = new System.Drawing.Point(357, 3);
+            this.RadioButton_Update.Location = new System.Drawing.Point(79, 3);
             this.RadioButton_Update.Name = "RadioButton_Update";
-            this.RadioButton_Update.Size = new System.Drawing.Size(349, 25);
+            this.RadioButton_Update.Size = new System.Drawing.Size(70, 25);
             this.RadioButton_Update.TabIndex = 5;
             this.RadioButton_Update.TabStop = true;
             this.RadioButton_Update.Text = "Update";
@@ -144,7 +144,7 @@
             this.RadioButton_New.AutoSize = true;
             this.RadioButton_New.Location = new System.Drawing.Point(3, 3);
             this.RadioButton_New.Name = "RadioButton_New";
-            this.RadioButton_New.Size = new System.Drawing.Size(348, 25);
+            this.RadioButton_New.Size = new System.Drawing.Size(70, 25);
             this.RadioButton_New.TabIndex = 6;
             this.RadioButton_New.TabStop = true;
             this.RadioButton_New.Text = "New";
@@ -181,7 +181,7 @@
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(709, 31);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(152, 31);
             this.tableLayoutPanel7.TabIndex = 8;
             // 
             // tableLayoutPanel2
