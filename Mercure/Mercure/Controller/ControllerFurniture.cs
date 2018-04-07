@@ -175,6 +175,13 @@ namespace Mercure.Controller
                 ListViewItem Line = AddItemToListView(ListArticles[NumArticle]);
                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
+
+            // Autoresize widths of columns
+            foreach (ColumnHeader ColumnHeader in MainWindow.MainWindowForm.ListViewArticles.Columns)
+            {
+                // Width changes with the texts as well as headers
+                ColumnHeader.Width = -2; 
+            }
         }
 
         public void UpdateStatusText(Object Article)
