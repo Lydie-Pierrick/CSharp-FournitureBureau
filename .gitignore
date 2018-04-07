@@ -2,3 +2,8 @@
 Mercure/.vs/Mercure/v14/.suo
 Mercure/Mercure/Mercure.csproj
 *.TMP
+Mercure/Mercure/obj/Debug/
+
+Mercure/Mercure/bin/Debug/
+
+Mercure/\.vs/

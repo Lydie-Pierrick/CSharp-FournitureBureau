@@ -52,27 +52,35 @@ namespace Mercure.Controller
 
         public void WriteEachArticleDB(int Index)
         {
-            Article Article = new Article();
-            // Get infomations of all nodes form NodeListRoot
-            Article.GetSetDescription = NodeListRoot[Index].SelectSingleNode("description").InnerText;
-            Article.GetSetRefArticle = NodeListRoot[Index].SelectSingleNode("refArticle").InnerText;
-            Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
-            Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
-            Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
-            Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
+            try
+            {
+                Article Article = new Article();
+                // Get infomations of all nodes form NodeListRoot
+                Article.GetSetDescription = NodeListRoot[Index].SelectSingleNode("description").InnerText;
+                Article.GetSetRefArticle = NodeListRoot[Index].SelectSingleNode("refArticle").InnerText;
+                Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
+                Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
+                Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
+                Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
-            // Write this Article into DB
-            DaoFurniture.CreateOrModifyArticle(Article);
+                // Write this Article into DB
+                DaoFurniture.CreateOrModifyArticle(Article);
 
-            // Start a new thread to update the status text
-            ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
-            ThreadUpdateStatus.Start(Article);
+                // Start a new thread to update the status text
+                ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
+                ThreadUpdateStatus.Start(Article);
 
-            string TextProgress = (Index+1) + "/" + NumberNodes;
-            // Start a new thread to update the status text
-            ThreadUpdateProgressText = new Thread(new ParameterizedThreadStart(UpdateProgressText));
-            ThreadUpdateProgressText.Start(TextProgress);
+                string TextProgress = (Index + 1) + "/" + NumberNodes;
+                // Start a new thread to update the status text
+                ThreadUpdateProgressText = new Thread(new ParameterizedThreadStart(UpdateProgressText));
+                ThreadUpdateProgressText.Start(TextProgress);
+            }        
+            catch(Exception e)
+            {
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
+            }
         }
+
         /*
          * Load XML
          */
@@ -92,13 +100,11 @@ namespace Mercure.Controller
             }
             catch (System.IO.FileNotFoundException)
             {
-                //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("Error XMLfile not found !");
-                throw new Exception("Error XMLfile not found !");
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("Error XMLfile not found !");
             }
             catch (Exception e)
             {
-                //Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
-                throw new Exception(e.Message);
+                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
             }
         }
 
@@ -188,6 +194,7 @@ namespace Mercure.Controller
                 Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("\tSubFamily : " + ArticleDelegate.GetSetSubFamily + "\n");
                 Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("------------------\n");
             };
+
             // Invoke this component
             Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Invoke(Delegate, Article);
         }
