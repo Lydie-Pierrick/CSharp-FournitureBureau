@@ -23,8 +23,8 @@ namespace Mercure.Controller
         public static int CounterInsertOrUpdate;
         public static int NumberNodes;
         private static XmlNodeList NodeListRoot;
-        private delegate void DelegateProgressBar();
         private Thread ThreadUpdateStatus;
+        private Thread ThreadUpdateProgressText;
         
 
         public ControllerFurniture()
@@ -67,6 +67,11 @@ namespace Mercure.Controller
             // Start a new thread to update the status text
             ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
             ThreadUpdateStatus.Start(Article);
+
+            string TextProgress = (Index+1) + "/" + NumberNodes;
+            // Start a new thread to update the status text
+            ThreadUpdateProgressText = new Thread(new ParameterizedThreadStart(UpdateProgressText));
+            ThreadUpdateProgressText.Start(TextProgress);
         }
         /*
          * Load XML
@@ -185,6 +190,17 @@ namespace Mercure.Controller
             };
             // Invoke this component
             Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Invoke(Delegate, Article);
+        }
+
+        public void UpdateProgressText(Object Text)
+        {
+            // Delegate for updating TextBoxStatusImport in another dialog
+            Action<string> Delegate = delegate(string TextDelegate)
+            {
+                Dialog_SelectionXML.DialogSelectionXML.Label_Progress.Text = TextDelegate;
+            };
+            // Invoke this component
+            Dialog_SelectionXML.DialogSelectionXML.Label_Progress.Invoke(Delegate, Text);
         }
 
         public List<Article> GetAllArticles()

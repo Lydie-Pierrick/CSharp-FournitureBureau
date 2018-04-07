@@ -15,6 +15,7 @@ namespace Mercure
             InitializeComponent();
             MainWindowForm = this;
 
+            // Initialise the ListView
             ListViewArticles.Columns.Add("RefArticle");
             ListViewArticles.Columns.Add("Description");
             ListViewArticles.Columns.Add("Brand");

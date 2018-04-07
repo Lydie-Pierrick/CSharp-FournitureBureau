@@ -62,8 +62,8 @@ namespace Mercure
                     MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-
-                ProgressBar_ImportXML.Maximum = 100;
+                //ProgressBar_ImportXML.Minimum = 1;
+                //ProgressBar_ImportXML.Maximum = 100;
                 BackgroundWorkerData = new BackgroundWorker();
                 BackgroundWorkerData.WorkerReportsProgress = true;
                 // This event will be raised on the worker thread when the worker starts
@@ -102,13 +102,14 @@ namespace Mercure
 
         private void BackgroundWorkerData_DoWork(object sender, DoWorkEventArgs e)
         {
-            int RatioProgressBar = 100 / ControllerFurniture.NumberNodes;
+            int RatioProgressBar = (int)(100.0 / (float)ControllerFurniture.NumberNodes);
             for (int Index = 0; Index < ControllerFurniture.NumberNodes; Index++)
             {
+                // Report progress bar to change the value
+                BackgroundWorkerData.ReportProgress((Index + 1) * RatioProgressBar);
+              
                 // Write every article into BD
                 ControllerFurniture.WriteEachArticleDB(Index);
-                // Report progress bar to change the value
-                BackgroundWorkerData.ReportProgress((Index+1) * RatioProgressBar);
             }
         }
 
