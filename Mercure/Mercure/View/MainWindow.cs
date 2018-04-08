@@ -23,7 +23,7 @@ namespace Mercure
             ListViewArticles.Columns.Add("Price");
             ListViewArticles.Columns.Add("Quantity");
 
-            ControllerFurniture ControllerFurniture = new ControllerFurniture();
+            ControllerFurniture = new ControllerFurniture();
             ControllerFurniture.RefreshListView();
         }
 
@@ -37,14 +37,6 @@ namespace Mercure
         {
             ListViewArticles.Sort();
             this.ListViewArticles.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewArticles.Sorting);
-        }
-
-        private void ListViewArticles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SetTextBox();
-
-            // Output the price to TextBox1.
-            //TextBox.Text = price.ToString();
         }
 
         private void SetTextBox()
@@ -71,8 +63,30 @@ namespace Mercure
                 Quantity = Int32.Parse(item.SubItems[5].Text);
             }
 
-            AddEditWindow AddEditWindow = new AddEditWindow(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
+            Dialog_AddEditWindow AddEditWindow = new Dialog_AddEditWindow(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
             AddEditWindow.Show();
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.F5)
+            {
+                ControllerFurniture.RefreshListView();
+                MessageBox.Show("List view refreshed !");
+            }
+        }
+
+        private void ListViewArticles_DoubleClick(object sender, EventArgs e)
+        {
+            string RefArticle = this.ListViewArticles.SelectedItems[0].Text;
+            string Description = this.ListViewArticles.SelectedItems[0].SubItems[1].Text;
+            string Brand = this.ListViewArticles.SelectedItems[0].SubItems[2].Text;
+            string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
+            double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
+            int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
+            Dialog_AddEditWindow Dialog_AddEditWindow = 
+                new Dialog_AddEditWindow(RefArticle, Description, Brand, "Family", SubFamily, Price, Quantity);
+            Dialog_AddEditWindow.Show();
         }
     }
 }

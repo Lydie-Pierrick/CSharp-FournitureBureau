@@ -62,11 +62,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\AddEditWindow.cs">
+    <Compile Include="View\Dialog_AddEditWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\AddEditWindow.Designer.cs">
-      <DependentUpon>AddEditWindow.cs</DependentUpon>
+    <Compile Include="View\Dialog_AddEditWindow.Designer.cs">
+      <DependentUpon>Dialog_AddEditWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Dialog_SelectXML.cs">
       <SubType>Form</SubType>
@@ -84,8 +84,8 @@
     <Compile Include="main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAO\SingletonBD.cs" />
-    <EmbeddedResource Include="View\AddEditWindow.resx">
-      <DependentUpon>AddEditWindow.cs</DependentUpon>
+    <EmbeddedResource Include="View\Dialog_AddEditWindow.resx">
+      <DependentUpon>Dialog_AddEditWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Dialog_SelectXML.resx">
       <DependentUpon>Dialog_SelectXML.cs</DependentUpon>

@@ -90,6 +90,7 @@
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
             this.ListViewArticles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewArticles_ColumnClick);
+            this.ListViewArticles.DoubleClick += new System.EventHandler(this.ListViewArticles_DoubleClick);
             // 
             // MainWindow
             // 
@@ -99,8 +100,10 @@
             this.Controls.Add(this.ListViewArticles);
             this.Controls.Add(this.StatusSQL_Container);
             this.Controls.Add(this.Menu_Container);
+            this.KeyPreview = true;
             this.Name = "MainWindow";
             this.Text = "Main Window";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainWindow_KeyDown);
             this.Menu_Container.ResumeLayout(false);
             this.Menu_Container.PerformLayout();
             this.StatusSQL_Container.ResumeLayout(false);
