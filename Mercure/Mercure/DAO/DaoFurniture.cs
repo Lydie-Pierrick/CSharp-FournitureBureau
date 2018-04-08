@@ -62,18 +62,18 @@ namespace Mercure.DAO
             int idBrand = GetOrCreateBrand(Article.GetSetBrand);
 
             // Insert new brand
-            SQLiteCommand QueryInsertBrand = new SQLiteCommand();
-            QueryInsertBrand.Connection = M_dbConnection;
+            SQLiteCommand QueryInsertArticle = new SQLiteCommand();
+            QueryInsertArticle.Connection = M_dbConnection;
 
-            QueryInsertBrand.CommandText = "INSERT OR REPLACE INTO Articles (RefArticle, Description, RefSousFamille, RefMarque, PrixHT, Quantite) VALUES (@RefArticle, @RefDescription, @RefRefSousFamille, @RefMarque, @RefPrixHT, @RefQuantite);";
-            QueryInsertBrand.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
-            QueryInsertBrand.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
-            QueryInsertBrand.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
-            QueryInsertBrand.Parameters.AddWithValue("@RefMarque", idBrand);
-            QueryInsertBrand.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
-            QueryInsertBrand.Parameters.AddWithValue("@RefQuantite", QuantiteArticle + 1);
+            QueryInsertArticle.CommandText = "INSERT OR REPLACE INTO Articles (RefArticle, Description, RefSousFamille, RefMarque, PrixHT, Quantite) VALUES (@RefArticle, @RefDescription, @RefRefSousFamille, @RefMarque, @RefPrixHT, @RefQuantite);";
+            QueryInsertArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
+            QueryInsertArticle.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
+            QueryInsertArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
+            QueryInsertArticle.Parameters.AddWithValue("@RefMarque", idBrand);
+            QueryInsertArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
+            QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", QuantiteArticle + 1);
 
-            CountInsertRowArticle += QueryInsertBrand.ExecuteNonQuery();
+            CountInsertRowArticle += QueryInsertArticle.ExecuteNonQuery();
         }
 
         /*

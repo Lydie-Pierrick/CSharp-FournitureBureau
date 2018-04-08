@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
-
+using System.Threading;
 
 namespace Mercure
 {
@@ -107,7 +107,8 @@ namespace Mercure
             {
                 // Report progress bar to change the value
                 BackgroundWorkerData.ReportProgress((Index + 1) * RatioProgressBar);
-              
+                Thread.Sleep(400);
+
                 // Write every article into BD
                 ControllerFurniture.WriteEachArticleDB(Index);
             }
