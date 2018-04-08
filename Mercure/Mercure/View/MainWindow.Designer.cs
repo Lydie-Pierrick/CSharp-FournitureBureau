@@ -28,14 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Menu_Container = new System.Windows.Forms.MenuStrip();
             this.Menu_Choice1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusSQL_Container = new System.Windows.Forms.StatusStrip();
             this.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.ListViewArticles = new System.Windows.Forms.ListView();
+            this.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addAnArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyThisAritcleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
+            this.ContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // Menu_Container
@@ -91,6 +97,35 @@
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
             this.ListViewArticles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewArticles_ColumnClick);
             this.ListViewArticles.DoubleClick += new System.EventHandler(this.ListViewArticles_DoubleClick);
+            this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
+            // 
+            // ContextMenuStrip
+            // 
+            this.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAnArticleToolStripMenuItem,
+            this.modifyThisAritcleToolStripMenuItem,
+            this.deleteThisArticleToolStripMenuItem});
+            this.ContextMenuStrip.Name = "ContextMenuStrip";
+            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 92);
+            // 
+            // addAnArticleToolStripMenuItem
+            // 
+            this.addAnArticleToolStripMenuItem.Name = "addAnArticleToolStripMenuItem";
+            this.addAnArticleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.addAnArticleToolStripMenuItem.Text = "Add an article";
+            // 
+            // modifyThisAritcleToolStripMenuItem
+            // 
+            this.modifyThisAritcleToolStripMenuItem.Name = "modifyThisAritcleToolStripMenuItem";
+            this.modifyThisAritcleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.modifyThisAritcleToolStripMenuItem.Text = "Modify this aritcle";
+            this.modifyThisAritcleToolStripMenuItem.Click += new System.EventHandler(this.modifyThisAritcleToolStripMenuItem_Click);
+            // 
+            // deleteThisArticleToolStripMenuItem
+            // 
+            this.deleteThisArticleToolStripMenuItem.Name = "deleteThisArticleToolStripMenuItem";
+            this.deleteThisArticleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.deleteThisArticleToolStripMenuItem.Text = "Delete this article";
             // 
             // MainWindow
             // 
@@ -108,6 +143,7 @@
             this.Menu_Container.PerformLayout();
             this.StatusSQL_Container.ResumeLayout(false);
             this.StatusSQL_Container.PerformLayout();
+            this.ContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -121,6 +157,10 @@
         private System.Windows.Forms.ToolStripStatusLabel StatusSQL_Label;
         private System.Windows.Forms.ToolStripMenuItem openXMLToolStripMenuItem;
         public System.Windows.Forms.ListView ListViewArticles;
+        private System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addAnArticleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modifyThisAritcleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteThisArticleToolStripMenuItem;
 
     }
 }

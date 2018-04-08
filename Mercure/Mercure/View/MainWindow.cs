@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using Mercure.Controller;
 using Mercure.View;
+using System.Drawing;
 
 namespace Mercure
 {
@@ -78,13 +79,33 @@ namespace Mercure
 
         private void ListViewArticles_DoubleClick(object sender, EventArgs e)
         {
+            ModifyArticle();
+        }
+
+        private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                //String fileName = filesList.SelectedItems[0].Text; //获取选中文件名  
+                Point MousePosition = new Point(e.X, e.Y);
+                ContextMenuStrip.Show(ListViewArticles, MousePosition);
+            }  
+        }
+
+        private void modifyThisAritcleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ModifyArticle();
+        }
+
+        private void ModifyArticle()
+        {
             string RefArticle = this.ListViewArticles.SelectedItems[0].Text;
             string Description = this.ListViewArticles.SelectedItems[0].SubItems[1].Text;
             string Brand = this.ListViewArticles.SelectedItems[0].SubItems[2].Text;
             string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
             double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
             int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
-            Dialog_AddEditWindow Dialog_AddEditWindow = 
+            Dialog_AddEditWindow Dialog_AddEditWindow =
                 new Dialog_AddEditWindow(RefArticle, Description, Brand, "Family", SubFamily, Price, Quantity);
             Dialog_AddEditWindow.Show();
         }
