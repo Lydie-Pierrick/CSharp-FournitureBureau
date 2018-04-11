@@ -133,8 +133,12 @@ namespace Mercure
             {
                 // Reset the progress bar
                 ProgressBar_ImportXML.Value = 0;
-                MessageBox.Show("Importation XML completed !");
-                ControllerFurniture.RefreshListView();
+                if (MessageBox.Show("Importation XML completed !") == DialogResult.OK)
+                {
+                    Close();
+                }
+
+                    ControllerFurniture.RefreshListView();
             }        
         }
     }
