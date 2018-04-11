@@ -101,18 +101,13 @@ namespace Mercure
             double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
             int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
             Dialog_AddEditWindow Dialog_AddEditWindow =
-                new Dialog_AddEditWindow(RefArticle, Description, Brand, "Family", SubFamily, Price, Quantity);
+                new Dialog_AddEditWindow(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
             Dialog_AddEditWindow.ShowDialog(this);
         }
 
         private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ModifyArticle();
-        }
-
-        private void ListViewArticles_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

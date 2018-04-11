@@ -64,7 +64,7 @@ namespace Mercure.Controller
                 Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
                 // Write this Article into DB
-                DaoFurniture.CreateOrModifyArticle(Article);
+                CreateOrModifyArticle(Article);
 
                 // Start a new thread to update the status text
                 ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
@@ -154,6 +154,11 @@ namespace Mercure.Controller
             }
 
             return true;
+        }
+
+        public void CreateOrModifyArticle(Article Article)
+        {
+            DaoFurniture.CreateOrModifyArticle(Article);
         }
 
         public ListViewItem AddItemToListView(Article Article)

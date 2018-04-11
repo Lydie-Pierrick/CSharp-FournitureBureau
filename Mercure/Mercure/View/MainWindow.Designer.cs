@@ -145,7 +145,6 @@
             this.ListViewArticles.TabIndex = 6;
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
-            this.ListViewArticles.SelectedIndexChanged += new System.EventHandler(this.ListViewArticles_SelectedIndexChanged);
             this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
             this.ListViewArticles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseDoubleClick);
             // 

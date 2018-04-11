@@ -69,5 +69,11 @@ namespace Mercure.View
         {
             Close();
         }
+
+        private void ButtonOk_Click(object sender, EventArgs e)
+        {
+            Article Article = new Article();
+            ControllerFurniture.CreateOrModifyArticle(Article);
+        }
     }
 }
