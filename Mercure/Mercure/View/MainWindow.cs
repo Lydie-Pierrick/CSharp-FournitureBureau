@@ -75,6 +75,12 @@ namespace Mercure
                 ControllerFurniture.RefreshListView();
                 MessageBox.Show("List view refreshed !");
             }
+
+            if (e.KeyData == Keys.Delete)
+            {
+                DeleteArticle();
+            }
+
         }
 
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
@@ -92,6 +98,11 @@ namespace Mercure
             ModifyArticle();
         }
 
+        private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ModifyArticle();
+        }
+
         private void ModifyArticle()
         {
             string RefArticle = this.ListViewArticles.SelectedItems[0].Text;
@@ -105,9 +116,32 @@ namespace Mercure
             Dialog_AddEditWindow.ShowDialog(this);
         }
 
-        private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
+        void DeleteArticle()
         {
-            ModifyArticle();
+            if (ListViewArticles.SelectedItems.Count != 0)
+            {
+                // Get RefArticle from the ListView
+                string RefArticle = ListViewArticles.SelectedItems[0].Text;
+
+                if (ControllerFurniture.DeleteArticle(RefArticle))
+                {
+                    ControllerFurniture.RefreshListView();
+                    MessageBox.Show("Succesfully deleted the article !");
+                }
+                else
+                {
+                    MessageBox.Show("Error : Fail to delete the article !");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error : Choose an article before trying  to delete it !");
+            }
+        }
+
+        private void deleteThisArticleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteArticle();
         }
     }
 }

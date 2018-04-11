@@ -75,7 +75,7 @@
             // 
             this.StatusSQL_Container.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusSQL_Label});
-            this.StatusSQL_Container.Location = new System.Drawing.Point(0, 414);
+            this.StatusSQL_Container.Location = new System.Drawing.Point(0, 380);
             this.StatusSQL_Container.Name = "StatusSQL_Container";
             this.StatusSQL_Container.Size = new System.Drawing.Size(808, 22);
             this.StatusSQL_Container.TabIndex = 1;
@@ -94,7 +94,7 @@
             this.modifyThisAritcleToolStripMenuItem,
             this.deleteThisArticleToolStripMenuItem});
             this.ContextMenuStrip.Name = "ContextMenuStrip";
-            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 70);
+            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 92);
             // 
             // addAnArticleToolStripMenuItem
             // 
@@ -114,6 +114,7 @@
             this.deleteThisArticleToolStripMenuItem.Name = "deleteThisArticleToolStripMenuItem";
             this.deleteThisArticleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.deleteThisArticleToolStripMenuItem.Text = "Delete this article";
+            this.deleteThisArticleToolStripMenuItem.Click += new System.EventHandler(this.deleteThisArticleToolStripMenuItem_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -125,11 +126,11 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.ListViewArticles, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 27);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 375);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 346);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // ListViewArticles
@@ -141,7 +142,7 @@
             this.ListViewArticles.LabelWrap = false;
             this.ListViewArticles.Location = new System.Drawing.Point(3, 3);
             this.ListViewArticles.Name = "ListViewArticles";
-            this.ListViewArticles.Size = new System.Drawing.Size(778, 369);
+            this.ListViewArticles.Size = new System.Drawing.Size(778, 340);
             this.ListViewArticles.TabIndex = 6;
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
@@ -150,9 +151,9 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 436);
+            this.ClientSize = new System.Drawing.Size(808, 402);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.StatusSQL_Container);
             this.Controls.Add(this.Menu_Container);

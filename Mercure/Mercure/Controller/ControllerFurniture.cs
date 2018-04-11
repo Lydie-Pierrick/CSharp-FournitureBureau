@@ -120,6 +120,11 @@ namespace Mercure.Controller
             return false;
         }
 
+        public bool DeleteArticle(string RefArticle)
+        {
+            return DaoFurniture.DeleteArticle(RefArticle);
+        }
+
         public bool NewXMLImport()
         {
             try
