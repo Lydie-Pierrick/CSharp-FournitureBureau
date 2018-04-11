@@ -40,6 +40,7 @@
             this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ListViewArticles = new System.Windows.Forms.ListView();
+            this.addAnArticleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
             this.ContextMenuStrip.SuspendLayout();
@@ -59,7 +60,8 @@
             // Menu_Choice1
             // 
             this.Menu_Choice1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openXMLToolStripMenuItem});
+            this.openXMLToolStripMenuItem,
+            this.addAnArticleToolStripMenuItem1});
             this.Menu_Choice1.Name = "Menu_Choice1";
             this.Menu_Choice1.Size = new System.Drawing.Size(37, 20);
             this.Menu_Choice1.Text = "File";
@@ -101,6 +103,7 @@
             this.addAnArticleToolStripMenuItem.Name = "addAnArticleToolStripMenuItem";
             this.addAnArticleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.addAnArticleToolStripMenuItem.Text = "Add an article";
+            this.addAnArticleToolStripMenuItem.Click += new System.EventHandler(this.addAnArticleToolStripMenuItem_Click_1);
             // 
             // modifyThisAritcleToolStripMenuItem
             // 
@@ -148,6 +151,13 @@
             this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
             this.ListViewArticles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseDoubleClick);
             // 
+            // addAnArticleToolStripMenuItem1
+            // 
+            this.addAnArticleToolStripMenuItem1.Name = "addAnArticleToolStripMenuItem1";
+            this.addAnArticleToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.addAnArticleToolStripMenuItem1.Text = "Add an Article";
+            this.addAnArticleToolStripMenuItem1.Click += new System.EventHandler(this.addAnArticleToolStripMenuItem1_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -185,5 +195,6 @@
         private System.Windows.Forms.ToolStripMenuItem deleteThisArticleToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         public System.Windows.Forms.ListView ListViewArticles;
+        private System.Windows.Forms.ToolStripMenuItem addAnArticleToolStripMenuItem1;
     }
 }

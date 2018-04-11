@@ -80,8 +80,7 @@ namespace Mercure
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-            {
-                //String fileName = filesList.SelectedItems[0].Text; //获取选中文件名  
+            { 
                 Point MousePosition = new Point(e.X, e.Y);
                 ContextMenuStrip.Show(ListViewArticles, MousePosition);
             }  
@@ -90,6 +89,12 @@ namespace Mercure
         private void modifyThisAritcleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ModifyArticle();
+        }
+
+        private void AddArticle()
+        {
+            Dialog_AddEditWindow Dialog_AddEditWindow = new Dialog_AddEditWindow();
+            Dialog_AddEditWindow.ShowDialog(this);
         }
 
         private void ModifyArticle()
@@ -108,6 +113,22 @@ namespace Mercure
         private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ModifyArticle();
+        }
+
+        private void addAnArticleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Dialog_AddEditWindow Dialog_AddEditWindow = new Dialog_AddEditWindow();
+            Dialog_AddEditWindow.ShowDialog(this);
+        }
+
+        private void addAnArticleToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            AddArticle();
+        }
+
+        private void addAnArticleToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AddArticle();
         }
     }
 }

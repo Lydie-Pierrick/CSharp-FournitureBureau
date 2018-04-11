@@ -222,6 +222,7 @@
             this.ComboBoxFamily.Name = "ComboBoxFamily";
             this.ComboBoxFamily.Size = new System.Drawing.Size(459, 21);
             this.ComboBoxFamily.TabIndex = 7;
+            this.ComboBoxFamily.SelectedIndexChanged += new System.EventHandler(this.ComboBoxFamily_SelectedIndexChanged);
             // 
             // ComboBoxSubFamily
             // 

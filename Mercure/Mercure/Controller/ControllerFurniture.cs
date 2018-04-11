@@ -158,7 +158,14 @@ namespace Mercure.Controller
 
         public void CreateOrModifyArticle(Article Article)
         {
-            DaoFurniture.CreateOrModifyArticle(Article);
+            try
+            {
+                DaoFurniture.CreateOrModifyArticle(Article);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public ListViewItem AddItemToListView(Article Article)
@@ -240,6 +247,11 @@ namespace Mercure.Controller
         public List<SubFamily> GetAllSubFamily()
         {
             return DaoFurniture.GetAllSubFamily();
+        }
+
+        public List<SubFamily> GetAllSubFamilyOfFamily(string Family)
+        {
+            return DaoFurniture.GetAllSubFamilyOfFamily(Family);
         }
 
         /*

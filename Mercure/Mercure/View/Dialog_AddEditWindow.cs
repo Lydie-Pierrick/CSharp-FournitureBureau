@@ -22,10 +22,14 @@ namespace Mercure.View
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();
             InitTextBox();
+            TextBoxRefArticle.Enabled = false;
 
             TextBoxRefArticle.Text = RefArticle;
             TextBoxDescription.Text = Description;
             ComboBoxBrand.SelectedIndex = ComboBoxBrand.FindStringExact(Brand);
+
+            // Debug ici
+
             ComboBoxFamily.SelectedIndex = ComboBoxFamily.FindStringExact(Family);
             ComboBoxSubFamily.SelectedIndex = ComboBoxSubFamily.FindStringExact(SubFamily);
             TextBoxPrice.Text = Price.ToString();
@@ -42,8 +46,6 @@ namespace Mercure.View
                 ComboBoxBrand.Items.Add(Brand);
             }
 
-            ComboBoxBrand.SelectedIndex = 0;
-
             // Init Family
             List<Family> ListFamily = ControllerFurniture.GetAllFamily();
 
@@ -51,11 +53,16 @@ namespace Mercure.View
             {
                 ComboBoxFamily.Items.Add(Family);
             }
+        }
 
-            ComboBoxFamily.SelectedIndex = 0;
-
+        private void InitTextBoxSubFamily()
+        {
             // Init SubFamily
-            List<SubFamily> ListSubFamily = ControllerFurniture.GetAllSubFamily();
+            List<SubFamily> ListSubFamily = ControllerFurniture.GetAllSubFamilyOfFamily(ComboBoxFamily.Text);
+
+            ComboBoxSubFamily.Items.Clear();
+            ComboBoxSubFamily.ResetText();
+            ComboBoxSubFamily.SelectedIndex = -1;
 
             foreach (SubFamily SubFamily in ListSubFamily)
             {
@@ -71,9 +78,29 @@ namespace Mercure.View
         }
 
         private void ButtonOk_Click(object sender, EventArgs e)
+        {           
+            try
+            {
+                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, double.Parse(TextBoxPrice.Text), int.Parse(TextBoxQuantity.Text));
+
+                ControllerFurniture.CreateOrModifyArticle(Article);
+
+                if (MessageBox.Show("Successfully modified !") == DialogResult.OK)
+                {
+                    Close();
+                }
+
+                ControllerFurniture.RefreshListView();
+            }
+            catch(Exception Exception)
+            {
+                MessageBox.Show("Error during the modification ! " + Exception.Message);
+            }
+        }
+
+        private void ComboBoxFamily_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Article Article = new Article();
-            ControllerFurniture.CreateOrModifyArticle(Article);
+            InitTextBoxSubFamily();
         }
     }
 }
