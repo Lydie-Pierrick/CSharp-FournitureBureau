@@ -36,8 +36,10 @@ namespace Mercure
 
         private void ListViewArticles_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            MessageBox.Show("Test !");
             ListViewArticles.Sort();
             this.ListViewArticles.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewArticles.Sorting);
+
         }
 
         private void SetTextBox()
@@ -64,7 +66,7 @@ namespace Mercure
                 Quantity = Int32.Parse(item.SubItems[5].Text);
             }
 
-            Dialog_AddEditWindow AddEditWindow = new Dialog_AddEditWindow(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
+            Dialog_AddEditArticle AddEditWindow = new Dialog_AddEditArticle(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
             AddEditWindow.Show();
         }
 
@@ -75,6 +77,12 @@ namespace Mercure
                 ControllerFurniture.RefreshListView();
                 MessageBox.Show("List view refreshed !");
             }
+
+            if (e.KeyData == Keys.Delete)
+            {
+                DeleteArticle();
+            }
+
         }
 
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
@@ -91,10 +99,15 @@ namespace Mercure
             ModifyArticle();
         }
 
+        private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ModifyArticle();
+        }
+
         private void AddArticle()
         {
-            Dialog_AddEditWindow Dialog_AddEditWindow = new Dialog_AddEditWindow();
-            Dialog_AddEditWindow.ShowDialog(this);
+            Dialog_AddEditArticle Dialog_AddEditArticle = new Dialog_AddEditArticle();
+            Dialog_AddEditArticle.ShowDialog(this);
         }
 
         private void ModifyArticle()
@@ -105,20 +118,38 @@ namespace Mercure
             string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
             double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
             int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
-            Dialog_AddEditWindow Dialog_AddEditWindow =
-                new Dialog_AddEditWindow(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
+            Dialog_AddEditArticle Dialog_AddEditWindow =
+                new Dialog_AddEditArticle(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
             Dialog_AddEditWindow.ShowDialog(this);
         }
 
-        private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
+        void DeleteArticle()
         {
-            ModifyArticle();
+            if (ListViewArticles.SelectedItems.Count != 0)
+            {
+                // Get RefArticle from the ListView
+                string RefArticle = ListViewArticles.SelectedItems[0].Text;
+
+                if (ControllerFurniture.DeleteArticle(RefArticle))
+                {
+                    ControllerFurniture.RefreshListView();
+                    MessageBox.Show("Succesfully deleted the article !");
+                }
+                else
+                {
+                    MessageBox.Show("Error : Fail to delete the article !");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error : Choose an article before trying  to delete it !");
+            }
         }
 
         private void addAnArticleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Dialog_AddEditWindow Dialog_AddEditWindow = new Dialog_AddEditWindow();
-            Dialog_AddEditWindow.ShowDialog(this);
+            Dialog_AddEditArticle Dialog_AddEditArticle = new Dialog_AddEditArticle();
+            Dialog_AddEditArticle.ShowDialog(this);
         }
 
         private void addAnArticleToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -129,6 +160,26 @@ namespace Mercure
         private void addAnArticleToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             AddArticle();
+        }
+
+        private void deleteThisArticleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DeleteArticle();
+        }
+
+        private void brandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void familyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void subFamilyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

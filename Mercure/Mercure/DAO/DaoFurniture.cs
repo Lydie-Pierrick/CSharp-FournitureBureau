@@ -595,7 +595,19 @@ namespace Mercure.DAO
 
             return ListSubFamily;
         }
+
+        public bool DeleteArticle(string RefArticle)
+        {
+            SQLiteCommand QueryDelete = new SQLiteCommand();
+            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.CommandText = "DELETE FROM Articles WHERE RefArticle = @RefArticle;";
+            QueryDelete.Parameters.AddWithValue("@RefArticle", RefArticle);
+            int NumberRow = QueryDelete.ExecuteNonQuery();
+
+            if (NumberRow == 1)
+                return true;
+            else
+                return false;
+        }
     }
-
-
 }
