@@ -30,8 +30,6 @@ namespace Mercure.View
             ComboBoxSubFamily.SelectedIndex = ComboBoxSubFamily.FindStringExact(SubFamily);
             TextBoxPrice.Text = Price.ToString();
             TextBoxQuantity.Text = Quantity.ToString();
-
-            GetFamily(SubFamily);
         }
 
         private void InitTextBox()
@@ -67,11 +65,9 @@ namespace Mercure.View
             ComboBoxSubFamily.SelectedIndex = 0;
         }
 
-        private void GetFamily(string SubFamily)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
-            String Family;
-            //Family = 
-            //ComboBoxFamily.SelectedIndex = ComboBoxSubFamily.FindStringExact(Family);
+            Close();
         }
     }
 }
