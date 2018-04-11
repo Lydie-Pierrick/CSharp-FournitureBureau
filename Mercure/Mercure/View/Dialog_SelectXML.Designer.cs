@@ -295,6 +295,7 @@
             this.ClientSize = new System.Drawing.Size(525, 375);
             this.Controls.Add(this.tableLayoutPanel6);
             this.Name = "Dialog_SelectionXML";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Selection of .XML";
             this.Load += new System.EventHandler(this.Dialog_SelectionXML_Load);
             this.GroupBox_TwoModes.ResumeLayout(false);

@@ -31,7 +31,7 @@ namespace Mercure
         private void openXMLToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Dialog_SelectionXML Dialog_SelectionXML = new Dialog_SelectionXML();
-            Dialog_SelectionXML.Show();
+            Dialog_SelectionXML.ShowDialog(this);
         }
 
         private void ListViewArticles_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -77,11 +77,6 @@ namespace Mercure
             }
         }
 
-        private void ListViewArticles_DoubleClick(object sender, EventArgs e)
-        {
-            ModifyArticle();
-        }
-
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -107,7 +102,17 @@ namespace Mercure
             int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
             Dialog_AddEditWindow Dialog_AddEditWindow =
                 new Dialog_AddEditWindow(RefArticle, Description, Brand, "Family", SubFamily, Price, Quantity);
-            Dialog_AddEditWindow.Show();
+            Dialog_AddEditWindow.ShowDialog(this);
+        }
+
+        private void ListViewArticles_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ModifyArticle();
+        }
+
+        private void ListViewArticles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
