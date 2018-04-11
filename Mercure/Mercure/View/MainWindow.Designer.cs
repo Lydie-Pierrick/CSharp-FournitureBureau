@@ -34,14 +34,16 @@
             this.openXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusSQL_Container = new System.Windows.Forms.StatusStrip();
             this.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ListViewArticles = new System.Windows.Forms.ListView();
             this.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addAnArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyThisAritcleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ListViewArticles = new System.Windows.Forms.ListView();
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
             this.ContextMenuStrip.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Menu_Container
@@ -73,7 +75,7 @@
             // 
             this.StatusSQL_Container.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusSQL_Label});
-            this.StatusSQL_Container.Location = new System.Drawing.Point(0, 380);
+            this.StatusSQL_Container.Location = new System.Drawing.Point(0, 414);
             this.StatusSQL_Container.Name = "StatusSQL_Container";
             this.StatusSQL_Container.Size = new System.Drawing.Size(808, 22);
             this.StatusSQL_Container.TabIndex = 1;
@@ -85,20 +87,6 @@
             this.StatusSQL_Label.Size = new System.Drawing.Size(39, 17);
             this.StatusSQL_Label.Text = "Status";
             // 
-            // ListViewArticles
-            // 
-            this.ListViewArticles.GridLines = true;
-            this.ListViewArticles.LabelWrap = false;
-            this.ListViewArticles.Location = new System.Drawing.Point(12, 27);
-            this.ListViewArticles.Name = "ListViewArticles";
-            this.ListViewArticles.Size = new System.Drawing.Size(784, 350);
-            this.ListViewArticles.TabIndex = 2;
-            this.ListViewArticles.UseCompatibleStateImageBehavior = false;
-            this.ListViewArticles.View = System.Windows.Forms.View.Details;
-            this.ListViewArticles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewArticles_ColumnClick);
-            this.ListViewArticles.DoubleClick += new System.EventHandler(this.ListViewArticles_DoubleClick);
-            this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
-            // 
             // ContextMenuStrip
             // 
             this.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -106,7 +94,7 @@
             this.modifyThisAritcleToolStripMenuItem,
             this.deleteThisArticleToolStripMenuItem});
             this.ContextMenuStrip.Name = "ContextMenuStrip";
-            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 92);
+            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 70);
             // 
             // addAnArticleToolStripMenuItem
             // 
@@ -127,12 +115,43 @@
             this.deleteThisArticleToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.deleteThisArticleToolStripMenuItem.Text = "Delete this article";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.AutoSize = true;
+            this.tableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.ListViewArticles, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 27);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 375);
+            this.tableLayoutPanel1.TabIndex = 6;
+            // 
+            // ListViewArticles
+            // 
+            this.ListViewArticles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListViewArticles.GridLines = true;
+            this.ListViewArticles.LabelWrap = false;
+            this.ListViewArticles.Location = new System.Drawing.Point(3, 3);
+            this.ListViewArticles.Name = "ListViewArticles";
+            this.ListViewArticles.Size = new System.Drawing.Size(778, 369);
+            this.ListViewArticles.TabIndex = 6;
+            this.ListViewArticles.UseCompatibleStateImageBehavior = false;
+            this.ListViewArticles.View = System.Windows.Forms.View.Details;
+            // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 402);
-            this.Controls.Add(this.ListViewArticles);
+            this.ClientSize = new System.Drawing.Size(808, 436);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.StatusSQL_Container);
             this.Controls.Add(this.Menu_Container);
             this.KeyPreview = true;
@@ -144,6 +163,7 @@
             this.StatusSQL_Container.ResumeLayout(false);
             this.StatusSQL_Container.PerformLayout();
             this.ContextMenuStrip.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,11 +176,11 @@
         private System.Windows.Forms.StatusStrip StatusSQL_Container;
         private System.Windows.Forms.ToolStripStatusLabel StatusSQL_Label;
         private System.Windows.Forms.ToolStripMenuItem openXMLToolStripMenuItem;
-        public System.Windows.Forms.ListView ListViewArticles;
         private System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addAnArticleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyThisAritcleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteThisArticleToolStripMenuItem;
-
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        public System.Windows.Forms.ListView ListViewArticles;
     }
 }
