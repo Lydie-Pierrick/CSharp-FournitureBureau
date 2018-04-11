@@ -1,6 +1,6 @@
 ﻿namespace Mercure.View
 {
-    partial class Dialog_AddEditWindow
+    partial class Dialog_AddEditArticle
     {
         /// <summary>
         /// Required designer variable.

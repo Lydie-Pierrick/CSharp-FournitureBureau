@@ -40,6 +40,10 @@
             this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ListViewArticles = new System.Windows.Forms.ListView();
+            this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.familyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.subFamilyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
             this.ContextMenuStrip.SuspendLayout();
@@ -49,7 +53,8 @@
             // Menu_Container
             // 
             this.Menu_Container.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Choice1});
+            this.Menu_Choice1,
+            this.managementToolStripMenuItem});
             this.Menu_Container.Location = new System.Drawing.Point(0, 0);
             this.Menu_Container.Name = "Menu_Container";
             this.Menu_Container.Size = new System.Drawing.Size(808, 24);
@@ -94,7 +99,7 @@
             this.modifyThisAritcleToolStripMenuItem,
             this.deleteThisArticleToolStripMenuItem});
             this.ContextMenuStrip.Name = "ContextMenuStrip";
-            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 92);
+            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 70);
             // 
             // addAnArticleToolStripMenuItem
             // 
@@ -135,9 +140,11 @@
             // 
             // ListViewArticles
             // 
+            this.ListViewArticles.AllowColumnReorder = true;
             this.ListViewArticles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ListViewArticles.FullRowSelect = true;
             this.ListViewArticles.GridLines = true;
             this.ListViewArticles.LabelWrap = false;
             this.ListViewArticles.Location = new System.Drawing.Point(3, 3);
@@ -146,8 +153,40 @@
             this.ListViewArticles.TabIndex = 6;
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
+            this.ListViewArticles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewArticles_ColumnClick);
             this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
             this.ListViewArticles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseDoubleClick);
+            // 
+            // managementToolStripMenuItem
+            // 
+            this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.brandToolStripMenuItem,
+            this.familyToolStripMenuItem,
+            this.subFamilyToolStripMenuItem});
+            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.managementToolStripMenuItem.Text = "Management";
+            // 
+            // brandToolStripMenuItem
+            // 
+            this.brandToolStripMenuItem.Name = "brandToolStripMenuItem";
+            this.brandToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.brandToolStripMenuItem.Text = "Brand";
+            this.brandToolStripMenuItem.Click += new System.EventHandler(this.brandToolStripMenuItem_Click);
+            // 
+            // familyToolStripMenuItem
+            // 
+            this.familyToolStripMenuItem.Name = "familyToolStripMenuItem";
+            this.familyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.familyToolStripMenuItem.Text = "Family";
+            this.familyToolStripMenuItem.Click += new System.EventHandler(this.familyToolStripMenuItem_Click);
+            // 
+            // subFamilyToolStripMenuItem
+            // 
+            this.subFamilyToolStripMenuItem.Name = "subFamilyToolStripMenuItem";
+            this.subFamilyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.subFamilyToolStripMenuItem.Text = "Sub Family";
+            this.subFamilyToolStripMenuItem.Click += new System.EventHandler(this.subFamilyToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -186,5 +225,9 @@
         private System.Windows.Forms.ToolStripMenuItem deleteThisArticleToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         public System.Windows.Forms.ListView ListViewArticles;
+        private System.Windows.Forms.ToolStripMenuItem managementToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem brandToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem familyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem subFamilyToolStripMenuItem;
     }
 }

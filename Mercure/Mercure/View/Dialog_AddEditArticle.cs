@@ -6,18 +6,18 @@ using System.Collections.Generic;
 
 namespace Mercure.View
 {
-    public partial class Dialog_AddEditWindow : Form
+    public partial class Dialog_AddEditArticle : Form
     {
         private ControllerFurniture ControllerFurniture;
 
-        public Dialog_AddEditWindow()
+        public Dialog_AddEditArticle()
         {
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();
             InitTextBox();
         }
 
-        public Dialog_AddEditWindow(string RefArticle, string Description, string Brand, string Family, string SubFamily, double Price, int Quantity)
+        public Dialog_AddEditArticle(string RefArticle, string Description, string Brand, string Family, string SubFamily, double Price, int Quantity)
         {
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();

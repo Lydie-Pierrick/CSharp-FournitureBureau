@@ -36,8 +36,10 @@ namespace Mercure
 
         private void ListViewArticles_ColumnClick(object sender, ColumnClickEventArgs e)
         {
+            MessageBox.Show("Test !");
             ListViewArticles.Sort();
             this.ListViewArticles.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewArticles.Sorting);
+
         }
 
         private void SetTextBox()
@@ -64,7 +66,7 @@ namespace Mercure
                 Quantity = Int32.Parse(item.SubItems[5].Text);
             }
 
-            Dialog_AddEditWindow AddEditWindow = new Dialog_AddEditWindow(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
+            Dialog_AddEditArticle AddEditWindow = new Dialog_AddEditArticle(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
             AddEditWindow.Show();
         }
 
@@ -86,8 +88,7 @@ namespace Mercure
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
-            {
-                //String fileName = filesList.SelectedItems[0].Text; //获取选中文件名  
+            { 
                 Point MousePosition = new Point(e.X, e.Y);
                 ContextMenuStrip.Show(ListViewArticles, MousePosition);
             }  
@@ -111,8 +112,8 @@ namespace Mercure
             string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
             double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
             int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
-            Dialog_AddEditWindow Dialog_AddEditWindow =
-                new Dialog_AddEditWindow(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
+            Dialog_AddEditArticle Dialog_AddEditWindow =
+                new Dialog_AddEditArticle(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
             Dialog_AddEditWindow.ShowDialog(this);
         }
 
@@ -142,6 +143,21 @@ namespace Mercure
         private void deleteThisArticleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DeleteArticle();
+        }
+
+        private void brandToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void familyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void subFamilyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
