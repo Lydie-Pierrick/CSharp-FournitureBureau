@@ -94,7 +94,7 @@ namespace Mercure.DAO
                         Article.GetSetQuantity += QuantiteArticle;
                     }
 
-                    ModifyArticle(Article);
+                    ModifyArticleQuantity(Article);
                 }
                 else
                 {
@@ -144,6 +144,23 @@ namespace Mercure.DAO
             QueryModifyArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
             QueryModifyArticle.Parameters.AddWithValue("@RefMarque", idBrand);
             QueryModifyArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
+            QueryModifyArticle.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
+
+            CountInsertRowArticle += QueryModifyArticle.ExecuteNonQuery();
+        }
+
+        private void ModifyArticleQuantity(Article Article)
+        {
+            // Create SubFamily or Brand if it does not exist
+            int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
+            int idBrand = GetOrCreateBrand(Article.GetSetBrand);
+
+            // Insert new brand
+            SQLiteCommand QueryModifyArticle = new SQLiteCommand();
+            QueryModifyArticle.Connection = M_dbConnection;
+
+            QueryModifyArticle.CommandText = "UPDATE Articles SET Quantite = @RefQuantite WHERE RefArticle = @RefArticle;";
+            QueryModifyArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
             QueryModifyArticle.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
 
             CountInsertRowArticle += QueryModifyArticle.ExecuteNonQuery();

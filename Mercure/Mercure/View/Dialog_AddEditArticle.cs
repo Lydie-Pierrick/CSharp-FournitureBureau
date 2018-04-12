@@ -92,12 +92,12 @@ namespace Mercure.View
                     ControllerFurniture.CreateOrModifyArticle(Article, true);
                 }
 
+                ControllerFurniture.RefreshListView();
+
                 if (MessageBox.Show("Successfully modified !") == DialogResult.OK)
                 {
                     Close();
                 }
-
-                ControllerFurniture.RefreshListView();
             }
             catch(Exception Exception)
             {
