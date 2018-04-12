@@ -64,7 +64,7 @@ namespace Mercure.Controller
                 Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
                 // Write this Article into DB
-                CreateOrModifyArticle(Article);
+                CreateOrModifyArticleXML(Article);
 
                 // Start a new thread to update the status text
                 ThreadUpdateStatus = new Thread(new ParameterizedThreadStart(UpdateStatusText));
@@ -161,11 +161,23 @@ namespace Mercure.Controller
             return true;
         }
 
-        public void CreateOrModifyArticle(Article Article)
+        public void CreateOrModifyArticleXML(Article Article)
         {
             try
             {
-                DaoFurniture.CreateOrModifyArticle(Article);
+                DaoFurniture.CreateOrModifyArticleXML(Article);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        public void CreateOrModifyArticle(Article Article, bool ActionEdit)
+        {
+            try
+            {
+                DaoFurniture.CreateOrModifyArticle(Article, ActionEdit);
             }
             catch (Exception e)
             {
@@ -269,6 +281,11 @@ namespace Mercure.Controller
             int IdFamilyName = DaoFurniture.GetFamilyIdOfSubFamily(SubFamily);
 
             return DaoFurniture.GetFamilyName(IdFamilyName);
+        }
+
+        private bool ArticleExist(string RefArticle)
+        {
+            return DaoFurniture.ArticleExist(RefArticle);
         }
     }
 }

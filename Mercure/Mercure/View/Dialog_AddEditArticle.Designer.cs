@@ -77,17 +77,17 @@
             this.tableLayoutPanel1.Controls.Add(this.ComboBoxSubFamily, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.ComboBoxBrand, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.TextBoxRefArticle, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 9);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 10);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 7;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.94017F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 79.05983F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 44F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 46F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(560, 323);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(560, 350);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // TextBoxQuantity
@@ -95,9 +95,9 @@
             this.TextBoxQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxQuantity.Location = new System.Drawing.Point(98, 295);
+            this.TextBoxQuantity.Location = new System.Drawing.Point(98, 319);
             this.TextBoxQuantity.Name = "TextBoxQuantity";
-            this.TextBoxQuantity.Size = new System.Drawing.Size(459, 21);
+            this.TextBoxQuantity.Size = new System.Drawing.Size(459, 20);
             this.TextBoxQuantity.TabIndex = 13;
             // 
             // TextBoxPrice
@@ -105,9 +105,9 @@
             this.TextBoxPrice.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxPrice.Location = new System.Drawing.Point(98, 269);
+            this.TextBoxPrice.Location = new System.Drawing.Point(98, 291);
             this.TextBoxPrice.Name = "TextBoxPrice";
-            this.TextBoxPrice.Size = new System.Drawing.Size(459, 21);
+            this.TextBoxPrice.Size = new System.Drawing.Size(459, 20);
             this.TextBoxPrice.TabIndex = 12;
             // 
             // TextBoxDescription
@@ -115,10 +115,10 @@
             this.TextBoxDescription.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBoxDescription.Location = new System.Drawing.Point(98, 30);
+            this.TextBoxDescription.Location = new System.Drawing.Point(98, 32);
             this.TextBoxDescription.Multiline = true;
             this.TextBoxDescription.Name = "TextBoxDescription";
-            this.TextBoxDescription.Size = new System.Drawing.Size(459, 98);
+            this.TextBoxDescription.Size = new System.Drawing.Size(459, 106);
             this.TextBoxDescription.TabIndex = 11;
             // 
             // LabelRefArticle
@@ -129,7 +129,7 @@
             this.LabelRefArticle.AutoSize = true;
             this.LabelRefArticle.Location = new System.Drawing.Point(3, 0);
             this.LabelRefArticle.Name = "LabelRefArticle";
-            this.LabelRefArticle.Size = new System.Drawing.Size(89, 27);
+            this.LabelRefArticle.Size = new System.Drawing.Size(89, 29);
             this.LabelRefArticle.TabIndex = 0;
             this.LabelRefArticle.Text = "Ref Article :";
             this.LabelRefArticle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -140,9 +140,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelDescription.AutoSize = true;
-            this.LabelDescription.Location = new System.Drawing.Point(3, 27);
+            this.LabelDescription.Location = new System.Drawing.Point(3, 29);
             this.LabelDescription.Name = "LabelDescription";
-            this.LabelDescription.Size = new System.Drawing.Size(89, 104);
+            this.LabelDescription.Size = new System.Drawing.Size(89, 112);
             this.LabelDescription.TabIndex = 1;
             this.LabelDescription.Text = "Description :";
             this.LabelDescription.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -153,9 +153,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelBrand.AutoSize = true;
-            this.LabelBrand.Location = new System.Drawing.Point(3, 131);
+            this.LabelBrand.Location = new System.Drawing.Point(3, 141);
             this.LabelBrand.Name = "LabelBrand";
-            this.LabelBrand.Size = new System.Drawing.Size(89, 45);
+            this.LabelBrand.Size = new System.Drawing.Size(89, 49);
             this.LabelBrand.TabIndex = 2;
             this.LabelBrand.Text = "Brand :";
             this.LabelBrand.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -166,9 +166,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelFamily.AutoSize = true;
-            this.LabelFamily.Location = new System.Drawing.Point(3, 176);
+            this.LabelFamily.Location = new System.Drawing.Point(3, 190);
             this.LabelFamily.Name = "LabelFamily";
-            this.LabelFamily.Size = new System.Drawing.Size(89, 44);
+            this.LabelFamily.Size = new System.Drawing.Size(89, 48);
             this.LabelFamily.TabIndex = 3;
             this.LabelFamily.Text = "Family :";
             this.LabelFamily.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -179,9 +179,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelSubFamily.AutoSize = true;
-            this.LabelSubFamily.Location = new System.Drawing.Point(3, 220);
+            this.LabelSubFamily.Location = new System.Drawing.Point(3, 238);
             this.LabelSubFamily.Name = "LabelSubFamily";
-            this.LabelSubFamily.Size = new System.Drawing.Size(89, 46);
+            this.LabelSubFamily.Size = new System.Drawing.Size(89, 50);
             this.LabelSubFamily.TabIndex = 4;
             this.LabelSubFamily.Text = "SubFamily :";
             this.LabelSubFamily.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -192,9 +192,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelPrice.AutoSize = true;
-            this.LabelPrice.Location = new System.Drawing.Point(3, 266);
+            this.LabelPrice.Location = new System.Drawing.Point(3, 288);
             this.LabelPrice.Name = "LabelPrice";
-            this.LabelPrice.Size = new System.Drawing.Size(89, 26);
+            this.LabelPrice.Size = new System.Drawing.Size(89, 28);
             this.LabelPrice.TabIndex = 5;
             this.LabelPrice.Text = "Price :";
             this.LabelPrice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -205,9 +205,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LabelQuantity.AutoSize = true;
-            this.LabelQuantity.Location = new System.Drawing.Point(3, 292);
+            this.LabelQuantity.Location = new System.Drawing.Point(3, 316);
             this.LabelQuantity.Name = "LabelQuantity";
-            this.LabelQuantity.Size = new System.Drawing.Size(89, 31);
+            this.LabelQuantity.Size = new System.Drawing.Size(89, 34);
             this.LabelQuantity.TabIndex = 6;
             this.LabelQuantity.Text = "Quantity :";
             this.LabelQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -218,9 +218,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComboBoxFamily.FormattingEnabled = true;
-            this.ComboBoxFamily.Location = new System.Drawing.Point(98, 179);
+            this.ComboBoxFamily.Location = new System.Drawing.Point(98, 193);
             this.ComboBoxFamily.Name = "ComboBoxFamily";
-            this.ComboBoxFamily.Size = new System.Drawing.Size(459, 20);
+            this.ComboBoxFamily.Size = new System.Drawing.Size(459, 21);
             this.ComboBoxFamily.TabIndex = 7;
             this.ComboBoxFamily.SelectedIndexChanged += new System.EventHandler(this.ComboBoxFamily_SelectedIndexChanged);
             // 
@@ -230,9 +230,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComboBoxSubFamily.FormattingEnabled = true;
-            this.ComboBoxSubFamily.Location = new System.Drawing.Point(98, 223);
+            this.ComboBoxSubFamily.Location = new System.Drawing.Point(98, 241);
             this.ComboBoxSubFamily.Name = "ComboBoxSubFamily";
-            this.ComboBoxSubFamily.Size = new System.Drawing.Size(459, 20);
+            this.ComboBoxSubFamily.Size = new System.Drawing.Size(459, 21);
             this.ComboBoxSubFamily.TabIndex = 8;
             // 
             // ComboBoxBrand
@@ -241,9 +241,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ComboBoxBrand.FormattingEnabled = true;
-            this.ComboBoxBrand.Location = new System.Drawing.Point(98, 134);
+            this.ComboBoxBrand.Location = new System.Drawing.Point(98, 144);
             this.ComboBoxBrand.Name = "ComboBoxBrand";
-            this.ComboBoxBrand.Size = new System.Drawing.Size(459, 20);
+            this.ComboBoxBrand.Size = new System.Drawing.Size(459, 21);
             this.ComboBoxBrand.TabIndex = 9;
             // 
             // TextBoxRefArticle
@@ -253,7 +253,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBoxRefArticle.Location = new System.Drawing.Point(98, 3);
             this.TextBoxRefArticle.Name = "TextBoxRefArticle";
-            this.TextBoxRefArticle.Size = new System.Drawing.Size(459, 21);
+            this.TextBoxRefArticle.Size = new System.Drawing.Size(459, 20);
             this.TextBoxRefArticle.TabIndex = 10;
             // 
             // tableLayoutPanel2
@@ -268,13 +268,13 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(13, 11);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(13, 12);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 329F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(566, 368);
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 356F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(566, 399);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -289,11 +289,11 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Controls.Add(this.ButtonCancel, 0, 0);
             this.tableLayoutPanel3.Controls.Add(this.ButtonOk, 1, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 338);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 366);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(560, 27);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(560, 30);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // ButtonCancel
@@ -305,7 +305,7 @@
             this.ButtonCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ButtonCancel.Location = new System.Drawing.Point(3, 3);
             this.ButtonCancel.Name = "ButtonCancel";
-            this.ButtonCancel.Size = new System.Drawing.Size(274, 21);
+            this.ButtonCancel.Size = new System.Drawing.Size(274, 24);
             this.ButtonCancel.TabIndex = 1;
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
@@ -320,21 +320,21 @@
             this.ButtonOk.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ButtonOk.Location = new System.Drawing.Point(283, 3);
             this.ButtonOk.Name = "ButtonOk";
-            this.ButtonOk.Size = new System.Drawing.Size(274, 21);
+            this.ButtonOk.Size = new System.Drawing.Size(274, 24);
             this.ButtonOk.TabIndex = 0;
             this.ButtonOk.Text = "OK";
             this.ButtonOk.UseVisualStyleBackColor = true;
             this.ButtonOk.Click += new System.EventHandler(this.ButtonOk_Click);
             // 
-            // Dialog_AddEditWindow
+            // Dialog_AddEditArticle
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(591, 390);
+            this.ClientSize = new System.Drawing.Size(591, 423);
             this.Controls.Add(this.tableLayoutPanel2);
-            this.Name = "Dialog_AddEditWindow";
+            this.Name = "Dialog_AddEditArticle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddEditWindow";
             this.tableLayoutPanel1.ResumeLayout(false);

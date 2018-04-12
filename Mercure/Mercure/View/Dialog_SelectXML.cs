@@ -107,7 +107,7 @@ namespace Mercure
             {
                 // Report progress bar to change the value
                 BackgroundWorkerData.ReportProgress((Index + 1) * RatioProgressBar);
-                Thread.Sleep(400);
+                Thread.Sleep(200);
 
                 // Write every article into BD
                 ControllerFurniture.WriteEachArticleDB(Index);

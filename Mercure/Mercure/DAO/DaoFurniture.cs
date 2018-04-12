@@ -35,11 +35,8 @@ namespace Mercure.DAO
         }
 
         // --- Create or modify section
-
-        /*
-         *  Create or modify a brand
-         */
-        public void CreateOrModifyArticle(Article Article)
+        
+        public void CreateOrModifyArticleXML(Article Article)
         {
             try
             {
@@ -57,30 +54,99 @@ namespace Mercure.DAO
                 {
                     GetQuantiteArticleReader.Read();
                     QuantiteArticle = GetQuantiteArticleReader.GetInt32(0);
+
+                    Article.GetSetQuantity = QuantiteArticle + 1;
+
+                    ModifyArticle(Article);                   
                 }
-
-                // Create SubFamily or Brand if it does not exist
-                int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
-                int idBrand = GetOrCreateBrand(Article.GetSetBrand);
-
-                // Insert new brand
-                SQLiteCommand QueryInsertArticle = new SQLiteCommand();
-                QueryInsertArticle.Connection = M_dbConnection;
-
-                QueryInsertArticle.CommandText = "INSERT OR REPLACE INTO Articles (RefArticle, Description, RefSousFamille, RefMarque, PrixHT, Quantite) VALUES (@RefArticle, @RefDescription, @RefRefSousFamille, @RefMarque, @RefPrixHT, @RefQuantite);";
-                QueryInsertArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
-                QueryInsertArticle.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
-                QueryInsertArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
-                QueryInsertArticle.Parameters.AddWithValue("@RefMarque", idBrand);
-                QueryInsertArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
-                QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", QuantiteArticle + 1);
-
-                CountInsertRowArticle += QueryInsertArticle.ExecuteNonQuery();
+                else
+                {
+                    CreateArticle(Article);
+                }
             }
             catch (Exception e)
             {
                 throw e;
             }
+        }
+
+        public void CreateOrModifyArticle(Article Article, bool ActionEdit)
+        {
+            try
+            {
+                int QuantiteArticle = 0;
+
+                SQLiteCommand QueryGetQuantiteArticle = new SQLiteCommand();
+                QueryGetQuantiteArticle.Connection = M_dbConnection;
+
+                // Get article if it exists
+                QueryGetQuantiteArticle.CommandText = "SELECT Quantite FROM Articles WHERE RefArticle = @RefArticle;";
+                QueryGetQuantiteArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
+                SQLiteDataReader GetQuantiteArticleReader = QueryGetQuantiteArticle.ExecuteReader();
+
+                if (GetQuantiteArticleReader.HasRows)
+                {
+                    GetQuantiteArticleReader.Read();
+                    QuantiteArticle = GetQuantiteArticleReader.GetInt32(0);
+
+                    if (!ActionEdit)
+                    {
+                        Article.GetSetQuantity += QuantiteArticle;
+                    }
+
+                    ModifyArticle(Article);
+                }
+                else
+                {
+                    CreateArticle(Article);
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private void CreateArticle(Article Article)
+        {
+            // Create SubFamily or Brand if it does not exist
+            int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
+            int idBrand = GetOrCreateBrand(Article.GetSetBrand);
+
+            // Insert new brand
+            SQLiteCommand QueryInsertArticle = new SQLiteCommand();
+            QueryInsertArticle.Connection = M_dbConnection;
+
+            QueryInsertArticle.CommandText = "INSERT INTO Articles (RefArticle, Description, RefSousFamille, RefMarque, PrixHT, Quantite) VALUES (@RefArticle, @RefDescription, @RefRefSousFamille, @RefMarque, @RefPrixHT, @RefQuantite);";
+            QueryInsertArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
+            QueryInsertArticle.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
+            QueryInsertArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
+            QueryInsertArticle.Parameters.AddWithValue("@RefMarque", idBrand);
+            QueryInsertArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
+            QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", 1);
+
+            CountInsertRowArticle += QueryInsertArticle.ExecuteNonQuery();
+        }
+
+        private void ModifyArticle(Article Article)
+        {
+            // Create SubFamily or Brand if it does not exist
+            int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
+            int idBrand = GetOrCreateBrand(Article.GetSetBrand);
+
+            // Insert new brand
+            SQLiteCommand QueryModifyArticle = new SQLiteCommand();
+            QueryModifyArticle.Connection = M_dbConnection;
+
+            QueryModifyArticle.CommandText = "UPDATE Articles SET Description = @RefDescription, RefSousFamille = @RefRefSousFamille, RefMarque = @RefMarque, PrixHT = @RefPrixHT, Quantite = @RefQuantite WHERE RefArticle = @RefArticle;";
+            QueryModifyArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
+            QueryModifyArticle.Parameters.AddWithValue("@RefDescription", Article.GetSetDescription);
+            QueryModifyArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
+            QueryModifyArticle.Parameters.AddWithValue("@RefMarque", idBrand);
+            QueryModifyArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
+            QueryModifyArticle.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
+
+            CountInsertRowArticle += QueryModifyArticle.ExecuteNonQuery();
         }
 
         /*
@@ -608,6 +674,23 @@ namespace Mercure.DAO
                 return true;
             else
                 return false;
+        }
+
+        public bool ArticleExist(string RefArticle)
+        {
+            SQLiteCommand QueryExistArticle = new SQLiteCommand();
+            QueryExistArticle.CommandText = "SELECT * FROM Articles WHERE RefArticle = '@RefArticle';";
+            QueryExistArticle.Parameters.AddWithValue("@RefArticle", RefArticle);
+            QueryExistArticle.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader ArticleReader = QueryExistArticle.ExecuteReader();
+
+            // Create if it does not exist
+            if (ArticleReader.HasRows)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
