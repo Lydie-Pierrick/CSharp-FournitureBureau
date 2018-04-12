@@ -23,7 +23,7 @@ namespace Mercure
             ListViewArticles.Columns.Add("SubFamily");
             ListViewArticles.Columns.Add("Price");
             ListViewArticles.Columns.Add("Quantity");
-
+            
             ControllerFurniture = new ControllerFurniture();
             ControllerFurniture.RefreshListView();
         }
@@ -36,15 +36,13 @@ namespace Mercure
 
         private void ListViewArticles_ColumnClick(object sender, ColumnClickEventArgs e)
         {
-            MessageBox.Show("Test !");
             ListViewArticles.Sort();
             this.ListViewArticles.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewArticles.Sorting);
-
         }
 
         private void SetTextBox()
         {
-            ListView.SelectedListViewItemCollection breakfast = this.ListViewArticles.SelectedItems;
+            ListView.SelectedListViewItemCollection Items = this.ListViewArticles.SelectedItems;
 
             string RefArticle = null;
             string Description = null;
@@ -55,15 +53,15 @@ namespace Mercure
             double Price = 0.0;
             int Quantity = 0;
 
-            foreach (ListViewItem item in breakfast)
+            foreach (ListViewItem Item in Items)
             {
-                RefArticle = item.SubItems[0].Text;
-                Description = item.SubItems[1].Text;
-                Brand = item.SubItems[2].Text;
-                SubFamily = item.SubItems[3].Text;
+                RefArticle = Item.SubItems[0].Text;
+                Description = Item.SubItems[1].Text;
+                Brand = Item.SubItems[2].Text;
+                SubFamily = Item.SubItems[3].Text;
                 Family = ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily);
-                Price = Double.Parse(item.SubItems[4].Text);
-                Quantity = Int32.Parse(item.SubItems[5].Text);
+                Price = Double.Parse(Item.SubItems[4].Text);
+                Quantity = Int32.Parse(Item.SubItems[5].Text);
             }
 
             Dialog_AddEditArticle AddEditWindow = new Dialog_AddEditArticle(RefArticle, Description, Brand, Family, SubFamily, Price, Quantity);
@@ -82,7 +80,6 @@ namespace Mercure
             {
                 DeleteArticle();
             }
-
         }
 
         private void ListViewArticles_MouseClick(object sender, MouseEventArgs e)
@@ -169,17 +166,20 @@ namespace Mercure
 
         private void brandToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Dialog_Brand Dialog_Brand = new Dialog_Brand();
+            Dialog_Brand.ShowDialog(this);
         }
 
         private void familyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Dialog_Family Dialog_Family = new Dialog_Family();
+            Dialog_Family.ShowDialog(this);
         }
 
         private void subFamilyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Dialog_SubFamily Dialog_SubFamily = new Dialog_SubFamily();
+            Dialog_SubFamily.ShowDialog(this);
         }
     }
 }

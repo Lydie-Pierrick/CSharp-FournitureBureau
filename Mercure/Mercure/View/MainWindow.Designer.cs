@@ -32,23 +32,23 @@
             this.Menu_Container = new System.Windows.Forms.MenuStrip();
             this.Menu_Choice1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openXMLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.StatusSQL_Container = new System.Windows.Forms.StatusStrip();
-            this.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
-            this.ContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.addAnArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modifyThisAritcleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.ListViewArticles = new System.Windows.Forms.ListView();
             this.addAnArticleToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.managementToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.brandToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.familyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subFamilyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.StatusSQL_Container = new System.Windows.Forms.StatusStrip();
+            this.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
+            this.addAnArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modifyThisAritcleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.ListViewArticles = new System.Windows.Forms.ListView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.Menu_Container.SuspendLayout();
             this.StatusSQL_Container.SuspendLayout();
-            this.ContextMenuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Menu_Container
@@ -74,9 +74,47 @@
             // openXMLToolStripMenuItem
             // 
             this.openXMLToolStripMenuItem.Name = "openXMLToolStripMenuItem";
-            this.openXMLToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.openXMLToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.openXMLToolStripMenuItem.Text = "Open XML";
             this.openXMLToolStripMenuItem.Click += new System.EventHandler(this.openXMLToolStripMenuItem_Click);
+            // 
+            // addAnArticleToolStripMenuItem1
+            // 
+            this.addAnArticleToolStripMenuItem1.Name = "addAnArticleToolStripMenuItem1";
+            this.addAnArticleToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
+            this.addAnArticleToolStripMenuItem1.Text = "Add an Article";
+            this.addAnArticleToolStripMenuItem1.Click += new System.EventHandler(this.addAnArticleToolStripMenuItem1_Click);
+            // 
+            // managementToolStripMenuItem
+            // 
+            this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.brandToolStripMenuItem,
+            this.familyToolStripMenuItem,
+            this.subFamilyToolStripMenuItem});
+            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
+            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
+            this.managementToolStripMenuItem.Text = "Management";
+            // 
+            // brandToolStripMenuItem
+            // 
+            this.brandToolStripMenuItem.Name = "brandToolStripMenuItem";
+            this.brandToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.brandToolStripMenuItem.Text = "Brand";
+            this.brandToolStripMenuItem.Click += new System.EventHandler(this.brandToolStripMenuItem_Click);
+            // 
+            // familyToolStripMenuItem
+            // 
+            this.familyToolStripMenuItem.Name = "familyToolStripMenuItem";
+            this.familyToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.familyToolStripMenuItem.Text = "Family";
+            this.familyToolStripMenuItem.Click += new System.EventHandler(this.familyToolStripMenuItem_Click);
+            // 
+            // subFamilyToolStripMenuItem
+            // 
+            this.subFamilyToolStripMenuItem.Name = "subFamilyToolStripMenuItem";
+            this.subFamilyToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.subFamilyToolStripMenuItem.Text = "Sub Family";
+            this.subFamilyToolStripMenuItem.Click += new System.EventHandler(this.subFamilyToolStripMenuItem_Click);
             // 
             // StatusSQL_Container
             // 
@@ -93,15 +131,6 @@
             this.StatusSQL_Label.Name = "StatusSQL_Label";
             this.StatusSQL_Label.Size = new System.Drawing.Size(39, 17);
             this.StatusSQL_Label.Text = "Status";
-            // 
-            // ContextMenuStrip
-            // 
-            this.ContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addAnArticleToolStripMenuItem,
-            this.modifyThisAritcleToolStripMenuItem,
-            this.deleteThisArticleToolStripMenuItem});
-            this.ContextMenuStrip.Name = "ContextMenuStrip";
-            this.ContextMenuStrip.Size = new System.Drawing.Size(170, 70);
             // 
             // addAnArticleToolStripMenuItem
             // 
@@ -143,7 +172,6 @@
             // 
             // ListViewArticles
             // 
-            this.ListViewArticles.AllowColumnReorder = true;
             this.ListViewArticles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -160,48 +188,21 @@
             this.ListViewArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseClick);
             this.ListViewArticles.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewArticles_MouseDoubleClick);
             // 
-            // addAnArticleToolStripMenuItem1
+            // contextMenuStrip1
             // 
-            this.addAnArticleToolStripMenuItem1.Name = "addAnArticleToolStripMenuItem1";
-            this.addAnArticleToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.addAnArticleToolStripMenuItem1.Text = "Add an Article";
-            this.addAnArticleToolStripMenuItem1.Click += new System.EventHandler(this.addAnArticleToolStripMenuItem1_Click);
-            // managementToolStripMenuItem
-            // 
-            this.managementToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.brandToolStripMenuItem,
-            this.familyToolStripMenuItem,
-            this.subFamilyToolStripMenuItem});
-            this.managementToolStripMenuItem.Name = "managementToolStripMenuItem";
-            this.managementToolStripMenuItem.Size = new System.Drawing.Size(90, 20);
-            this.managementToolStripMenuItem.Text = "Management";
-            // 
-            // brandToolStripMenuItem
-            // 
-            this.brandToolStripMenuItem.Name = "brandToolStripMenuItem";
-            this.brandToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.brandToolStripMenuItem.Text = "Brand";
-            this.brandToolStripMenuItem.Click += new System.EventHandler(this.brandToolStripMenuItem_Click);
-            // 
-            // familyToolStripMenuItem
-            // 
-            this.familyToolStripMenuItem.Name = "familyToolStripMenuItem";
-            this.familyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.familyToolStripMenuItem.Text = "Family";
-            this.familyToolStripMenuItem.Click += new System.EventHandler(this.familyToolStripMenuItem_Click);
-            // 
-            // subFamilyToolStripMenuItem
-            // 
-            this.subFamilyToolStripMenuItem.Name = "subFamilyToolStripMenuItem";
-            this.subFamilyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.subFamilyToolStripMenuItem.Text = "Sub Family";
-            this.subFamilyToolStripMenuItem.Click += new System.EventHandler(this.subFamilyToolStripMenuItem_Click);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addAnArticleToolStripMenuItem,
+            this.modifyThisAritcleToolStripMenuItem,
+            this.deleteThisArticleToolStripMenuItem});
+            this.contextMenuStrip1.Name = "ContextMenuStrip";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(170, 70);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(808, 402);
+            this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.StatusSQL_Container);
             this.Controls.Add(this.Menu_Container);
@@ -214,8 +215,8 @@
             this.Menu_Container.PerformLayout();
             this.StatusSQL_Container.ResumeLayout(false);
             this.StatusSQL_Container.PerformLayout();
-            this.ContextMenuStrip.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,5 +239,6 @@
         private System.Windows.Forms.ToolStripMenuItem brandToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem familyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem subFamilyToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     }
 }

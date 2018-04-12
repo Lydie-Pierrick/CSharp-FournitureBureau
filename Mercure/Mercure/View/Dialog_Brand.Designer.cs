@@ -38,6 +38,7 @@
             this.ListViewBrands.Size = new System.Drawing.Size(460, 337);
             this.ListViewBrands.TabIndex = 0;
             this.ListViewBrands.UseCompatibleStateImageBehavior = false;
+            this.ListViewBrands.View = System.Windows.Forms.View.Details;
             // 
             // Dialog_Brand
             // 
@@ -46,6 +47,7 @@
             this.ClientSize = new System.Drawing.Size(484, 361);
             this.Controls.Add(this.ListViewBrands);
             this.Name = "Dialog_Brand";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dialog_Brand";
             this.ResumeLayout(false);
 
@@ -53,6 +55,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView ListViewBrands;
+        public System.Windows.Forms.ListView ListViewBrands;
+
     }
 }

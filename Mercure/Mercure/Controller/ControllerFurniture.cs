@@ -173,7 +173,7 @@ namespace Mercure.Controller
             }
         }
 
-        public ListViewItem AddItemToListView(Article Article)
+        public ListViewItem AddArticleToListView(Article Article)
         {
             ListViewItem Line = new ListViewItem(Article.GetSetRefArticle);
             Line.SubItems.Add(Article.GetSetDescription);
@@ -195,7 +195,7 @@ namespace Mercure.Controller
             // Show all the data on the ListView
             for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
             {
-                ListViewItem Line = AddItemToListView(ListArticles[NumArticle]);
+                ListViewItem Line = AddArticleToListView(ListArticles[NumArticle]);
                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
 
