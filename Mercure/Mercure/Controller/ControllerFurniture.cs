@@ -99,6 +99,10 @@ namespace Mercure.Controller
                 NodeListRoot = NodeRoot.ChildNodes;
                 // Get the number of nodes
                 NumberNodes = NodeListRoot.Count;
+
+                double threshold = 0.8;
+                //double coef = Levenshtein.ComputeCorrelation(song.Artist, txtArtist.Text, false);
+                //if (coef > threshold)
             }
             catch (System.IO.FileNotFoundException)
             {

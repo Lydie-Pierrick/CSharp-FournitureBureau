@@ -138,7 +138,7 @@ namespace Mercure
                     Close();
                 }
 
-                    ControllerFurniture.RefreshListView();
+                ControllerFurniture.RefreshListView();
             }        
         }
     }
