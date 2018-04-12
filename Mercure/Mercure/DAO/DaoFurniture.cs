@@ -536,7 +536,7 @@ namespace Mercure.DAO
                 int RefBrand = ArticlesReader.GetInt32(3);
                 int RefFamily = 0;
                 int RefSubFamily =  ArticlesReader.GetInt32(2);                
-                float PriceHT = ArticlesReader.GetFloat(4);
+                string PriceHT = ArticlesReader.GetString(4);
                 int Quantity =  ArticlesReader.GetInt32(5);
 
                 // Get the name of SubFamily

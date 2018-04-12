@@ -81,7 +81,7 @@ namespace Mercure.View
         {           
             try
             {
-                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, double.Parse(TextBoxPrice.Text), int.Parse(TextBoxQuantity.Text));
+                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, TextBoxPrice.Text, int.Parse(TextBoxQuantity.Text));
 
                 if (TextBoxRefArticle.Enabled == true)
                 {

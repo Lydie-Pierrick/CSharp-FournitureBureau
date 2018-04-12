@@ -10,7 +10,7 @@ namespace Mercure
         public Article()
         { }
 
-        public Article(string RefArticle, string Description, string Family, string SubFamily, string Brand, double PriceHT, int Quantity)
+        public Article(string RefArticle, string Description, string Family, string SubFamily, string Brand, string PriceHT, int Quantity)
         {
             GetSetRefArticle = RefArticle;
             GetSetDescription = Description;
@@ -26,7 +26,7 @@ namespace Mercure
         private string Brand;
         private string Family;
         private string SubFamily;
-        private double PriceHT;
+        private string PriceHT;
         private int Quantity;
 
         public string GetSetRefArticle
@@ -94,7 +94,7 @@ namespace Mercure
             }
         }
 
-        public double GetSetPriceHT
+        public string GetSetPriceHT
         {
             get
             {

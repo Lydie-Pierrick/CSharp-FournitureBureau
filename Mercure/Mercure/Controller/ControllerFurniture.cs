@@ -13,6 +13,7 @@ using Mercure.DAO;
 using Mercure.Model;
 using System.Data.SqlClient;
 using System.Threading;
+using System.Globalization;
 
 namespace Mercure.Controller
 {
@@ -61,7 +62,8 @@ namespace Mercure.Controller
                 Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
                 Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
                 Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
-                Article.GetSetPriceHT = Convert.ToDouble(NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
+
+                Article.GetSetPriceHT = String.Format("{0:0.00}", NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
                 // Write this Article into DB
                 CreateOrModifyArticleXML(Article);
