@@ -58,16 +58,23 @@ namespace Mercure.View
 
         protected override void Add()
         {
+            base.Add();
+
             Dialog_AddEditFamily Dialog_AddEditFamily = new Dialog_AddEditFamily();
             Dialog_AddEditFamily.ShowDialog(this);
         }
 
         protected override void Modify()
         {
-            int RefFamily = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
-            string NameFamily = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
-            Dialog_AddEditFamily Dialog_AddEditFamily = new Dialog_AddEditFamily(RefFamily, NameFamily);
-            Dialog_AddEditFamily.ShowDialog(this);
+            base.Modify();
+
+            if (IsChoosen)
+            {
+                int RefFamily = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
+                string NameFamily = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
+                Dialog_AddEditFamily Dialog_AddEditFamily = new Dialog_AddEditFamily(RefFamily, NameFamily);
+                Dialog_AddEditFamily.ShowDialog(this);
+            }
         }
     }
 }

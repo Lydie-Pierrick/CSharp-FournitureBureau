@@ -51,14 +51,33 @@ namespace Mercure.View
         {
             try
             {
-                ControllerManagement.InsertSubFamily(TextBox.Text, Combobox.SelectedIndex.ToString());
-                ControllerManagement.RefreshListViewSubFamily();
-
-                if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
+                if (Dialog_Basic.ModifyOrAdd == 0)
                 {
-                    Mercure.MainWindow.StatusSQL_Label.Text = "Operation on subFamily.";
-                    Close();
+                    if (!ControllerManagement.ModifySubFamily(int.Parse(TextRefSubFamily.Text), TextBox.Text, Combobox.Items.ToString()))
+                    {
+                        MessageBox.Show("Fail to modify the subfamily ! ");
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Successfully modified the subfamily !") == DialogResult.OK)
+                        {
+                            Close();
+                        }
+                    }
+                    
                 }
+                else if (Dialog_Basic.ModifyOrAdd == 1)
+                {
+                    ControllerManagement.AddSubFamily(TextBox.Text, Combobox.SelectedItem.ToString());
+
+                    if (MessageBox.Show("Successfully added the brand !") == DialogResult.OK)
+                    {
+                      Mercure.MainWindow.StatusSQL_Label.Text = "Operation on subFamily.";
+                      Close();
+                    }
+                }
+                
+                ControllerManagement.RefreshListViewSubFamily();
             }
             catch (Exception Exception)
             {

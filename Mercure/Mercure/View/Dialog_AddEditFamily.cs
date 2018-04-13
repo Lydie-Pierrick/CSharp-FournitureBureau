@@ -32,7 +32,30 @@ namespace Mercure.View
         {
             try
             {
-                ControllerManagement.InsertFamily(TextBox.Text);
+                if (Dialog_Basic.ModifyOrAdd == 0)
+                {
+                    if (!ControllerManagement.ModifyFamily(int.Parse(TextRefFamily.Text), TextBox.Text))
+                    {
+                        MessageBox.Show("Fail to modify the family ! ");
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Successfully modified the family !") == DialogResult.OK)
+                        {
+                            Close();
+                        }
+                    }
+                }
+                else if (Dialog_Basic.ModifyOrAdd == 1)
+                {
+                    ControllerManagement.AddFamily(TextBox.Text);
+
+                    if (MessageBox.Show("Successfully added the family !") == DialogResult.OK)
+                    {
+                        Close();
+                    }
+                }
+                
                 ControllerManagement.RefreshListViewFamily();
 
                 if (MessageBox.Show("Operation accepted !") == DialogResult.OK)

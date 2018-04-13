@@ -827,21 +827,50 @@ namespace Mercure.DAO
                 return false;
         }
 
-        public bool ArticleExist(string RefArticle)
+        public bool ModifyBrand(int RefBrand, string BrandName)
         {
-            SQLiteCommand QueryExistArticle = new SQLiteCommand();
-            QueryExistArticle.CommandText = "SELECT * FROM Articles WHERE RefArticle = '@RefArticle';";
-            QueryExistArticle.Parameters.AddWithValue("@RefArticle", RefArticle);
-            QueryExistArticle.Connection = SingletonBD.GetInstance.GetDB();
-            SQLiteDataReader ArticleReader = QueryExistArticle.ExecuteReader();
+            SQLiteCommand QueryDelete = new SQLiteCommand();
+            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.CommandText = "UPDATE Marques SET Nom = @BrandName WHERE RefMarque= @RefBrand;";
+            QueryDelete.Parameters.AddWithValue("@RefBrand", RefBrand);
+            QueryDelete.Parameters.AddWithValue("@BrandName", BrandName);
+            int NumberRow = QueryDelete.ExecuteNonQuery();
 
-            // Create if it does not exist
-            if (ArticleReader.HasRows)
-            {
+            if (NumberRow == 1)
                 return true;
-            }
+            else
+                return false;
+        }
 
-            return false;
+        public bool ModifyFamily(int RefFamily, string FamilyName)
+        {
+            SQLiteCommand QueryDelete = new SQLiteCommand();
+            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.CommandText = "UPDATE Familles SET Nom = @FamilyName WHERE RefFamille= @RefFamily;";
+            QueryDelete.Parameters.AddWithValue("@RefFamily", RefFamily);
+            QueryDelete.Parameters.AddWithValue("@FamilyName", FamilyName);
+            int NumberRow = QueryDelete.ExecuteNonQuery();
+
+            if (NumberRow == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, int RefFamily)
+        {
+            SQLiteCommand QueryDelete = new SQLiteCommand();
+            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.CommandText = "UPDATE SousFamilles SET Nom = @SubFamilyName, RefFamille = @RefFamily WHERE RefSousFamille= @RefSubFamily;";
+            QueryDelete.Parameters.AddWithValue("@RefFamily", RefFamily);
+            QueryDelete.Parameters.AddWithValue("@SubFamilyName", SubFamilyName);
+            QueryDelete.Parameters.AddWithValue("@RefSubFamily", RefSubFamily);
+            int NumberRow = QueryDelete.ExecuteNonQuery();
+
+            if (NumberRow == 1)
+                return true;
+            else
+                return false;
         }
     }
 }

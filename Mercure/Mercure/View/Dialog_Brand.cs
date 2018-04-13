@@ -64,10 +64,15 @@ namespace Mercure.View
 
         protected override void Modify()
         {
-            int RefBrand = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
-            string NameBrand = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
-            Dialog_AddEditBrand Dialog_AddEditBrand = new Dialog_AddEditBrand(RefBrand, NameBrand);
-            Dialog_AddEditBrand.ShowDialog(this);
+            base.Modify();
+
+            if (IsChoosen)
+            {
+                int RefBrand = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
+                string NameBrand = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
+                Dialog_AddEditBrand Dialog_AddEditBrand = new Dialog_AddEditBrand(RefBrand, NameBrand);
+                Dialog_AddEditBrand.ShowDialog(this);
+            }
         }
     }
 }

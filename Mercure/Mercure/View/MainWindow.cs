@@ -117,17 +117,22 @@ namespace Mercure
 
         private void ModifyArticle()
         {
-            string RefArticle = this.ListViewArticles.SelectedItems[0].Text;
-            string Description = this.ListViewArticles.SelectedItems[0].SubItems[1].Text;
-            string Brand = this.ListViewArticles.SelectedItems[0].SubItems[2].Text;
-            string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
-            double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
-            int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
-            Dialog_AddEditArticle Dialog_AddEditWindow =
-                new Dialog_AddEditArticle(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
-            Dialog_AddEditWindow.ShowDialog(this);
-
-            Mercure.MainWindow.StatusSQL_Label.Text = "Succesfully modified the article.";
+            if (ListViewArticles.SelectedItems.Count != 0)
+            {
+                string RefArticle = this.ListViewArticles.SelectedItems[0].Text;
+                string Description = this.ListViewArticles.SelectedItems[0].SubItems[1].Text;
+                string Brand = this.ListViewArticles.SelectedItems[0].SubItems[2].Text;
+                string SubFamily = this.ListViewArticles.SelectedItems[0].SubItems[3].Text;
+                double Price = double.Parse(this.ListViewArticles.SelectedItems[0].SubItems[4].Text);
+                int Quantity = int.Parse(this.ListViewArticles.SelectedItems[0].SubItems[5].Text);
+                Dialog_AddEditArticle Dialog_AddEditWindow =
+                    new Dialog_AddEditArticle(RefArticle, Description, Brand, ControllerFurniture.GetFamilyNameOfSubFamily(SubFamily), SubFamily, Price, Quantity);
+                Dialog_AddEditWindow.ShowDialog(this);
+            }
+            else
+            {
+                MessageBox.Show("Error : Choose an article before trying  to modify it !");
+            }
         }
 
         void DeleteArticle()
