@@ -31,13 +31,31 @@ namespace Mercure.View
         {
             try
             {
-                ControllerManagement.InsertBrand(TextBox.Text);
-                ControllerManagement.RefreshListViewBrand();
-
-                if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
+                if (Dialog_Basic.ModifyOrAdd == 0)
                 {
-                    Close();
+                    if (!ControllerManagement.ModifyBrand(int.Parse(TextRefBrand.Text), TextBox.Text))
+                    {
+                        MessageBox.Show("Fail to modify the brand ! ");
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Successfully modified the brand !") == DialogResult.OK)
+                        {
+                            Close();
+                        }
+                    }
                 }
+                else if (Dialog_Basic.ModifyOrAdd == 1)
+                {
+                    ControllerManagement.AddBrand(TextBox.Text);
+
+                    if (MessageBox.Show("Successfully added the brand !") == DialogResult.OK)
+                    {
+                        Close();
+                    }
+                }
+
+                ControllerManagement.RefreshListViewBrand();
             }
             catch (Exception Exception)
             {

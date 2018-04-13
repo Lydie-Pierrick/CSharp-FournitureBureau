@@ -128,28 +128,35 @@ namespace Mercure.Controller
             return DaoFurniture.DeleteSubFamily(RefSubfamily);
         }
 
-        public bool InsertBrand(string BrandName)
+        public void AddBrand(string BrandName)
         {
-            if (DaoFurniture.GetOrCreateBrand(BrandName) != 0)
-                return true;
-            else
-                return false;
+            DaoFurniture.GetOrCreateBrand(BrandName);
         }
        
-        public bool InsertFamily(string FamilyName)
+        public void AddFamily(string FamilyName)
         {
-            if (DaoFurniture. GetOrCreateFamily(FamilyName) != 0)
-                return true;
-            else
-                return false;
+            DaoFurniture. GetOrCreateFamily(FamilyName);
         }
 
-        public bool InsertSubFamily(string SubFamilyName, string FamilyName)
+        public void AddSubFamily(string SubFamilyName, string FamilyName)
         {
-            if (DaoFurniture.GetOrCreateSubFamily(SubFamilyName, FamilyName) != 0)
-                return true;
-            else
-                return false;
+            DaoFurniture.GetOrCreateSubFamily(SubFamilyName, FamilyName);
+        }
+
+        public bool ModifyBrand(int RefBrand, string BrandName)
+        {
+            return DaoFurniture.ModifyBrand(RefBrand, BrandName);
+        }
+
+        public bool ModifyFamily(int RefFamily, string FamilyName)
+        {
+            return DaoFurniture.ModifyFamily(RefFamily, FamilyName);
+        }
+
+        public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, string FamilyName)
+        {
+            int RefFamily = DaoFurniture.GetFamilyIdOfSubFamily(SubFamilyName);
+            return DaoFurniture.ModifySubFamily(RefSubFamily, SubFamilyName, RefFamily);
         }
     }
 }

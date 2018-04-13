@@ -14,6 +14,8 @@ namespace Mercure.View
     {
         public static Dialog_Basic DialogBasic;
         protected ControllerManagement ControllerManagement;
+        public static int ModifyOrAdd = -1;
+        protected static bool IsChoosen = false;
 
         public Dialog_Basic()
         {
@@ -31,6 +33,11 @@ namespace Mercure.View
             if (e.KeyData == Keys.Delete)
             {
                 Delete();
+            }
+
+            if (e.KeyData == Keys.Enter)
+            {
+                Modify();
             }
         }
 
@@ -74,10 +81,21 @@ namespace Mercure.View
 
         protected virtual void Add()
         {
+            ModifyOrAdd = 1;
         }
 
         protected virtual void Modify()
         {
+            ModifyOrAdd = 0;
+            if (ListViewBasic.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Error : Choose an item before trying  to modify it !");
+                IsChoosen = false;
+            }
+            else
+            {
+                IsChoosen = true;
+            }
         }
     }
 }
