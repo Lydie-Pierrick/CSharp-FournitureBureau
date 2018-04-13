@@ -107,7 +107,7 @@ namespace Mercure
             {
                 // Report progress bar to change the value
                 BackgroundWorkerData.ReportProgress((Index + 1) * RatioProgressBar);
-                Thread.Sleep(200);
+                //Thread.Sleep(100);
 
                 // Write every article into BD
                 ControllerFurniture.WriteEachArticleDB(Index);
@@ -120,7 +120,7 @@ namespace Mercure
         }
 
         private void BackgroundWorkerData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
+        {        
             if (e.Error != null)
             {
                 MessageBox.Show("Errors in importation XML !");
@@ -132,7 +132,7 @@ namespace Mercure
             else
             {
                 // Reset the progress bar
-                ProgressBar_ImportXML.Value = 0;
+                ProgressBar_ImportXML.Value = 100;
                 if (MessageBox.Show("Importation XML completed !") == DialogResult.OK)
                 {
                     Close();
