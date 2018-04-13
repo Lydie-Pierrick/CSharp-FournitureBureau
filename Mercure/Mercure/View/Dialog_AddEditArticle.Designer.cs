@@ -217,6 +217,7 @@
             this.ComboBoxFamily.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBoxFamily.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxFamily.FormattingEnabled = true;
             this.ComboBoxFamily.Location = new System.Drawing.Point(98, 193);
             this.ComboBoxFamily.Name = "ComboBoxFamily";
@@ -229,6 +230,7 @@
             this.ComboBoxSubFamily.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBoxSubFamily.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxSubFamily.FormattingEnabled = true;
             this.ComboBoxSubFamily.Location = new System.Drawing.Point(98, 241);
             this.ComboBoxSubFamily.Name = "ComboBoxSubFamily";
@@ -240,6 +242,7 @@
             this.ComboBoxBrand.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ComboBoxBrand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBoxBrand.FormattingEnabled = true;
             this.ComboBoxBrand.Location = new System.Drawing.Point(98, 144);
             this.ComboBoxBrand.Name = "ComboBoxBrand";

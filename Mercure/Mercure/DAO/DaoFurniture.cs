@@ -35,7 +35,11 @@ namespace Mercure.DAO
         }
 
         // --- Create or modify section
-        
+
+        /// <summary>
+        /// Create or modify article from the Dialog_SelectXML
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
         public void CreateOrModifyArticleXML(Article Article)
         {
             try
@@ -70,6 +74,11 @@ namespace Mercure.DAO
             }
         }
 
+        /// <summary>
+        /// Create or modify article from the Dialog_AddEditArticle
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
+        /// <param name="ActioNEdit"> The action wanted by the user, if true it's edit action</param>
         public void CreateOrModifyArticle(Article Article, bool ActionEdit)
         {
             try
@@ -94,7 +103,7 @@ namespace Mercure.DAO
                         Article.GetSetQuantity += QuantiteArticle;
                     }
 
-                    ModifyArticle(Article);
+                    ModifyArticleQuantity(Article);
                 }
                 else
                 {
@@ -107,6 +116,10 @@ namespace Mercure.DAO
             }
         }
 
+        /// <summary>
+        /// Create an article
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
         private void CreateArticle(Article Article)
         {
             // Create SubFamily or Brand if it does not exist
@@ -128,6 +141,10 @@ namespace Mercure.DAO
             CountInsertRowArticle += QueryInsertArticle.ExecuteNonQuery();
         }
 
+        /// <summary>
+        /// Modify article
+        /// </summary>
+        /// <param name="Article"> The Article object to edit </param>
         private void ModifyArticle(Article Article)
         {
             // Create SubFamily or Brand if it does not exist
@@ -149,11 +166,32 @@ namespace Mercure.DAO
             CountInsertRowArticle += QueryModifyArticle.ExecuteNonQuery();
         }
 
-        /*
-         *  Get Brand id
-         *
-         *  @return id of brand or -1 if it does not exist
-         */
+        /// <summary>
+        /// Modify quantity of article
+        /// </summary>
+        /// <param name="Article"> The Article object to edit quantity </param>
+        private void ModifyArticleQuantity(Article Article)
+        {
+            // Create SubFamily or Brand if it does not exist
+            int idSubFamily = GetOrCreateSubFamily(Article.GetSetSubFamily, Article.GetSetFamily);
+            int idBrand = GetOrCreateBrand(Article.GetSetBrand);
+
+            // Insert new brand
+            SQLiteCommand QueryModifyArticle = new SQLiteCommand();
+            QueryModifyArticle.Connection = M_dbConnection;
+
+            QueryModifyArticle.CommandText = "UPDATE Articles SET Quantite = @RefQuantite WHERE RefArticle = @RefArticle;";
+            QueryModifyArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
+            QueryModifyArticle.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
+
+            CountInsertRowArticle += QueryModifyArticle.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        /// Get brand id
+        /// </summary>
+        /// <param name="Brand"> The brand name to get id</param>
+        /// <returns> The id of brand </returns>
         private int GetBrandId(string Brand)
         {
             // Get brand if it exists
@@ -178,11 +216,11 @@ namespace Mercure.DAO
             return IdBrand;
         }
 
-        /*
-         *  Get Brand name
-         *
-         *  @return name of brand or null if it does not exist
-         */
+        /// <summary>
+        /// Get brand name
+        /// </summary>
+        /// <param name="RefBrand"> The brand id to get name</param>
+        /// <returns> The name of brand or null if it does not exist </returns>
         private string GetBrandName(int RefBrand)
         {
             SQLiteCommand QueryGetBrand = new SQLiteCommand();
@@ -200,20 +238,20 @@ namespace Mercure.DAO
             return Brand;
         }
 
-        /*
-         *  Get or create a brand
-         *
-         *  @return id of brand
-         */
-        private int GetOrCreateBrand(string Brand)
+        /// <summary>
+        /// Get or create brand
+        /// </summary>
+        /// <param name="BrandName"> The brand name </param>
+        /// <returns> The brand id </returns>
+        private int GetOrCreateBrand(string BrandName)
         {
-            int IdBrand = 0;
-
-            IdBrand = GetBrandId(Brand);
+            // Check family syntax
+            Brand Brand;
+            Brand = ControllerFurniture.CheckBrandSyntax(BrandName);
 
             // Create if it does not exist
-            if (IdBrand == -1)
-            {
+            if (Brand == null)
+            {                
                 // Get last id for autoincrement
                 int LastId = 0;
 
@@ -236,7 +274,7 @@ namespace Mercure.DAO
 
                     QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
                     QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastRefBrand + 1);
-                    QueryInsertBrand.Parameters.AddWithValue("@RefNom", Brand);
+                    QueryInsertBrand.Parameters.AddWithValue("@RefNom", BrandName);
                     CountInsertRowBrand += QueryInsertBrand.ExecuteNonQuery();
 
                     LastRefBrand++;
@@ -245,14 +283,14 @@ namespace Mercure.DAO
                 return LastId + 1;
             }
 
-            return IdBrand;
+            return Brand.GetSetIdBrand;
         }
 
-        /*
-         *  Get Family id
-         *
-         *  @return id of family or -1 if it does not exist
-         */
+        /// <summary>
+        /// Get family id from familyName
+        /// </summary>
+        /// <param name="FamilyName"> The brand name </param>
+        /// <returns> The id of family or -1 if it does not exist </returns>
         private int GetFamilyId(string FamilyName)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
@@ -275,11 +313,11 @@ namespace Mercure.DAO
             return IdFamily;
         }
 
-        /*
-         *  Get Name of Family
-         *
-         *  @return string of family or null if it does not exist
-         */
+        /// <summary>
+        /// Get family name
+        /// </summary>
+        /// <param name="RefFamily"> The family id </param>
+        /// <returns> The string of family or null if it does not exist </returns>
         public string GetFamilyName(int RefFamily)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
@@ -296,11 +334,11 @@ namespace Mercure.DAO
             return Family;
         }
 
-        /*
-         *  Get Family id of SubFamily
-         *
-         *  @return id of family or -1 if it does not exist
-         */
+        /// <summary>
+        /// Get family id of subFamily
+        /// </summary>
+        /// <param name="SubFamily"> The subFamily id </param>
+        /// <returns> The id of family or -1 if it does not exist </returns>
         public int GetFamilyIdOfSubFamily(string SubFamily)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
@@ -323,18 +361,18 @@ namespace Mercure.DAO
             return IdFamily;
         }
 
-        /*
-         *  Get or create a family
-         *
-         *  @return id of family
-         */
+        /// <summary>
+        /// Get of create family
+        /// </summary>
+        /// <param name="FamilyName"> The subFamily id </param>
+        /// <returns> The id of family </returns>
         private int GetOrCreateFamily(string FamilyName)
         {
-            int IdFamily = 0;
-            IdFamily = GetFamilyId(FamilyName);
+            // Check family syntax
+            Family Family;
+            Family = ControllerFurniture.CheckFamilySyntax(FamilyName);
 
-            // Create if it does not exist
-            if (IdFamily == -1)
+            if (Family == null)
             {
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
@@ -362,42 +400,14 @@ namespace Mercure.DAO
                 return LastRefFamily;
             }
 
-            return IdFamily;
+            return Family.GetSetIdFamily;
         }
 
-        /*
-         *  Get Id of SubFamily
-         *
-         *  @return id of subfamily or -1 if it does not exist
-         */
-        private int GetSubFamilyId(string SubFamilyName)
-        {
-            int IdSubFamily = 0;
-
-            SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
-            QueryGetSubFamily.Connection = M_dbConnection;
-
-            // Get sub family if it exists
-            QueryGetSubFamily.CommandText = "SELECT RefSousFamille FROM SousFamilles WHERE Nom = @Nom;";
-            QueryGetSubFamily.Parameters.AddWithValue("@Nom", SubFamilyName);
-            SQLiteDataReader GetSubFamilyReader = QueryGetSubFamily.ExecuteReader();
-
-            if (!GetSubFamilyReader.HasRows)
-            {
-                return -1;
-            }
-
-            GetSubFamilyReader.Read();
-            IdSubFamily = GetSubFamilyReader.GetInt32(0);
-
-            return IdSubFamily;
-        }
-
-        /*
-         *  Get Name of SubFamily
-         *
-         *  @return string of subfamily or null if it does not exist
-         */
+        /// <summary>
+        /// Get subFamily name
+        /// </summary>
+        /// <param name="RefSubFamily"> The SubFamily id </param>
+        /// <returns> The string of subfamily or null if it does not exist </returns>
         private string GetSubFamilyName(int RefSubFamily)
         {
             SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
@@ -414,19 +424,19 @@ namespace Mercure.DAO
             return SubFamily;
         }
 
-        /*
-         *  Get or create a sub family
-         *
-         *  @return id of sub family
-         */
+        /// <summary>
+        /// Get or create a sub family
+        /// </summary>
+        /// <param name="RefSubFamily"> The SubFamily id </param>
+        /// <returns> The id of sub family </returns>
         private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
         {
-            int IdSubFamily = 0;
-
-            IdSubFamily = GetSubFamilyId(SubFamilyName);
+            // Check SubFamily syntax
+            SubFamily SubFamily;
+            SubFamily = ControllerFurniture.CheckSubFamilySyntax(SubFamilyName);
 
             // Create if it does not exist
-            if (IdSubFamily == -1)
+            if (SubFamily == null)
             {
                 // Get last id for autoincrement
                 int LastId = 0;
@@ -445,7 +455,7 @@ namespace Mercure.DAO
                 // Get Family for this SubFamily
                 int IdFamily = GetOrCreateFamily(FamilyName);
 
-                SQLiteCommand QueryCreateModify  = new SQLiteCommand();
+                SQLiteCommand QueryCreateModify = new SQLiteCommand();
                 QueryCreateModify.Connection = M_dbConnection;
 
                 // Insert new sub family
@@ -460,14 +470,13 @@ namespace Mercure.DAO
                 return LastId + 1;
             }
 
-            return IdSubFamily;
+            return SubFamily.GetSetIdSubFamily;
         }
 
-        // Delete
-
-        /*
-         * Delete All entries of tables
-         */
+        /// <summary>
+        /// Delete all entries of tables
+        /// </summary>
+        /// <returns> The bool true if success </returns>
         public bool DeleteAllEntriesTables()
         {
             int countResetTable = 0;
@@ -490,8 +499,10 @@ namespace Mercure.DAO
             return false;
         }
 
-        // ---
-
+        /// <summary>
+        /// Get all name tables of DB
+        /// </summary>
+        /// <returns> The list of name table from DB </returns>
         private List<String> GetAllNameTables()
         {
             List<string> List = new List<string>();
@@ -520,6 +531,10 @@ namespace Mercure.DAO
             return List;
         }
 
+        /// <summary>
+        /// Get list of all articles
+        /// </summary>
+        /// <returns> The list of articles </returns>
         public List<Article> GetAllArticles()
         {
             List<Article> ListArticles = new List<Article>();
@@ -559,6 +574,10 @@ namespace Mercure.DAO
             return ListArticles;
         }
 
+        /// <summary>
+        /// Get list of all brands
+        /// </summary>
+        /// <returns> The list of brands </returns>
         public List<Brand> GetAllBrands()
         {
             List<Brand> ListBrands = new List<Brand>();
@@ -583,6 +602,10 @@ namespace Mercure.DAO
             return ListBrands;
         }
 
+        /// <summary>
+        /// Get list of all family
+        /// </summary>
+        /// <returns> The list of family </returns>
         public List<Family> GetAllFamily()
         {
             List<Family> ListFamily = new List<Family>();
@@ -607,6 +630,10 @@ namespace Mercure.DAO
             return ListFamily;
         }
 
+        /// <summary>
+        /// Get list of all subFamily
+        /// </summary>
+        /// <returns> The list of subFamily </returns>
         public List<SubFamily> GetAllSubFamily()
         {
             List<SubFamily> ListSubFamily = new List<SubFamily>();
@@ -631,6 +658,11 @@ namespace Mercure.DAO
             return ListSubFamily;
         }
 
+        /// <summary>
+        /// Get list of subFamily from family
+        /// </summary>
+        /// <param name="Family"> The name of the family </param>
+        /// <returns> The list of subFamily </returns>
         public List<SubFamily> GetAllSubFamilyOfFamily(string Family)
         {
             List<SubFamily> ListSubFamily = new List<SubFamily>();
@@ -662,6 +694,11 @@ namespace Mercure.DAO
             return ListSubFamily;
         }
 
+        /// <summary>
+        /// Delete article
+        /// </summary>
+        /// <param name="RefArticle"> The ref of article to delete </param>
+        /// <returns> The bool true if success </returns>
         public bool DeleteArticle(string RefArticle)
         {
             SQLiteCommand QueryDelete = new SQLiteCommand();

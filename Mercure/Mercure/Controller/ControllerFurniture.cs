@@ -26,8 +26,10 @@ namespace Mercure.Controller
         private static XmlNodeList NodeListRoot;
         private Thread ThreadUpdateStatus;
         private Thread ThreadUpdateProgressText;
-        
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ControllerFurniture()
         {
             this.PathXML = null;
@@ -35,9 +37,9 @@ namespace Mercure.Controller
             ControllerFurniture.CounterInsertOrUpdate = 0;
         }
 
-        /*
-         * Getter Setter of path XML
-         */
+        /// <summary>
+        /// Getter Setter of path XML
+        /// </summary>
         public string GetterSetterPathXML
         {
             get
@@ -51,6 +53,10 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// The action to write each article into DB
+        /// </summary>
+        /// <param name="Index"> The Index of node</param>
         public void WriteEachArticleDB(int Index)
         {
             try
@@ -79,13 +85,13 @@ namespace Mercure.Controller
             }        
             catch(Exception e)
             {
-                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
+                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        /*
-         * Load XML
-         */
+        /// <summary>
+        /// Load an XML file
+        /// </summary>
         private void LoadXML()
         {
             XmlDocument XMLDoc = new XmlDocument();
@@ -112,6 +118,10 @@ namespace Mercure.Controller
 
         // ---     
 
+        /// <summary>
+        /// Delete all entries tables of DB
+        /// </summary>
+        /// <returns> The bool if success </returns>
         private bool DeleteAllEntriesTables()
         {
             if (DaoFurniture.DeleteAllEntriesTables())
@@ -122,11 +132,20 @@ namespace Mercure.Controller
             return false;
         }
 
+        /// <summary>
+        /// The action if the user want to delete article
+        /// </summary>
+        /// <param name="RefArticle"> The RefArticle</param>
+        /// <returns> The bool if success </returns>
         public bool DeleteArticle(string RefArticle)
         {
             return DaoFurniture.DeleteArticle(RefArticle);
         }
 
+        /// <summary>
+        /// The action if the user want to init and set data into DB with xml file
+        /// </summary>
+        /// <returns> The bool if success </returns>
         public bool NewXMLImport()
         {
             try
@@ -148,6 +167,10 @@ namespace Mercure.Controller
             return true;
         }
 
+        /// <summary>
+        /// The action if the user want to update DB with xml file
+        /// </summary>
+        /// <returns> The bool if success </returns>
         public bool UpdateXMLImport()
         {
             try
@@ -163,6 +186,103 @@ namespace Mercure.Controller
             return true;
         }
 
+        /// <summary>
+        /// Check family syntax with distance Levenshtein
+        /// </summary>
+        /// <param name="FamilyToAdd"> The name of family to add</param>
+        /// <returns> The Family if find or null </returns>
+        public static Family CheckFamilySyntax(string FamilyToAdd)
+        {
+            List<Family> ListFamily = GetAllFamily();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            Family Family = null;
+
+            foreach (Family FamilyEntry in ListFamily)
+            {
+                Temp = DistanceLevenshtein(FamilyToAdd, FamilyEntry.GetSetFamilyName);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    Family = FamilyEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return Family;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Check subFamily syntax with distance Levenshtein
+        /// </summary>
+        /// <param name="SubFamilyToAdd"> The name of SubFamily to add</param>
+        /// <returns> The SubFamily if find or null </returns>
+        public static SubFamily CheckSubFamilySyntax(string SubFamilyToAdd)
+        {
+            List<SubFamily> ListSubFamily = GetAllSubFamily();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            SubFamily SubFamily = null;
+
+            foreach (SubFamily SubFamilyEntry in ListSubFamily)
+            {
+                Temp = DistanceLevenshtein(SubFamilyToAdd, SubFamilyEntry.GetSetSubFamilyName);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    SubFamily = SubFamilyEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return SubFamily;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Check brand syntax with distance Levenshtein
+        /// </summary>
+        /// <param name="BrandToAdd"> The name of brand to add</param>
+        /// <returns> The Brand if find or null </returns>
+        public static Brand CheckBrandSyntax(string BrandToAdd)
+        {
+            List<Brand> ListBrand = GetAllBrands();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            Brand Brand = null;
+
+            foreach (Brand BrandEntry in ListBrand)
+            {
+                Temp = DistanceLevenshtein(BrandToAdd, BrandEntry.GetSetNameBrand);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    Brand = BrandEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return Brand;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Create or modify article from the Dialog_SelectXML
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
         public void CreateOrModifyArticleXML(Article Article)
         {
             try
@@ -175,6 +295,11 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Create or modify article from the Dialog_AddEditArticle
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
+        /// <param name="ActioNEdit"> The action wanted by the user, if true it's edit action</param>
         public void CreateOrModifyArticle(Article Article, bool ActionEdit)
         {
             try
@@ -187,6 +312,11 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Add an item to the list view
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
+        /// <returns> The ListViewItem </returns>
         public ListViewItem AddArticleToListView(Article Article)
         {
             ListViewItem Line = new ListViewItem(Article.GetSetRefArticle);
@@ -199,6 +329,9 @@ namespace Mercure.Controller
             return Line;
         }
 
+        /// <summary>
+        /// Refresh the list view
+        /// </summary>
         public void RefreshListView()
         {
             int NumArticle;
@@ -221,6 +354,10 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Update status text
+        /// </summary>
+        /// <param name="Article"> Object of Article </param>
         public void UpdateStatusText(Object Article)
         {
             // Delegate for updating TextBoxStatusImport in another dialog
@@ -237,6 +374,10 @@ namespace Mercure.Controller
             Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.Invoke(Delegate, Article);
         }
 
+        /// <summary>
+        /// Update the progress text
+        /// </summary>
+        /// <param name="Text"> Object of text </param>
         public void UpdateProgressText(Object Text)
         {
             // Delegate for updating TextBoxStatusImport in another dialog
@@ -248,36 +389,57 @@ namespace Mercure.Controller
             Dialog_SelectionXML.DialogSelectionXML.Label_Progress.Invoke(Delegate, Text);
         }
 
+        /// <summary>
+        /// Get list of all articles
+        /// </summary>
+        /// <returns> The list of articles </returns>
         public List<Article> GetAllArticles()
         {
             return DaoFurniture.GetAllArticles();
         }
 
-        public List<Brand> GetAllBrands()
+        /// <summary>
+        /// Get list of all brands
+        /// </summary>
+        /// <returns> The list of brands </returns>
+        public static List<Brand> GetAllBrands()
         {
             return DaoFurniture.GetAllBrands();
         }
 
-        public List<Family> GetAllFamily()
+        /// <summary>
+        /// Get list of all family
+        /// </summary>
+        /// <returns> The list of family </returns>
+        public static List<Family> GetAllFamily()
         {
             return DaoFurniture.GetAllFamily();
         }
 
-        public List<SubFamily> GetAllSubFamily()
+        /// <summary>
+        /// Get list of all subFamily
+        /// </summary>
+        /// <returns> The list of subFamily </returns>
+        public static List<SubFamily> GetAllSubFamily()
         {
             return DaoFurniture.GetAllSubFamily();
         }
 
+        /// <summary>
+        /// Get list of subFamily from family
+        /// </summary>
+        /// <param name="Family"> The name of the family </param>
+        /// <returns> The list of subFamily </returns>
         public List<SubFamily> GetAllSubFamilyOfFamily(string Family)
         {
             return DaoFurniture.GetAllSubFamilyOfFamily(Family);
         }
 
-        /*
-         *  Get Family id of SubFamily
-         *
-         *  @return id of family or -1 if it does not exist
-         */
+        /// <summary>
+        /// Get the name of the family of a subFamily
+        /// </summary>
+        /// <param name="SubFamily"> The name of the subFamily </param>
+        /// <returns> The name of the family </returns>
         public string GetFamilyNameOfSubFamily(string SubFamily)
         {
             int IdFamilyName = DaoFurniture.GetFamilyIdOfSubFamily(SubFamily);
@@ -285,9 +447,42 @@ namespace Mercure.Controller
             return DaoFurniture.GetFamilyName(IdFamilyName);
         }
 
-        private bool ArticleExist(string RefArticle)
+        /// <summary>
+        /// Compute the distance between tow string
+        /// </summary>
+        /// <param name="s"> The first string </param>
+        /// <param name="t">The second string </param>
+        /// <returns> Distance of 2 strings </returns>
+        private static int DistanceLevenshtein(string s, string t)
         {
-            return DaoFurniture.ArticleExist(RefArticle);
+            s = s.ToLower();
+            t = t.ToLower();
+
+            int n = s.Length;
+            int m = t.Length;
+            int[,] d = new int[n + 1, m + 1];
+
+            if (n == 0)
+                return m;
+
+            if (m == 0)
+                return n;
+
+            for (int i = 0; i <= n; d[i, 0] = i++) { }
+            for (int j = 0; j <= m; d[0, j] = j++) { }
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
+            }
+            return d[n, m];
         }
     }
 }
