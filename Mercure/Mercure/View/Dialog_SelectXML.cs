@@ -41,38 +41,46 @@ namespace Mercure
 
         private void Btn_ImportXML_Click(object sender, EventArgs e)
         {
-            ControllerFurniture.GetterSetterPathXML = TxtBox_PathXML.Text;
-
-            if (string.IsNullOrWhiteSpace(ControllerFurniture.GetterSetterPathXML))
+            try
             {
-                MessageBox.Show("Empty path XML", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {                                               
-                if (RadioButton_New.Checked)
+                ControllerFurniture.GetterSetterPathXML = TxtBox_PathXML.Text;
+
+                if (string.IsNullOrWhiteSpace(ControllerFurniture.GetterSetterPathXML))
                 {
-                    ControllerFurniture.NewXMLImport();
-                }
-                else if (RadioButton_Update.Checked)
-                {
-                    ControllerFurniture.UpdateXMLImport();
+                    MessageBox.Show("Empty path XML", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    if (RadioButton_New.Checked)
+                    {
+                        ControllerFurniture.NewXMLImport();
+                    }
+                    else if (RadioButton_Update.Checked)
+                    {
+                        ControllerFurniture.UpdateXMLImport();
+                    }
 
-                //ProgressBar_ImportXML.Minimum = 1;
-                //ProgressBar_ImportXML.Maximum = 100;
-                BackgroundWorkerData = new BackgroundWorker();
-                BackgroundWorkerData.WorkerReportsProgress = true;
-                // This event will be raised on the worker thread when the worker starts
-                BackgroundWorkerData.DoWork += BackgroundWorkerData_DoWork;
-                // This event will be raised when we call ReportProgress
-                BackgroundWorkerData.ProgressChanged += BackgroundWorkerData_ProgressChanged;
-                BackgroundWorkerData.RunWorkerCompleted += BackgroundWorkerData_RunWorkerCompleted;
-                BackgroundWorkerData.RunWorkerAsync();
-            }           
+                    else
+                    {
+                        MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                    //ProgressBar_ImportXML.Minimum = 1;
+                    //ProgressBar_ImportXML.Maximum = 100;
+                    BackgroundWorkerData = new BackgroundWorker();
+                    BackgroundWorkerData.WorkerReportsProgress = true;
+                    // This event will be raised on the worker thread when the worker starts
+                    BackgroundWorkerData.DoWork += BackgroundWorkerData_DoWork;
+                    // This event will be raised when we call ReportProgress
+                    BackgroundWorkerData.ProgressChanged += BackgroundWorkerData_ProgressChanged;
+                    BackgroundWorkerData.RunWorkerCompleted += BackgroundWorkerData_RunWorkerCompleted;
+                    BackgroundWorkerData.RunWorkerAsync();
+                }
+            }
+            catch (Exception Exception)
+            {
+                TextBoxStatusImport.AppendText("[!] Error ! " + Exception.Message + "\n");
+            }
         }
 
         private void OpenFileDialog_FileOk(object sender, CancelEventArgs e)
@@ -110,7 +118,14 @@ namespace Mercure
                 //Thread.Sleep(100);
 
                 // Write every article into BD
-                ControllerFurniture.WriteEachArticleDB(Index);
+                try
+                {
+                    ControllerFurniture.WriteEachArticleDB(Index);
+                }
+                catch (Exception Exception)
+                {
+                    TextBoxStatusImport.AppendText("[!] Error ! " + Exception.Message + "\n");
+                }
             }
         }
 
