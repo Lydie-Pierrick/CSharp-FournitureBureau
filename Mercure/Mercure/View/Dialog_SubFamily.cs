@@ -17,39 +17,19 @@ namespace Mercure.View
             this.Size = new Size(500, 400);
 
             ListViewBasic.Columns.Add("RefSubFamily");
-            ListViewBasic.Columns.Add("RefFamily");
-            ListViewBasic.Columns.Add("Name");
+            ListViewBasic.Columns.Add("Family Name");
+            ListViewBasic.Columns.Add("SubFamily Name");
 
             ControllerManagement.RefreshListViewSubFamily();
         }
 
-        protected override void ListViewBasic_KeyDown(object sender, KeyEventArgs e)
+        protected new void ListViewBasic_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.F5)
             {
                 ControllerManagement.RefreshListViewSubFamily();
                 MessageBox.Show("List view refreshed !");
             }
-
-            if (e.KeyData == Keys.Delete)
-            {
-                Delete();
-            }
-        }
-
-        protected override void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Add();
-        }
-
-        protected override void modifyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Modify();
-        }
-
-        protected override void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Delete();
         }
 
         protected override void Delete()

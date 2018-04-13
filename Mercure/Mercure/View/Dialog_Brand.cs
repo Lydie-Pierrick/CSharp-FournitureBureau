@@ -29,26 +29,6 @@ namespace Mercure.View
                 ControllerManagement.RefreshListViewBrand();
                 MessageBox.Show("List view refreshed !");
             }
-
-            if (e.KeyData == Keys.Delete)
-            {
-                Delete();
-            }
-        }
-
-        protected override void addToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Add();
-        }
-
-        protected override void modifyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Modify();
-        }
-
-        protected override void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Delete();
         }
 
         protected override void Delete()
