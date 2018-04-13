@@ -74,6 +74,7 @@ namespace Mercure
             {
                 ControllerFurniture.RefreshListView();
                 MessageBox.Show("List view refreshed !");
+                Mercure.MainWindow.StatusSQL_Label.Text = "List view refreshed !";
             }
 
             if (e.KeyData == Keys.Delete)
@@ -105,6 +106,8 @@ namespace Mercure
         {
             Dialog_AddEditArticle Dialog_AddEditArticle = new Dialog_AddEditArticle();
             Dialog_AddEditArticle.ShowDialog(this);
+
+            Mercure.MainWindow.StatusSQL_Label.Text = "Succesfully added the article.";
         }
 
         private void ModifyArticle()
@@ -137,6 +140,7 @@ namespace Mercure
                 if (ControllerFurniture.DeleteArticle(RefArticle))
                 {
                     ControllerFurniture.RefreshListView();
+                    Mercure.MainWindow.StatusSQL_Label.Text = "Succesfully deleted the article.";
                     MessageBox.Show("Succesfully deleted the article !");
                 }
                 else

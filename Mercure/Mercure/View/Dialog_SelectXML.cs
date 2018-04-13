@@ -154,6 +154,7 @@ namespace Mercure
                 }
 
                 ControllerFurniture.RefreshListView();
+                Mercure.MainWindow.StatusSQL_Label.Text = "You have imported XML File.";
             }
 
             TextBoxStatusImport.AppendText("\nList of errors :\n");
@@ -169,7 +170,7 @@ namespace Mercure
                     TextBoxStatusImport.AppendText("[!] Error ! " + Exception.Message + "\n");
                 }
 
-                ListException.Clear();
+                ListException.Clear();                
             }
         }
     }

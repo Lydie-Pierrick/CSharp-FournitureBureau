@@ -38,7 +38,7 @@
             this.familyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subFamilyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StatusSQL_Container = new System.Windows.Forms.StatusStrip();
-            this.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
+            MainWindow.StatusSQL_Label = new System.Windows.Forms.ToolStripStatusLabel();
             this.addAnArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyThisAritcleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteThisArticleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -119,7 +119,7 @@
             // StatusSQL_Container
             // 
             this.StatusSQL_Container.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusSQL_Label});
+            MainWindow.StatusSQL_Label});
             this.StatusSQL_Container.Location = new System.Drawing.Point(0, 380);
             this.StatusSQL_Container.Name = "StatusSQL_Container";
             this.StatusSQL_Container.Size = new System.Drawing.Size(808, 22);
@@ -128,9 +128,9 @@
             // 
             // StatusSQL_Label
             // 
-            this.StatusSQL_Label.Name = "StatusSQL_Label";
-            this.StatusSQL_Label.Size = new System.Drawing.Size(39, 17);
-            this.StatusSQL_Label.Text = "Status";
+            MainWindow.StatusSQL_Label.Name = "StatusSQL_Label";
+            MainWindow.StatusSQL_Label.Size = new System.Drawing.Size(39, 17);
+            MainWindow.StatusSQL_Label.Text = "Status";
             // 
             // addAnArticleToolStripMenuItem
             // 
@@ -227,7 +227,7 @@
         private System.Windows.Forms.MenuStrip Menu_Container;
         private System.Windows.Forms.ToolStripMenuItem Menu_Choice1;
         private System.Windows.Forms.StatusStrip StatusSQL_Container;
-        private System.Windows.Forms.ToolStripStatusLabel StatusSQL_Label;
+        public static System.Windows.Forms.ToolStripStatusLabel StatusSQL_Label;
         private System.Windows.Forms.ToolStripMenuItem openXMLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addAnArticleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyThisAritcleToolStripMenuItem;

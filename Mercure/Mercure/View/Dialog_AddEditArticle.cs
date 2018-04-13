@@ -67,7 +67,7 @@ namespace Mercure.View
                 ComboBoxSubFamily.Items.Add(SubFamily);
             }
 
-            ComboBoxSubFamily.SelectedIndex = 0;
+            ComboBoxSubFamily.SelectedIndex = -1;
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
@@ -91,6 +91,8 @@ namespace Mercure.View
                 }
 
                 ControllerFurniture.RefreshListView();
+
+                Mercure.MainWindow.StatusSQL_Label.Text = "Operation on Article.";
 
                 if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
                 {

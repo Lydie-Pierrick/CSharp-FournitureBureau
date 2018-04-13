@@ -58,7 +58,11 @@ namespace Mercure.View
                 
                 ControllerManagement.RefreshListViewFamily();
 
-                
+                if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
+                {
+                    Mercure.MainWindow.StatusSQL_Label.Text = "Operation on family.";
+                    Close();
+                }
             }
             catch (Exception Exception)
             {

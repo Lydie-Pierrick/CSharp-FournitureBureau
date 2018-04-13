@@ -64,6 +64,7 @@ namespace Mercure.View
                             Close();
                         }
                     }
+                    
                 }
                 else if (Dialog_Basic.ModifyOrAdd == 1)
                 {
@@ -71,7 +72,8 @@ namespace Mercure.View
 
                     if (MessageBox.Show("Successfully added the brand !") == DialogResult.OK)
                     {
-                        Close();
+                      Mercure.MainWindow.StatusSQL_Label.Text = "Operation on subFamily.";
+                      Close();
                     }
                 }
                 
