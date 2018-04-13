@@ -28,8 +28,6 @@ namespace Mercure.View
             TextBoxDescription.Text = Description;
             ComboBoxBrand.SelectedIndex = ComboBoxBrand.FindStringExact(Brand);
 
-            // Debug ici
-
             ComboBoxFamily.SelectedIndex = ComboBoxFamily.FindStringExact(Family);
             ComboBoxSubFamily.SelectedIndex = ComboBoxSubFamily.FindStringExact(SubFamily);
             TextBoxPrice.Text = Price.ToString();
