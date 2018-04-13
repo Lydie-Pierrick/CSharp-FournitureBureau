@@ -83,9 +83,9 @@ namespace Mercure.Controller
                 ThreadUpdateProgressText = new Thread(new ParameterizedThreadStart(UpdateProgressText));
                 ThreadUpdateProgressText.Start(TextProgress);
             }        
-            catch(Exception e)
+            catch(Exception Exception)
             {
-                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                throw Exception;
             }
         }
 
@@ -106,13 +106,13 @@ namespace Mercure.Controller
                 // Get the number of nodes
                 NumberNodes = NodeListRoot.Count;
             }
-            catch (System.IO.FileNotFoundException)
+            catch (System.IO.FileNotFoundException FileException)
             {
-                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("Error XMLfile not found !");
+                throw FileException;
             }
-            catch (Exception e)
+            catch (Exception Exception)
             {
-                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
+                throw Exception;
             }
         }
 
@@ -146,7 +146,7 @@ namespace Mercure.Controller
         /// The action if the user want to init and set data into DB with xml file
         /// </summary>
         /// <returns> The bool if success </returns>
-        public bool NewXMLImport()
+        public void NewXMLImport()
         {
             try
             {
@@ -158,32 +158,26 @@ namespace Mercure.Controller
 
                 LoadXML();
             }
-            catch (Exception e)
+            catch (Exception Exception)
             {
-                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw Exception;
             }
-
-            return true;
         }
 
         /// <summary>
         /// The action if the user want to update DB with xml file
         /// </summary>
         /// <returns> The bool if success </returns>
-        public bool UpdateXMLImport()
+        public void UpdateXMLImport()
         {
             try
             {
                 LoadXML();
             }
-            catch (Exception e)
+            catch (Exception Exception)
             {
-                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                throw Exception;
             }
-
-            return true;
         }
 
         /// <summary>
@@ -289,9 +283,9 @@ namespace Mercure.Controller
             {
                 DaoFurniture.CreateOrModifyArticleXML(Article);
             }
-            catch (Exception e)
+            catch (Exception Exception)
             {
-                throw e;
+                throw Exception;
             }
         }
 
@@ -306,9 +300,9 @@ namespace Mercure.Controller
             {
                 DaoFurniture.CreateOrModifyArticle(Article, ActionEdit);
             }
-            catch (Exception e)
+            catch (Exception Exception)
             {
-                throw e;
+                throw Exception;
             }
         }
 

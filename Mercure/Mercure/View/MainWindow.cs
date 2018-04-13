@@ -181,5 +181,10 @@ namespace Mercure
             Dialog_SubFamily Dialog_SubFamily = new Dialog_SubFamily();
             Dialog_SubFamily.ShowDialog(this);
         }
+
+        private void StatusSQL_Label_TextChanged(object sender, EventArgs e)
+        {
+            StatusSQL_Container.Refresh();
+        }
     }
 }
