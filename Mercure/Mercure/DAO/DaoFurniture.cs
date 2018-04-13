@@ -35,7 +35,11 @@ namespace Mercure.DAO
         }
 
         // --- Create or modify section
-        
+
+        /// <summary>
+        /// Create or modify article from the Dialog_SelectXML
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
         public void CreateOrModifyArticleXML(Article Article)
         {
             try
@@ -70,6 +74,11 @@ namespace Mercure.DAO
             }
         }
 
+        /// <summary>
+        /// Create or modify article from the Dialog_AddEditArticle
+        /// </summary>
+        /// <param name="Article"> The Article object to add </param>
+        /// <param name="ActioNEdit"> The action wanted by the user, if true it's edit action</param>
         public void CreateOrModifyArticle(Article Article, bool ActionEdit)
         {
             try
