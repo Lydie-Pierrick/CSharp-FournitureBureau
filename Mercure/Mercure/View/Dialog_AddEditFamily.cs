@@ -37,6 +37,7 @@ namespace Mercure.View
 
                 if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
                 {
+                    Mercure.MainWindow.StatusSQL_Label.Text = "Operation on family.";
                     Close();
                 }
             }
