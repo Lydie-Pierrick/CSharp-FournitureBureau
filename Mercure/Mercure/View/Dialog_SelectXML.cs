@@ -18,12 +18,14 @@ namespace Mercure
         private ControllerFurniture ControllerFurniture;
         public static Dialog_SelectionXML DialogSelectionXML;
         private BackgroundWorker BackgroundWorkerData;
+        private static List<Exception> ListException;
 
         public Dialog_SelectionXML()
         {
             InitializeComponent();
             ControllerFurniture = new ControllerFurniture();
             DialogSelectionXML = this;
+            ListException = new List<Exception>();
         }
 
        
@@ -65,8 +67,6 @@ namespace Mercure
                         MessageBox.Show("Please select \"New\" or \"Update\" checkbox !", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    //ProgressBar_ImportXML.Minimum = 1;
-                    //ProgressBar_ImportXML.Maximum = 100;
                     BackgroundWorkerData = new BackgroundWorker();
                     BackgroundWorkerData.WorkerReportsProgress = true;
                     // This event will be raised on the worker thread when the worker starts
@@ -124,7 +124,7 @@ namespace Mercure
                 }
                 catch (Exception Exception)
                 {
-                    TextBoxStatusImport.AppendText("[!] Error ! " + Exception.Message + "\n");
+                    ListException.Add(Exception);
                 }
             }
         }
@@ -150,11 +150,27 @@ namespace Mercure
                 ProgressBar_ImportXML.Value = 100;
                 if (MessageBox.Show("Importation XML completed !") == DialogResult.OK)
                 {
-                    Close();
+                    ProgressBar_ImportXML.Value = 0;
                 }
 
                 ControllerFurniture.RefreshListView();
-            }        
+            }
+
+            TextBoxStatusImport.AppendText("\nList of errors :\n");
+
+            if (ListException.Count == 0)
+            {
+                TextBoxStatusImport.AppendText("Empty error list\n");
+            }
+            else
+            {
+                foreach (Exception Exception in ListException)
+                {
+                    TextBoxStatusImport.AppendText("[!] Error ! " + Exception.Message + "\n");
+                }
+
+                ListException.Clear();
+            }
         }
     }
 }
