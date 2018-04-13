@@ -90,7 +90,7 @@ namespace Mercure.View
                     ControllerFurniture.CreateOrModifyArticle(Article, true);
                 }
 
-                ControllerFurniture.RefreshListView();
+                ControllerFurniture.RefreshListView();                
 
                 if (MessageBox.Show("Successfully modified !") == DialogResult.OK)
                 {

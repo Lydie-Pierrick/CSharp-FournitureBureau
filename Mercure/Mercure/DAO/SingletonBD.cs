@@ -41,6 +41,8 @@ public class SingletonBD
             M_dbConnection = new SQLiteConnection();
             M_dbConnection.ConnectionString = @"Data Source=./Mercure.SQLITE; Version=3;";
             M_dbConnection.Open();
+
+            Mercure.MainWindow.StatusSQL_Label.Text = "Database connection successful.";
         }
         catch (SQLiteException e)
         {
