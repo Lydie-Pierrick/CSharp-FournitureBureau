@@ -29,6 +29,8 @@ namespace Mercure.View
                 ControllerManagement.RefreshListViewBrand();
                 MessageBox.Show("List view refreshed !");
             }
+
+            base.ListViewBasic_KeyDown(sender, e);
         }
 
         protected override void Delete()

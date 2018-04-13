@@ -23,13 +23,15 @@ namespace Mercure.View
             ControllerManagement.RefreshListViewSubFamily();
         }
 
-        protected new void ListViewBasic_KeyDown(object sender, KeyEventArgs e)
+        protected override void ListViewBasic_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.F5)
             {
                 ControllerManagement.RefreshListViewSubFamily();
                 MessageBox.Show("List view refreshed !");
             }
+
+            base.ListViewBasic_KeyDown(sender, e);
         }
 
         protected override void Delete()
