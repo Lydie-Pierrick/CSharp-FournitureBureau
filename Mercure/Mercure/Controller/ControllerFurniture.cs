@@ -79,7 +79,7 @@ namespace Mercure.Controller
             }        
             catch(Exception e)
             {
-                Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText(e.Message);
+                MessageBox.Show("Error during new import XML ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -99,10 +99,6 @@ namespace Mercure.Controller
                 NodeListRoot = NodeRoot.ChildNodes;
                 // Get the number of nodes
                 NumberNodes = NodeListRoot.Count;
-
-                double threshold = 0.8;
-                //double coef = Levenshtein.ComputeCorrelation(song.Artist, txtArtist.Text, false);
-                //if (coef > threshold)
             }
             catch (System.IO.FileNotFoundException)
             {
@@ -165,6 +161,84 @@ namespace Mercure.Controller
             }
 
             return true;
+        }
+
+        public static Family CheckFamilySyntax(string FamilyToAdd)
+        {
+            List<Family> ListFamily = GetAllFamily();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            Family Family = null;
+
+            foreach (Family FamilyEntry in ListFamily)
+            {
+                Temp = DistanceLevenshtein(FamilyToAdd, FamilyEntry.GetSetFamilyName);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    Family = FamilyEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return Family;
+            else
+                return null;
+        }
+
+        public static SubFamily CheckSubFamilySyntax(string SubFamilyToAdd)
+        {
+            List<SubFamily> ListSubFamily = GetAllSubFamily();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            SubFamily SubFamily = null;
+
+            foreach (SubFamily SubFamilyEntry in ListSubFamily)
+            {
+                Temp = DistanceLevenshtein(SubFamilyToAdd, SubFamilyEntry.GetSetSubFamilyName);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    SubFamily = SubFamilyEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return SubFamily;
+            else
+                return null;
+        }
+
+        public static Brand CheckBrandSyntax(string BrandToAdd)
+        {
+            List<Brand> ListBrand = GetAllBrands();
+
+            int BestDistance = 255;
+            int Temp = 0;
+
+            Brand Brand = null;
+
+            foreach (Brand BrandEntry in ListBrand)
+            {
+                Temp = DistanceLevenshtein(BrandToAdd, BrandEntry.GetSetNameBrand);
+
+                if (Temp < BestDistance)
+                {
+                    BestDistance = Temp;
+                    Brand = BrandEntry;
+                }
+            }
+
+            if (BestDistance <= 2)
+                return Brand;
+            else
+                return null;
         }
 
         public void CreateOrModifyArticleXML(Article Article)
@@ -257,17 +331,17 @@ namespace Mercure.Controller
             return DaoFurniture.GetAllArticles();
         }
 
-        public List<Brand> GetAllBrands()
+        public static List<Brand> GetAllBrands()
         {
             return DaoFurniture.GetAllBrands();
         }
 
-        public List<Family> GetAllFamily()
+        public static List<Family> GetAllFamily()
         {
             return DaoFurniture.GetAllFamily();
         }
 
-        public List<SubFamily> GetAllSubFamily()
+        public static List<SubFamily> GetAllSubFamily()
         {
             return DaoFurniture.GetAllSubFamily();
         }
@@ -292,6 +366,44 @@ namespace Mercure.Controller
         private bool ArticleExist(string RefArticle)
         {
             return DaoFurniture.ArticleExist(RefArticle);
+        }
+
+        /// <summary>
+        /// Compute the distance between tow string
+        /// </summary>
+        /// <param name="s"> The first string </param>
+        /// <param name="t">The second string </param>
+        /// <returns> Distance of 2 strings </returns>
+        private static int DistanceLevenshtein(string s, string t)
+        {
+            s = s.ToLower();
+            t = t.ToLower();
+
+            int n = s.Length;
+            int m = t.Length;
+            int[,] d = new int[n + 1, m + 1];
+
+            if (n == 0)
+                return m;
+
+            if (m == 0)
+                return n;
+
+            for (int i = 0; i <= n; d[i, 0] = i++) { }
+            for (int j = 0; j <= m; d[0, j] = j++) { }
+
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j <= m; j++)
+                {
+                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+
+                    d[i, j] = Math.Min(
+                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
+                        d[i - 1, j - 1] + cost);
+                }
+            }
+            return d[n, m];
         }
     }
 }

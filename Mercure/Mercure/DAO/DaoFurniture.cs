@@ -222,15 +222,15 @@ namespace Mercure.DAO
          *
          *  @return id of brand
          */
-        private int GetOrCreateBrand(string Brand)
+        private int GetOrCreateBrand(string BrandName)
         {
-            int IdBrand = 0;
-
-            IdBrand = GetBrandId(Brand);
+            // Check family syntax
+            Brand Brand;
+            Brand = ControllerFurniture.CheckBrandSyntax(BrandName);
 
             // Create if it does not exist
-            if (IdBrand == -1)
-            {
+            if (Brand == null)
+            {                
                 // Get last id for autoincrement
                 int LastId = 0;
 
@@ -253,7 +253,7 @@ namespace Mercure.DAO
 
                     QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
                     QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastRefBrand + 1);
-                    QueryInsertBrand.Parameters.AddWithValue("@RefNom", Brand);
+                    QueryInsertBrand.Parameters.AddWithValue("@RefNom", BrandName);
                     CountInsertRowBrand += QueryInsertBrand.ExecuteNonQuery();
 
                     LastRefBrand++;
@@ -262,7 +262,7 @@ namespace Mercure.DAO
                 return LastId + 1;
             }
 
-            return IdBrand;
+            return Brand.GetSetIdBrand;
         }
 
         /*
@@ -347,11 +347,11 @@ namespace Mercure.DAO
          */
         private int GetOrCreateFamily(string FamilyName)
         {
-            int IdFamily = 0;
-            IdFamily = GetFamilyId(FamilyName);
+            // Check family syntax
+            Family Family;
+            Family = ControllerFurniture.CheckFamilySyntax(FamilyName);
 
-            // Create if it does not exist
-            if (IdFamily == -1)
+            if (Family == null)
             {
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
@@ -379,36 +379,8 @@ namespace Mercure.DAO
                 return LastRefFamily;
             }
 
-            return IdFamily;
-        }
-
-        /*
-         *  Get Id of SubFamily
-         *
-         *  @return id of subfamily or -1 if it does not exist
-         */
-        private int GetSubFamilyId(string SubFamilyName)
-        {
-            int IdSubFamily = 0;
-
-            SQLiteCommand QueryGetSubFamily = new SQLiteCommand();
-            QueryGetSubFamily.Connection = M_dbConnection;
-
-            // Get sub family if it exists
-            QueryGetSubFamily.CommandText = "SELECT RefSousFamille FROM SousFamilles WHERE Nom = @Nom;";
-            QueryGetSubFamily.Parameters.AddWithValue("@Nom", SubFamilyName);
-            SQLiteDataReader GetSubFamilyReader = QueryGetSubFamily.ExecuteReader();
-
-            if (!GetSubFamilyReader.HasRows)
-            {
-                return -1;
-            }
-
-            GetSubFamilyReader.Read();
-            IdSubFamily = GetSubFamilyReader.GetInt32(0);
-
-            return IdSubFamily;
-        }
+            return Family.GetSetIdFamily;
+        }      
 
         /*
          *  Get Name of SubFamily
@@ -438,12 +410,12 @@ namespace Mercure.DAO
          */
         private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
         {
-            int IdSubFamily = 0;
-
-            IdSubFamily = GetSubFamilyId(SubFamilyName);
+            // Check SubFamily syntax
+            SubFamily SubFamily;
+            SubFamily = ControllerFurniture.CheckSubFamilySyntax(SubFamilyName);
 
             // Create if it does not exist
-            if (IdSubFamily == -1)
+            if (SubFamily == null)
             {
                 // Get last id for autoincrement
                 int LastId = 0;
@@ -462,7 +434,7 @@ namespace Mercure.DAO
                 // Get Family for this SubFamily
                 int IdFamily = GetOrCreateFamily(FamilyName);
 
-                SQLiteCommand QueryCreateModify  = new SQLiteCommand();
+                SQLiteCommand QueryCreateModify = new SQLiteCommand();
                 QueryCreateModify.Connection = M_dbConnection;
 
                 // Insert new sub family
@@ -477,7 +449,7 @@ namespace Mercure.DAO
                 return LastId + 1;
             }
 
-            return IdSubFamily;
+            return SubFamily.GetSetIdSubFamily;
         }
 
         // Delete
