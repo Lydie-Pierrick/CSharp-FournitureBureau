@@ -77,6 +77,11 @@ namespace Mercure
                 Mercure.MainWindow.StatusSQL_Label.Text = "List view refreshed !";
             }
 
+            if (e.KeyData == Keys.Enter)
+            {
+                ModifyArticle();
+            }
+
             if (e.KeyData == Keys.Delete)
             {
                 DeleteArticle();
