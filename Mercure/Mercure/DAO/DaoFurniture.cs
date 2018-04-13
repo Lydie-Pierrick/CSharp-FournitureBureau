@@ -251,36 +251,39 @@ namespace Mercure.DAO
 
             // Create if it does not exist
             if (Brand == null)
-            {                
+            {
                 // Get last id for autoincrement
                 int LastId = 0;
 
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
 
-                QueryLastInsertId.CommandText = "SELECT * FROM Marques;";
+                QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM Marques;";
                 SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
+
+                LastInsertReader.Read();
 
                 if (!LastInsertReader.HasRows)
                 {
                     LastRefBrand = 0;
                 }
-
-                // Insert new brand
-
-                using (var QueryInsertBrand = new SQLiteCommand())
+                else
                 {
-                    QueryInsertBrand.Connection = M_dbConnection;
-
-                    QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
-                    QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastRefBrand + 1);
-                    QueryInsertBrand.Parameters.AddWithValue("@RefNom", BrandName);
-                    CountInsertRowBrand += QueryInsertBrand.ExecuteNonQuery();
-
-                    LastRefBrand++;
+                    LastRefBrand = LastInsertReader.GetInt32(0);
                 }
 
-                return LastId + 1;
+                // Insert new brand
+                SQLiteCommand QueryInsertBrand = new SQLiteCommand();
+                QueryInsertBrand.Connection = M_dbConnection;
+
+                QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
+                QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastRefBrand + 1);
+                QueryInsertBrand.Parameters.AddWithValue("@RefNom", BrandName);
+                CountInsertRowBrand += QueryInsertBrand.ExecuteNonQuery();
+
+                LastRefBrand++;
+
+                return LastRefBrand;
             }
 
             return Brand.GetSetIdBrand;
@@ -378,12 +381,18 @@ namespace Mercure.DAO
                 QueryLastInsertId.Connection = M_dbConnection;
 
                 // Get last id for autoincrement
-                QueryLastInsertId.CommandText = "SELECT * FROM Familles;";
+                QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM Familles;";
                 SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
+
+                LastInsertReader.Read();
 
                 if (!LastInsertReader.HasRows)
                 {
                     LastRefFamily = 0;
+                }
+                else
+                {
+                    LastRefFamily = LastInsertReader.GetInt32(0);
                 }
 
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
@@ -438,18 +447,21 @@ namespace Mercure.DAO
             // Create if it does not exist
             if (SubFamily == null)
             {
-                // Get last id for autoincrement
-                int LastId = 0;
-
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
 
-                QueryLastInsertId.CommandText = "SELECT * FROM SousFamilles;";
+                QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM SousFamilles;";
                 SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
+
+                LastInsertReader.Read();
 
                 if (!LastInsertReader.HasRows)
                 {
                     LastRefSubFamily = 0;
+                }
+                else
+                {
+                    LastRefSubFamily = LastInsertReader.GetInt32(0);
                 }
 
                 // Get Family for this SubFamily
@@ -467,7 +479,7 @@ namespace Mercure.DAO
 
                 LastRefSubFamily++;
 
-                return LastId + 1;
+                return LastRefSubFamily;
             }
 
             return SubFamily.GetSetIdSubFamily;
