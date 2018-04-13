@@ -67,9 +67,10 @@ namespace Mercure.Controller
                 Article.GetSetRefArticle = NodeListRoot[Index].SelectSingleNode("refArticle").InnerText;
                 Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
                 Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
-                Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
-
+                Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;            
                 Article.GetSetPriceHT = String.Format("{0:0.00}", NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
+
+                CheckArticle(Article);
 
                 // Write this Article into DB
                 CreateOrModifyArticleXML(Article);
@@ -87,6 +88,22 @@ namespace Mercure.Controller
             {
                 throw Exception;
             }
+        }
+
+        private void CheckArticle(Article Article)
+        {
+            if (Article.GetSetDescription == "")
+                throw new Exception("For one article : Empty Description");
+            if (Article.GetSetRefArticle == "")
+                throw new Exception("For one article : Empty Ref Article");
+            if (Article.GetSetBrand == "")
+                throw new Exception("For one article : Empty Brand");
+            if (Article.GetSetFamily == "")
+                throw new Exception("For one article : Empty Family");
+            if (Article.GetSetSubFamily == "")
+                throw new Exception("For one article : Empty SubFamily");
+            if (Article.GetSetPriceHT == "")
+                throw new Exception("For one article : Empty Price HT");
         }
 
         /// <summary>
