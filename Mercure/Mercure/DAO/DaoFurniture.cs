@@ -252,9 +252,6 @@ namespace Mercure.DAO
             // Create if it does not exist
             if (Brand == null)
             {
-                // Get last id for autoincrement
-                int LastId = 0;
-
                 SQLiteCommand QueryLastInsertId = new SQLiteCommand();
                 QueryLastInsertId.Connection = M_dbConnection;
 
@@ -665,6 +662,29 @@ namespace Mercure.DAO
 
                 // Add this article into the list
                 ListSubFamily.Add(SubFamily);
+            }
+
+            return ListSubFamily;
+        }
+
+        /// <summary>
+        /// Get list of all quantity of article
+        /// </summary>
+        /// <returns> The list of quantity </returns>
+        public static List<int> GetAllQuantity()
+        {
+            List<int> ListSubFamily = new List<int>();
+
+            SQLiteCommand QueryGetAllQuantityArticle = new SQLiteCommand();
+            QueryGetAllQuantityArticle.CommandText = "SELECT DISTINCT Quantite FROM Articles;";
+            QueryGetAllQuantityArticle.Connection = SingletonBD.GetInstance.GetDB();
+            SQLiteDataReader QuantiteArticleReader = QueryGetAllQuantityArticle.ExecuteReader();
+
+            while (QuantiteArticleReader.Read())
+            {
+                int Quantity = QuantiteArticleReader.GetInt32(0);
+
+                ListSubFamily.Add(Quantity);
             }
 
             return ListSubFamily;

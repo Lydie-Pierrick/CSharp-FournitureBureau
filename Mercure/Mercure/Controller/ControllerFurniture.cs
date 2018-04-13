@@ -345,15 +345,24 @@ namespace Mercure.Controller
         /// </summary>
         public void RefreshListView()
         {
-            int NumArticle;
             List<Article> ListArticles = GetAllArticles();
+            List<int> ListQuantity = GetAllQuantity();
+
+            Dictionary<int, ListViewGroup> ListViewGroup = new Dictionary<int, ListViewGroup>();
+
+            foreach (int Quantity in ListQuantity)
+            {
+                ListViewGroup.Add(Quantity, new ListViewGroup("Quantity: " + Quantity, HorizontalAlignment.Left));
+                MainWindow.MainWindowForm.ListViewArticles.Groups.Add(ListViewGroup[Quantity]);
+            }
 
             MainWindow.MainWindowForm.ListViewArticles.Items.Clear();
 
             // Show all the data on the ListView
-            for (NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
-            {
+            for (int NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
+            {                               
                 ListViewItem Line = AddArticleToListView(ListArticles[NumArticle]);
+                ListViewGroup[ListArticles[NumArticle].GetSetQuantity].Items.Add(Line);
                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
 
@@ -434,6 +443,15 @@ namespace Mercure.Controller
         public static List<SubFamily> GetAllSubFamily()
         {
             return DaoFurniture.GetAllSubFamily();
+        }
+
+        /// <summary>
+        /// Get list of all quantity of article
+        /// </summary>
+        /// <returns> The list of quantity </returns>
+        public static List<int> GetAllQuantity()
+        {
+            return DaoFurniture.GetAllQuantity();
         }
 
         /// <summary>
