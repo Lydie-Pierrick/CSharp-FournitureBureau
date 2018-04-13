@@ -80,9 +80,13 @@ namespace Mercure.Controller
 
         public ListViewItem AddSubFamilyToListView(SubFamily SubFamily)
         {
+            string SubFamilyName = SubFamily.GetSetSubFamilyName;
+            int IdFamily = DaoFurniture.GetFamilyIdOfSubFamily(SubFamilyName);
+            string FamilyName = DaoFurniture.GetFamilyName(IdFamily);
+
             ListViewItem Line = new ListViewItem(SubFamily.GetSetIdSubFamily.ToString());
-            Line.SubItems.Add(" ");
-            Line.SubItems.Add(SubFamily.GetSetSubFamilyName);
+            Line.SubItems.Add(FamilyName);
+            Line.SubItems.Add(SubFamilyName);
 
             return Line;
         }
@@ -122,6 +126,30 @@ namespace Mercure.Controller
         public bool DeleteSubFamily(int RefSubfamily)
         {
             return DaoFurniture.DeleteSubFamily(RefSubfamily);
+        }
+
+        public bool InsertBrand(string BrandName)
+        {
+            if (DaoFurniture.GetOrCreateBrand(BrandName) != 0)
+                return true;
+            else
+                return false;
+        }
+       
+        public bool InsertFamily(string FamilyName)
+        {
+            if (DaoFurniture. GetOrCreateFamily(FamilyName) != 0)
+                return true;
+            else
+                return false;
+        }
+
+        public bool InsertSubFamily(string SubFamilyName, string FamilyName)
+        {
+            if (DaoFurniture.GetOrCreateSubFamily(SubFamilyName, FamilyName) != 0)
+                return true;
+            else
+                return false;
         }
     }
 }

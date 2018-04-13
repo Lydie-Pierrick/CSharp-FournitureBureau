@@ -27,7 +27,11 @@ namespace Mercure.View
         }
 
         protected virtual void ListViewBasic_KeyDown(object sender, KeyEventArgs e)
-        {     
+        {
+            if (e.KeyData == Keys.Delete)
+            {
+                Delete();
+            }
         }
 
         private void ListViewBasic_MouseClick(object sender, MouseEventArgs e)
@@ -39,16 +43,29 @@ namespace Mercure.View
             }  
         }
 
-        protected virtual void addToolStripMenuItem_Click(object sender, EventArgs e)
+        protected  void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Add();
         }
 
-        protected virtual void modifyToolStripMenuItem_Click(object sender, EventArgs e)
+        protected void modifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Modify();
         }
 
-        protected virtual void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        protected void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Delete();
+        }
+
+        protected void addToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Add();
+        }
+
+        private void ListViewBasic_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Modify();
         }
 
         protected virtual void Delete()

@@ -48,7 +48,7 @@
             // 
             this.LabelRefSubFamily.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LabelRefSubFamily.AutoSize = true;
-            this.LabelRefSubFamily.Location = new System.Drawing.Point(9, 21);
+            this.LabelRefSubFamily.Location = new System.Drawing.Point(44, 21);
             this.LabelRefSubFamily.Name = "LabelRefSubFamily";
             this.LabelRefSubFamily.Size = new System.Drawing.Size(89, 12);
             this.LabelRefSubFamily.TabIndex = 0;
@@ -59,7 +59,7 @@
             // 
             this.TextRefSubFamily.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.TextRefSubFamily.AutoSize = true;
-            this.TextRefSubFamily.Location = new System.Drawing.Point(111, 21);
+            this.TextRefSubFamily.Location = new System.Drawing.Point(181, 21);
             this.TextRefSubFamily.Name = "TextRefSubFamily";
             this.TextRefSubFamily.Size = new System.Drawing.Size(11, 12);
             this.TextRefSubFamily.TabIndex = 1;
@@ -70,7 +70,7 @@
             // 
             this.LabelSubFamilyName.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LabelSubFamilyName.AutoSize = true;
-            this.LabelSubFamilyName.Location = new System.Drawing.Point(9, 75);
+            this.LabelSubFamilyName.Location = new System.Drawing.Point(44, 75);
             this.LabelSubFamilyName.Name = "LabelSubFamilyName";
             this.LabelSubFamilyName.Size = new System.Drawing.Size(89, 12);
             this.LabelSubFamilyName.TabIndex = 2;
@@ -80,16 +80,16 @@
             // TextBox
             // 
             this.TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.TextBox.Location = new System.Drawing.Point(111, 70);
+            this.TextBox.Location = new System.Drawing.Point(181, 70);
             this.TextBox.Name = "TextBox";
-            this.TextBox.Size = new System.Drawing.Size(130, 21);
+            this.TextBox.Size = new System.Drawing.Size(265, 21);
             this.TextBox.TabIndex = 3;
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.67213F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.32787F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.64365F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.35635F));
             this.tableLayoutPanel1.Controls.Add(this.LabelRefSubFamily, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.TextBox, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.TextRefSubFamily, 1, 0);
@@ -102,14 +102,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 45F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(244, 154);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(449, 154);
             this.tableLayoutPanel1.TabIndex = 4;
             // 
             // LabelFamily
             // 
             this.LabelFamily.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LabelFamily.AutoSize = true;
-            this.LabelFamily.Location = new System.Drawing.Point(33, 125);
+            this.LabelFamily.Location = new System.Drawing.Point(68, 125);
             this.LabelFamily.Name = "LabelFamily";
             this.LabelFamily.Size = new System.Drawing.Size(41, 12);
             this.LabelFamily.TabIndex = 4;
@@ -118,10 +118,11 @@
             // Combobox
             // 
             this.Combobox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.Combobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Combobox.FormattingEnabled = true;
-            this.Combobox.Location = new System.Drawing.Point(111, 121);
+            this.Combobox.Location = new System.Drawing.Point(181, 121);
             this.Combobox.Name = "Combobox";
-            this.Combobox.Size = new System.Drawing.Size(130, 20);
+            this.Combobox.Size = new System.Drawing.Size(265, 20);
             this.Combobox.TabIndex = 5;
             // 
             // BtnOK
@@ -129,20 +130,22 @@
             this.BtnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnOK.Location = new System.Drawing.Point(3, 12);
             this.BtnOK.Name = "BtnOK";
-            this.BtnOK.Size = new System.Drawing.Size(116, 23);
+            this.BtnOK.Size = new System.Drawing.Size(218, 23);
             this.BtnOK.TabIndex = 5;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
+            this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
             // 
             // BtnCancle
             // 
             this.BtnCancle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.BtnCancle.Location = new System.Drawing.Point(125, 12);
+            this.BtnCancle.Location = new System.Drawing.Point(227, 12);
             this.BtnCancle.Name = "BtnCancle";
-            this.BtnCancle.Size = new System.Drawing.Size(116, 23);
+            this.BtnCancle.Size = new System.Drawing.Size(219, 23);
             this.BtnCancle.TabIndex = 6;
             this.BtnCancle.Text = "Cancle";
             this.BtnCancle.UseVisualStyleBackColor = true;
+            this.BtnCancle.Click += new System.EventHandler(this.BtnCancle_Click);
             // 
             // tableLayoutPanel2
             // 
@@ -155,7 +158,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.94936F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.05063F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(250, 237);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(455, 237);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // tableLayoutPanel3
@@ -169,14 +172,14 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(244, 47);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(449, 47);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
             // Dialog_AddEditSubFamily
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(484, 261);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Name = "Dialog_AddEditSubFamily";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

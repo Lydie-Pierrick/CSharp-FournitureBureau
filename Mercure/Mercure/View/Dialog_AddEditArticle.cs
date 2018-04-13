@@ -92,14 +92,14 @@ namespace Mercure.View
 
                 ControllerFurniture.RefreshListView();                
 
-                if (MessageBox.Show("Successfully modified !") == DialogResult.OK)
+                if (MessageBox.Show("Operation accepted !") == DialogResult.OK)
                 {
                     Close();
                 }
             }
             catch(Exception Exception)
             {
-                MessageBox.Show("Error during the modification ! " + Exception.Message);
+                MessageBox.Show("Error during the operation ! " + Exception.Message);
             }
         }
 

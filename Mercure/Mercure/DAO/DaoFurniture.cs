@@ -243,7 +243,7 @@ namespace Mercure.DAO
         /// </summary>
         /// <param name="BrandName"> The brand name </param>
         /// <returns> The brand id </returns>
-        private int GetOrCreateBrand(string BrandName)
+        public int GetOrCreateBrand(string BrandName)
         {
             // Check family syntax
             Brand Brand;
@@ -340,7 +340,7 @@ namespace Mercure.DAO
         /// <summary>
         /// Get family id of subFamily
         /// </summary>
-        /// <param name="SubFamily"> The subFamily id </param>
+        /// <param name="SubFamily"> The SubFamily name </param>
         /// <returns> The id of family or -1 if it does not exist </returns>
         public int GetFamilyIdOfSubFamily(string SubFamily)
         {
@@ -367,9 +367,9 @@ namespace Mercure.DAO
         /// <summary>
         /// Get of create family
         /// </summary>
-        /// <param name="FamilyName"> The subFamily id </param>
+        /// <param name="FamilyName"> The Family name </param>
         /// <returns> The id of family </returns>
-        private int GetOrCreateFamily(string FamilyName)
+        public int GetOrCreateFamily(string FamilyName)
         {
             // Check family syntax
             Family Family;
@@ -438,7 +438,7 @@ namespace Mercure.DAO
         /// </summary>
         /// <param name="RefSubFamily"> The SubFamily id </param>
         /// <returns> The id of sub family </returns>
-        private int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
+        public int GetOrCreateSubFamily(string SubFamilyName, string FamilyName)
         {
             // Check SubFamily syntax
             SubFamily SubFamily;
