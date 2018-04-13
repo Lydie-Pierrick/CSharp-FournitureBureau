@@ -81,9 +81,16 @@ namespace Mercure.View
         {           
             try
             {
-                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, double.Parse(TextBoxPrice.Text), int.Parse(TextBoxQuantity.Text));
+                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, TextBoxPrice.Text, int.Parse(TextBoxQuantity.Text));
 
-                ControllerFurniture.CreateOrModifyArticle(Article);
+                if (TextBoxRefArticle.Enabled == true)
+                {
+                    ControllerFurniture.CreateOrModifyArticle(Article, false);
+                }
+                else
+                {
+                    ControllerFurniture.CreateOrModifyArticle(Article, true);
+                }
 
                 if (MessageBox.Show("Successfully modified !") == DialogResult.OK)
                 {

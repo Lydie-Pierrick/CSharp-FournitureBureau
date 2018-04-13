@@ -32,25 +32,60 @@ namespace Mercure.View
 
             if (e.KeyData == Keys.Delete)
             {
-                //DeleteBrand();
-                MessageBox.Show("Successfully deleted the family !");
+                Delete();
             }
         }
 
         protected override void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Successfully added the family !");
+            Add();
         }
 
         protected override void modifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Successfully modified the family !");
+            Modify();
         }
 
         protected override void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DeleteFamily();
-            MessageBox.Show("Successfully deleted the family !");
+            Delete();
+        }
+
+        protected override void Delete()
+        {
+            if (ListViewBasic.SelectedItems.Count != 0)
+            {
+                // Get RefFamily from the ListView
+                int RefFamily = int.Parse(ListViewBasic.SelectedItems[0].Text);
+
+                if (ControllerManagement.DeleteFamily(RefFamily))
+                {
+                    ControllerManagement.RefreshListViewFamily();
+                    MessageBox.Show("Succesfully deleted the Family !");
+                }
+                else
+                {
+                    MessageBox.Show("Error : Fail to delete the Family ! ");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error : Choose a Family before trying  to delete it !");
+            }
+        }
+
+        protected override void Add()
+        {
+            Dialog_AddEditFamily Dialog_AddEditFamily = new Dialog_AddEditFamily();
+            Dialog_AddEditFamily.ShowDialog(this);
+        }
+
+        protected override void Modify()
+        {
+            int RefFamily = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
+            string NameFamily = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
+            Dialog_AddEditFamily Dialog_AddEditFamily = new Dialog_AddEditFamily(RefFamily, NameFamily);
+            Dialog_AddEditFamily.ShowDialog(this);
         }
     }
 }

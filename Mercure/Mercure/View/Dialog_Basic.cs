@@ -50,5 +50,17 @@ namespace Mercure.View
         protected virtual void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
+
+        protected virtual void Delete()
+        {
+        }
+
+        protected virtual void Add()
+        {
+        }
+
+        protected virtual void Modify()
+        {
+        }
     }
 }

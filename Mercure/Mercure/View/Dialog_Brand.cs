@@ -32,25 +32,60 @@ namespace Mercure.View
 
             if (e.KeyData == Keys.Delete)
             {
-                //DeleteBrand();
-                MessageBox.Show("Successfully deleted the brand !");
+                Delete();
             }
         }
 
         protected override void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Successfully added the brand !");
+            Add();
         }
 
         protected override void modifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Successfully modified the brand !");
+            Modify();
         }
 
         protected override void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //DeleteBrand();
-            MessageBox.Show("Successfully deleted the brand !");
+            Delete();
+        }
+
+        protected override void Delete()
+        {
+            if (ListViewBasic.SelectedItems.Count != 0)
+            {
+                // Get RefBrand from the ListView
+                int RefBrand = int.Parse(ListViewBasic.SelectedItems[0].Text);
+
+                if (ControllerManagement.DeleteBrand(RefBrand))
+                {
+                    ControllerManagement.RefreshListViewBrand();
+                    MessageBox.Show("Succesfully deleted the brand !");
+                }
+                else
+                {
+                    MessageBox.Show("Error : Fail to delete the brand ! ");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Error : Choose a brand before trying  to delete it !");
+            }
+        }
+
+        protected override void Add()
+        {
+            Dialog_AddEditBrand Dialog_AddEditBrand = new Dialog_AddEditBrand();
+            Dialog_AddEditBrand.ShowDialog(this);
+        }
+
+        protected override void Modify()
+        {
+            int RefBrand = int.Parse(this.ListViewBasic.SelectedItems[0].Text);
+            string NameBrand = this.ListViewBasic.SelectedItems[0].SubItems[1].Text;
+            Dialog_AddEditBrand Dialog_AddEditBrand = new Dialog_AddEditBrand(RefBrand, NameBrand);
+            Dialog_AddEditBrand.ShowDialog(this);
         }
     }
 }

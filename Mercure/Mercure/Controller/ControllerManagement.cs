@@ -108,5 +108,20 @@ namespace Mercure.Controller
                 ColumnHeader.Width = -2;
             }
         }
+
+        public bool DeleteBrand(int RefBrand)
+        {
+            return DaoFurniture.DeleteBrand(RefBrand);
+        }
+
+        public bool DeleteFamily(int RefFamily)
+        {
+            return DaoFurniture.DeleteFamily(RefFamily);
+        }
+
+        public bool DeleteSubFamily(int RefSubfamily)
+        {
+            return DaoFurniture.DeleteSubFamily(RefSubfamily);
+        }
     }
 }
