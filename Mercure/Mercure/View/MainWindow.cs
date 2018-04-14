@@ -25,7 +25,7 @@ namespace Mercure
             ListViewArticles.Columns.Add("Quantity");
             
             ControllerFurniture = new ControllerFurniture();
-            ControllerFurniture.RefreshListView();
+            ControllerFurniture.RefreshListView(-1);
         }
 
         private void openXMLToolStripMenuItem_Click(object sender, EventArgs e)
@@ -38,6 +38,8 @@ namespace Mercure
         {
             ListViewArticles.Sort();
             this.ListViewArticles.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewArticles.Sorting);
+
+            ControllerFurniture.RefreshListView(e.Column);
         }
 
         private void SetTextBox()
@@ -72,7 +74,7 @@ namespace Mercure
         {
             if (e.KeyData == Keys.F5)
             {
-                ControllerFurniture.RefreshListView();
+                ControllerFurniture.RefreshListView(-1);
                 MessageBox.Show("List view refreshed !");
                 Mercure.MainWindow.StatusSQL_Label.Text = "List view refreshed !";
             }
@@ -144,7 +146,7 @@ namespace Mercure
 
                 if (ControllerFurniture.DeleteArticle(RefArticle))
                 {
-                    ControllerFurniture.RefreshListView();
+                    ControllerFurniture.RefreshListView(-1);
                     Mercure.MainWindow.StatusSQL_Label.Text = "Succesfully deleted the article.";
                     MessageBox.Show("Succesfully deleted the article !");
                 }

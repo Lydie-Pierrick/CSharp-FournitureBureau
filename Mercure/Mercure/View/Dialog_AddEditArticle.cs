@@ -90,7 +90,7 @@ namespace Mercure.View
                     ControllerFurniture.CreateOrModifyArticle(Article, true);
                 }
 
-                ControllerFurniture.RefreshListView();
+                ControllerFurniture.RefreshListView(-1);
 
                 Mercure.MainWindow.StatusSQL_Label.Text = "Operation on Article.";
 

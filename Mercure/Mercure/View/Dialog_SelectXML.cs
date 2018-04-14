@@ -153,7 +153,7 @@ namespace Mercure
                     ProgressBar_ImportXML.Value = 0;
                 }
 
-                ControllerFurniture.RefreshListView();
+                ControllerFurniture.RefreshListView(-1);
                 Mercure.MainWindow.StatusSQL_Label.Text = "You have imported XML File.";
             }
 

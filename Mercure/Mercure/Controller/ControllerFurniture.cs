@@ -27,6 +27,13 @@ namespace Mercure.Controller
         private Thread ThreadUpdateStatus;
         private Thread ThreadUpdateProgressText;
 
+        private const string RefArticleColumn = "0";
+        private const string DescriptionColumn = "1";
+        private const string BrandColumn = "2";
+        private const string SubFamilyColumn = "3";
+        private const string PriceColumn = "4";
+        private const string QuantityColumn = "5";
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -67,7 +74,7 @@ namespace Mercure.Controller
                 Article.GetSetRefArticle = NodeListRoot[Index].SelectSingleNode("refArticle").InnerText;
                 Article.GetSetBrand = NodeListRoot[Index].SelectSingleNode("marque").InnerText;
                 Article.GetSetFamily = NodeListRoot[Index].SelectSingleNode("famille").InnerText;
-                Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;            
+                Article.GetSetSubFamily = NodeListRoot[Index].SelectSingleNode("sousFamille").InnerText;
                 Article.GetSetPriceHT = String.Format("{0:0.00}", NodeListRoot[Index].SelectSingleNode("prixHT").InnerText);
 
                 CheckArticle(Article);
@@ -83,8 +90,8 @@ namespace Mercure.Controller
                 // Start a new thread to update the status text
                 ThreadUpdateProgressText = new Thread(new ParameterizedThreadStart(UpdateProgressText));
                 ThreadUpdateProgressText.Start(TextProgress);
-            }        
-            catch(Exception Exception)
+            }
+            catch (Exception Exception)
             {
                 throw Exception;
             }
@@ -339,41 +346,7 @@ namespace Mercure.Controller
 
             return Line;
         }
-
-        /// <summary>
-        /// Refresh the list view
-        /// </summary>
-        public void RefreshListView()
-        {
-            List<Article> ListArticles = GetAllArticles();
-            List<int> ListQuantity = GetAllQuantity();
-
-            Dictionary<int, ListViewGroup> ListViewGroup = new Dictionary<int, ListViewGroup>();
-
-            foreach (int Quantity in ListQuantity)
-            {
-                ListViewGroup.Add(Quantity, new ListViewGroup("Quantity: " + Quantity, HorizontalAlignment.Left));
-                MainWindow.MainWindowForm.ListViewArticles.Groups.Add(ListViewGroup[Quantity]);
-            }
-
-            MainWindow.MainWindowForm.ListViewArticles.Items.Clear();
-
-            // Show all the data on the ListView
-            for (int NumArticle = 0; NumArticle < ListArticles.Count; NumArticle ++)
-            {                               
-                ListViewItem Line = AddArticleToListView(ListArticles[NumArticle]);
-                ListViewGroup[ListArticles[NumArticle].GetSetQuantity].Items.Add(Line);
-                MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
-            }
-
-            // Autoresize widths of columns
-            foreach (ColumnHeader ColumnHeader in MainWindow.MainWindowForm.ListViewArticles.Columns)
-            {
-                // Width changes with the texts as well as headers
-                ColumnHeader.Width = -2; 
-            }
-        }
-
+       
         /// <summary>
         /// Update status text
         /// </summary>
@@ -381,7 +354,7 @@ namespace Mercure.Controller
         public void UpdateStatusText(Object Article)
         {
             // Delegate for updating TextBoxStatusImport in another dialog
-            Action<Article> Delegate = delegate(Article ArticleDelegate) 
+            Action<Article> Delegate = delegate (Article ArticleDelegate)
             {
                 Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("[Insert or update]: Article : " + ArticleDelegate.GetSetRefArticle);
                 Dialog_SelectionXML.DialogSelectionXML.TextBoxStatusImport.AppendText("\tBrand : " + ArticleDelegate.GetSetBrand);
@@ -401,7 +374,7 @@ namespace Mercure.Controller
         public void UpdateProgressText(Object Text)
         {
             // Delegate for updating TextBoxStatusImport in another dialog
-            Action<string> Delegate = delegate(string TextDelegate)
+            Action<string> Delegate = delegate (string TextDelegate)
             {
                 Dialog_SelectionXML.DialogSelectionXML.Label_Progress.Text = TextDelegate;
             };
@@ -512,6 +485,103 @@ namespace Mercure.Controller
                 }
             }
             return d[n, m];
+        }
+
+        /// <summary>
+        /// Refresh the list view
+        /// <param name="FilterIndex"> The Filter index </param>
+        /// </summary>
+        public void RefreshListView(int FilterIndex)
+        {
+            List<Article> ListArticles = GetAllArticles();
+
+            Dictionary<string, ListViewGroup> ListViewGroup = CreateGroupFilter(FilterIndex.ToString());
+
+            MainWindow.MainWindowForm.ListViewArticles.Items.Clear();
+
+            // Show all the data on the ListView
+            for (int NumArticle = 0; NumArticle < ListArticles.Count; NumArticle++)
+            {
+                ListViewItem Line = AddArticleToListView(ListArticles[NumArticle]);
+                SetGroupFilter(ListViewGroup, ListArticles, FilterIndex.ToString(), NumArticle, Line);
+                MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
+            }
+
+            // Autoresize widths of columns
+            foreach (ColumnHeader ColumnHeader in MainWindow.MainWindowForm.ListViewArticles.Columns)
+            {
+                // Width changes with the texts as well as headers
+                ColumnHeader.Width = -2;
+            }
+        }
+
+        private void SetGroupFilter(Dictionary<string, ListViewGroup> ListViewGroup, List<Article> ListArticles, string FilterIndex, int NumArticle, ListViewItem Line)
+        {
+            switch (FilterIndex)
+            {
+                case BrandColumn:
+                    ListViewGroup[ListArticles[NumArticle].GetSetBrand].Items.Add(Line);
+                    break;
+                default:
+                    int Quantity = ListArticles[NumArticle].GetSetQuantity;
+                    ListViewGroup[Quantity.ToString()].Items.Add(Line);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Create Group filter
+        /// </summary>
+        /// <param name="s"> The column index </param>
+        /// <returns> Dictionary<int, ListViewGroup> </returns>
+        private Dictionary<string, ListViewGroup> CreateGroupFilter(string ColumnIndex)
+        {
+            List<int> ListQuantity = GetAllQuantity();
+
+            Dictionary<string, ListViewGroup> ListViewGroup = null;
+
+            switch(ColumnIndex)
+            {
+                case BrandColumn:
+                    ListViewGroup = GroupBrand();
+                    break;
+                case QuantityColumn:
+                    ListViewGroup = GroupQuantity();
+                    break;
+                default:
+                    ListViewGroup = GroupQuantity();
+                    break;
+            }
+
+            return ListViewGroup;
+        }
+
+        private Dictionary<string, ListViewGroup> GroupBrand()
+        {
+            Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
+            List<Brand> ListBrand = GetAllBrands();
+
+            foreach (Brand Brand in ListBrand)
+            {
+                ListViewGroup.Add(Brand.GetSetNameBrand, new ListViewGroup("Brand: " + Brand.GetSetNameBrand, HorizontalAlignment.Left));
+                MainWindow.MainWindowForm.ListViewArticles.Groups.Add(ListViewGroup[Brand.GetSetNameBrand]);
+            }
+
+            return ListViewGroup;
+        }
+
+        private Dictionary<string, ListViewGroup> GroupQuantity()
+        {
+            Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
+            List<int> ListQuantity = GetAllQuantity();
+
+            foreach (int Quantity in ListQuantity)
+            {
+                ListViewGroup.Add(Quantity.ToString(), new ListViewGroup("Quantity: " + Quantity, HorizontalAlignment.Left));
+                MainWindow.MainWindowForm.ListViewArticles.Groups.Add(ListViewGroup[Quantity.ToString()]);
+            }
+
+            return ListViewGroup;
         }
     }
 }
