@@ -29,6 +29,7 @@ namespace Mercure.View
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
+            // Revoir
             try
             {
                 if (Dialog_Basic.ModifyOrAdd == 0)
