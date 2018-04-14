@@ -503,7 +503,10 @@ namespace Mercure.Controller
             for (int NumArticle = 0; NumArticle < ListArticles.Count; NumArticle++)
             {
                 ListViewItem Line = AddArticleToListView(ListArticles[NumArticle]);
-                SetGroupFilter(ListViewGroup, ListArticles, FilterIndex.ToString(), NumArticle, Line);
+
+                if(ListViewGroup != null)
+                    SetGroupFilter(ListViewGroup, ListArticles, FilterIndex.ToString(), NumArticle, Line);
+
                 MainWindow.MainWindowForm.ListViewArticles.Items.Add(Line);
             }
 
@@ -519,12 +522,16 @@ namespace Mercure.Controller
         {
             switch (FilterIndex)
             {
+                case SubFamilyColumn:
+                    ListViewGroup[ListArticles[NumArticle].GetSetSubFamily].Items.Add(Line);
+                    break;
                 case BrandColumn:
                     ListViewGroup[ListArticles[NumArticle].GetSetBrand].Items.Add(Line);
                     break;
+                case QuantityColumn:
+                    ListViewGroup[ListArticles[NumArticle].GetSetQuantity.ToString()].Items.Add(Line);
+                    break;
                 default:
-                    int Quantity = ListArticles[NumArticle].GetSetQuantity;
-                    ListViewGroup[Quantity.ToString()].Items.Add(Line);
                     break;
             }
         }
@@ -536,12 +543,14 @@ namespace Mercure.Controller
         /// <returns> Dictionary<int, ListViewGroup> </returns>
         private Dictionary<string, ListViewGroup> CreateGroupFilter(string ColumnIndex)
         {
+            Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
             List<int> ListQuantity = GetAllQuantity();
-
-            Dictionary<string, ListViewGroup> ListViewGroup = null;
 
             switch(ColumnIndex)
             {
+                case SubFamilyColumn:
+                    ListViewGroup = GroupSubFamily();
+                    break;
                 case BrandColumn:
                     ListViewGroup = GroupBrand();
                     break;
@@ -549,8 +558,21 @@ namespace Mercure.Controller
                     ListViewGroup = GroupQuantity();
                     break;
                 default:
-                    ListViewGroup = GroupQuantity();
                     break;
+            }
+
+            return ListViewGroup;
+        }
+
+        private Dictionary<string, ListViewGroup> GroupSubFamily()
+        {
+            Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
+            List<SubFamily> ListSubFamily = GetAllSubFamily();
+
+            foreach (SubFamily SubFamily in ListSubFamily)
+            {
+                ListViewGroup.Add(SubFamily.GetSetSubFamilyName, new ListViewGroup("SubFamily: " + SubFamily.GetSetSubFamilyName, HorizontalAlignment.Left));
+                MainWindow.MainWindowForm.ListViewArticles.Groups.Add(ListViewGroup[SubFamily.GetSetSubFamilyName]);
             }
 
             return ListViewGroup;
