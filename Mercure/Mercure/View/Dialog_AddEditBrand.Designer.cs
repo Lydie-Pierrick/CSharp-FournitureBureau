@@ -60,7 +60,7 @@
             this.TextRefBrand.Location = new System.Drawing.Point(177, 35);
             this.TextRefBrand.Name = "TextRefBrand";
             this.TextRefBrand.Size = new System.Drawing.Size(10, 13);
-            this.TextRefBrand.TabIndex = 1;
+            this.TextRefBrand.TabIndex = 0;
             this.TextRefBrand.Text = "-";
             this.TextRefBrand.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -81,7 +81,7 @@
             this.TextBox.Location = new System.Drawing.Point(177, 115);
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(269, 20);
-            this.TextBox.TabIndex = 3;
+            this.TextBox.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
@@ -106,7 +106,7 @@
             this.BtnOK.Location = new System.Drawing.Point(3, 13);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(218, 25);
-            this.BtnOK.TabIndex = 5;
+            this.BtnOK.TabIndex = 0;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
             this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -117,7 +117,7 @@
             this.BtnCancel.Location = new System.Drawing.Point(227, 13);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(219, 25);
-            this.BtnCancel.TabIndex = 6;
+            this.BtnCancel.TabIndex = 1;
             this.BtnCancel.Text = "Cancel";
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancle_Click);

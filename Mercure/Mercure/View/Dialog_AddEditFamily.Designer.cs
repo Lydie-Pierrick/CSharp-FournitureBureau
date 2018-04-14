@@ -60,7 +60,7 @@
             this.TextRefFamily.Location = new System.Drawing.Point(166, 35);
             this.TextRefFamily.Name = "TextRefFamily";
             this.TextRefFamily.Size = new System.Drawing.Size(10, 13);
-            this.TextRefFamily.TabIndex = 1;
+            this.TextRefFamily.TabIndex = 0;
             this.TextRefFamily.Text = "-";
             this.TextRefFamily.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -81,7 +81,7 @@
             this.TextBox.Location = new System.Drawing.Point(166, 115);
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(280, 20);
-            this.TextBox.TabIndex = 3;
+            this.TextBox.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
@@ -106,7 +106,7 @@
             this.BtnOK.Location = new System.Drawing.Point(3, 13);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(218, 25);
-            this.BtnOK.TabIndex = 5;
+            this.BtnOK.TabIndex = 0;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
             this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -117,7 +117,7 @@
             this.BtnCancle.Location = new System.Drawing.Point(227, 13);
             this.BtnCancle.Name = "BtnCancle";
             this.BtnCancle.Size = new System.Drawing.Size(219, 25);
-            this.BtnCancle.TabIndex = 6;
+            this.BtnCancle.TabIndex = 1;
             this.BtnCancle.Text = "Cancle";
             this.BtnCancle.UseVisualStyleBackColor = true;
             this.BtnCancle.Click += new System.EventHandler(this.BtnCancle_Click);

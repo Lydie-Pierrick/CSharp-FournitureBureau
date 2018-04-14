@@ -99,11 +99,11 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.ListViewBasic, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 27);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 29);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(506, 375);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(506, 406);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // ListViewBasic
@@ -112,9 +112,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ListViewBasic.Location = new System.Drawing.Point(3, 3);
-            this.ListViewBasic.MinimumSize = new System.Drawing.Size(500, 370);
+            this.ListViewBasic.MinimumSize = new System.Drawing.Size(500, 401);
             this.ListViewBasic.Name = "ListViewBasic";
-            this.ListViewBasic.Size = new System.Drawing.Size(500, 370);
+            this.ListViewBasic.Size = new System.Drawing.Size(500, 401);
             this.ListViewBasic.TabIndex = 2;
             this.ListViewBasic.UseCompatibleStateImageBehavior = false;
             this.ListViewBasic.View = System.Windows.Forms.View.Details;
@@ -124,13 +124,13 @@
             // 
             // Dialog_Basic
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(528, 410);
+            this.ClientSize = new System.Drawing.Size(528, 444);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.MenuStrip);
             this.MainMenuStrip = this.MenuStrip;
-            this.MinimumSize = new System.Drawing.Size(544, 449);
+            this.MinimumSize = new System.Drawing.Size(544, 483);
             this.Name = "Dialog_Basic";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dialog_Basic";

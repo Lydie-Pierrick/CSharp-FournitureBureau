@@ -98,7 +98,7 @@
             this.TextBoxQuantity.Location = new System.Drawing.Point(98, 319);
             this.TextBoxQuantity.Name = "TextBoxQuantity";
             this.TextBoxQuantity.Size = new System.Drawing.Size(459, 20);
-            this.TextBoxQuantity.TabIndex = 13;
+            this.TextBoxQuantity.TabIndex = 6;
             // 
             // TextBoxPrice
             // 
@@ -108,7 +108,7 @@
             this.TextBoxPrice.Location = new System.Drawing.Point(98, 291);
             this.TextBoxPrice.Name = "TextBoxPrice";
             this.TextBoxPrice.Size = new System.Drawing.Size(459, 20);
-            this.TextBoxPrice.TabIndex = 12;
+            this.TextBoxPrice.TabIndex = 5;
             // 
             // TextBoxDescription
             // 
@@ -119,7 +119,7 @@
             this.TextBoxDescription.Multiline = true;
             this.TextBoxDescription.Name = "TextBoxDescription";
             this.TextBoxDescription.Size = new System.Drawing.Size(459, 106);
-            this.TextBoxDescription.TabIndex = 11;
+            this.TextBoxDescription.TabIndex = 1;
             // 
             // LabelRefArticle
             // 
@@ -222,7 +222,7 @@
             this.ComboBoxFamily.Location = new System.Drawing.Point(98, 193);
             this.ComboBoxFamily.Name = "ComboBoxFamily";
             this.ComboBoxFamily.Size = new System.Drawing.Size(459, 21);
-            this.ComboBoxFamily.TabIndex = 7;
+            this.ComboBoxFamily.TabIndex = 3;
             this.ComboBoxFamily.SelectedIndexChanged += new System.EventHandler(this.ComboBoxFamily_SelectedIndexChanged);
             // 
             // ComboBoxSubFamily
@@ -235,7 +235,7 @@
             this.ComboBoxSubFamily.Location = new System.Drawing.Point(98, 241);
             this.ComboBoxSubFamily.Name = "ComboBoxSubFamily";
             this.ComboBoxSubFamily.Size = new System.Drawing.Size(459, 21);
-            this.ComboBoxSubFamily.TabIndex = 8;
+            this.ComboBoxSubFamily.TabIndex = 4;
             // 
             // ComboBoxBrand
             // 
@@ -247,7 +247,7 @@
             this.ComboBoxBrand.Location = new System.Drawing.Point(98, 144);
             this.ComboBoxBrand.Name = "ComboBoxBrand";
             this.ComboBoxBrand.Size = new System.Drawing.Size(459, 21);
-            this.ComboBoxBrand.TabIndex = 9;
+            this.ComboBoxBrand.TabIndex = 2;
             // 
             // TextBoxRefArticle
             // 
@@ -257,7 +257,7 @@
             this.TextBoxRefArticle.Location = new System.Drawing.Point(98, 3);
             this.TextBoxRefArticle.Name = "TextBoxRefArticle";
             this.TextBoxRefArticle.Size = new System.Drawing.Size(459, 20);
-            this.TextBoxRefArticle.TabIndex = 10;
+            this.TextBoxRefArticle.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 

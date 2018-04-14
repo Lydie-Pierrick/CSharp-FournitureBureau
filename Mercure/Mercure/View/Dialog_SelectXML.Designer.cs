@@ -73,7 +73,7 @@
             this.TxtBox_PathXML.MinimumSize = new System.Drawing.Size(354, 20);
             this.TxtBox_PathXML.Name = "TxtBox_PathXML";
             this.TxtBox_PathXML.Size = new System.Drawing.Size(354, 20);
-            this.TxtBox_PathXML.TabIndex = 2;
+            this.TxtBox_PathXML.TabIndex = 0;
             // 
             // OpenFileDialog
             // 
@@ -89,7 +89,7 @@
             this.Label_Progress.Location = new System.Drawing.Point(3, 0);
             this.Label_Progress.Name = "Label_Progress";
             this.Label_Progress.Size = new System.Drawing.Size(81, 27);
-            this.Label_Progress.TabIndex = 4;
+            this.Label_Progress.TabIndex = 1;
             this.Label_Progress.Text = "Progress";
             this.Label_Progress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -104,7 +104,7 @@
             this.Btn_BrowseXML.MinimumSize = new System.Drawing.Size(129, 24);
             this.Btn_BrowseXML.Name = "Btn_BrowseXML";
             this.Btn_BrowseXML.Size = new System.Drawing.Size(129, 24);
-            this.Btn_BrowseXML.TabIndex = 3;
+            this.Btn_BrowseXML.TabIndex = 1;
             this.Btn_BrowseXML.Text = "Browse";
             this.Btn_BrowseXML.UseVisualStyleBackColor = true;
             this.Btn_BrowseXML.Click += new System.EventHandler(this.Btn_BrowseXML_Click);
@@ -129,7 +129,7 @@
             this.RadioButton_Update.Location = new System.Drawing.Point(164, 3);
             this.RadioButton_Update.Name = "RadioButton_Update";
             this.RadioButton_Update.Size = new System.Drawing.Size(60, 17);
-            this.RadioButton_Update.TabIndex = 5;
+            this.RadioButton_Update.TabIndex = 0;
             this.RadioButton_Update.TabStop = true;
             this.RadioButton_Update.Text = "Update";
             this.RadioButton_Update.UseVisualStyleBackColor = true;
@@ -140,7 +140,7 @@
             this.RadioButton_New.Location = new System.Drawing.Point(3, 3);
             this.RadioButton_New.Name = "RadioButton_New";
             this.RadioButton_New.Size = new System.Drawing.Size(47, 17);
-            this.RadioButton_New.TabIndex = 6;
+            this.RadioButton_New.TabIndex = 0;
             this.RadioButton_New.TabStop = true;
             this.RadioButton_New.Text = "New";
             this.RadioButton_New.UseVisualStyleBackColor = true;
@@ -156,7 +156,7 @@
             this.GroupBox_TwoModes.Location = new System.Drawing.Point(3, 3);
             this.GroupBox_TwoModes.Name = "GroupBox_TwoModes";
             this.GroupBox_TwoModes.Size = new System.Drawing.Size(489, 49);
-            this.GroupBox_TwoModes.TabIndex = 6;
+            this.GroupBox_TwoModes.TabIndex = 0;
             this.GroupBox_TwoModes.TabStop = false;
             // 
             // tableLayoutPanel4
@@ -176,7 +176,7 @@
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(322, 24);
-            this.tableLayoutPanel4.TabIndex = 7;
+            this.tableLayoutPanel4.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
@@ -195,7 +195,7 @@
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(495, 37);
-            this.tableLayoutPanel2.TabIndex = 8;
+            this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tableLayoutPanel1
             // 
@@ -212,7 +212,7 @@
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(495, 31);
-            this.tableLayoutPanel1.TabIndex = 9;
+            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // tableLayoutPanel3
             // 
@@ -229,7 +229,7 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(495, 55);
-            this.tableLayoutPanel3.TabIndex = 10;
+            this.tableLayoutPanel3.TabIndex = 1;
             // 
             // tableLayoutPanel5
             // 
@@ -248,7 +248,7 @@
             this.tableLayoutPanel5.RowCount = 1;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Size = new System.Drawing.Size(495, 27);
-            this.tableLayoutPanel5.TabIndex = 11;
+            this.tableLayoutPanel5.TabIndex = 2;
             // 
             // tableLayoutPanel6
             // 
@@ -271,7 +271,7 @@
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 176F));
             this.tableLayoutPanel6.Size = new System.Drawing.Size(501, 351);
-            this.tableLayoutPanel6.TabIndex = 12;
+            this.tableLayoutPanel6.TabIndex = 0;
             this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
             // 
             // TextBoxStatusImport
@@ -285,7 +285,7 @@
             this.TextBoxStatusImport.ReadOnly = true;
             this.TextBoxStatusImport.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.TextBoxStatusImport.Size = new System.Drawing.Size(495, 171);
-            this.TextBoxStatusImport.TabIndex = 12;
+            this.TextBoxStatusImport.TabIndex = 3;
             this.TextBoxStatusImport.TextChanged += new System.EventHandler(this.textBoxStatusImport_TextChanged);
             // 
             // Dialog_SelectionXML

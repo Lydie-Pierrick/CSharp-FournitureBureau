@@ -58,7 +58,7 @@
             this.managementToolStripMenuItem});
             this.Menu_Container.Location = new System.Drawing.Point(0, 0);
             this.Menu_Container.Name = "Menu_Container";
-            this.Menu_Container.Size = new System.Drawing.Size(808, 24);
+            this.Menu_Container.Size = new System.Drawing.Size(1025, 24);
             this.Menu_Container.TabIndex = 0;
             this.Menu_Container.Text = "menuStrip";
             // 
@@ -163,11 +163,11 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.Controls.Add(this.ListViewArticles, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 25);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 27);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 346);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1001, 436);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // ListViewArticles
@@ -180,7 +180,7 @@
             this.ListViewArticles.LabelWrap = false;
             this.ListViewArticles.Location = new System.Drawing.Point(3, 3);
             this.ListViewArticles.Name = "ListViewArticles";
-            this.ListViewArticles.Size = new System.Drawing.Size(778, 340);
+            this.ListViewArticles.Size = new System.Drawing.Size(995, 430);
             this.ListViewArticles.TabIndex = 6;
             this.ListViewArticles.UseCompatibleStateImageBehavior = false;
             this.ListViewArticles.View = System.Windows.Forms.View.Details;
@@ -199,9 +199,9 @@
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(808, 402);
+            this.ClientSize = new System.Drawing.Size(1025, 497);
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.StatusSQL_Container);

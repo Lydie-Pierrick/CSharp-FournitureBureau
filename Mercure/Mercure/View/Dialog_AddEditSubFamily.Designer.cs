@@ -62,7 +62,7 @@
             this.TextRefSubFamily.Location = new System.Drawing.Point(180, 23);
             this.TextRefSubFamily.Name = "TextRefSubFamily";
             this.TextRefSubFamily.Size = new System.Drawing.Size(10, 13);
-            this.TextRefSubFamily.TabIndex = 1;
+            this.TextRefSubFamily.TabIndex = 0;
             this.TextRefSubFamily.Text = "-";
             this.TextRefSubFamily.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -83,7 +83,7 @@
             this.TextBox.Location = new System.Drawing.Point(180, 78);
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(266, 20);
-            this.TextBox.TabIndex = 3;
+            this.TextBox.TabIndex = 1;
             // 
             // tableLayoutPanel1
             // 
@@ -123,7 +123,7 @@
             this.Combobox.Location = new System.Drawing.Point(180, 132);
             this.Combobox.Name = "Combobox";
             this.Combobox.Size = new System.Drawing.Size(266, 21);
-            this.Combobox.TabIndex = 5;
+            this.Combobox.TabIndex = 2;
             // 
             // BtnOK
             // 
@@ -131,7 +131,7 @@
             this.BtnOK.Location = new System.Drawing.Point(3, 13);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(218, 25);
-            this.BtnOK.TabIndex = 5;
+            this.BtnOK.TabIndex = 0;
             this.BtnOK.Text = "OK";
             this.BtnOK.UseVisualStyleBackColor = true;
             this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -142,7 +142,7 @@
             this.BtnCancle.Location = new System.Drawing.Point(227, 13);
             this.BtnCancle.Name = "BtnCancle";
             this.BtnCancle.Size = new System.Drawing.Size(219, 25);
-            this.BtnCancle.TabIndex = 6;
+            this.BtnCancle.TabIndex = 1;
             this.BtnCancle.Text = "Cancle";
             this.BtnCancle.UseVisualStyleBackColor = true;
             this.BtnCancle.Click += new System.EventHandler(this.BtnCancle_Click);
