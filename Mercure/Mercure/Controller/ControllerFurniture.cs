@@ -518,6 +518,14 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Set Group filter
+        /// </summary>
+        /// <param name="ListViewGroup"> The listView group to set </param>
+        /// <param name="ListArticles"> The list of article </param>
+        /// <param name="FilterIndex"> The column index to filter </param>
+        /// <param name="NumArticle"> The index of article </param>
+        /// <param name="Line"> The object line of ListView </param>
         private void SetGroupFilter(Dictionary<string, ListViewGroup> ListViewGroup, List<Article> ListArticles, string FilterIndex, int NumArticle, ListViewItem Line)
         {
             switch (FilterIndex)
@@ -539,8 +547,8 @@ namespace Mercure.Controller
         /// <summary>
         /// Create Group filter
         /// </summary>
-        /// <param name="s"> The column index </param>
-        /// <returns> Dictionary<int, ListViewGroup> </returns>
+        /// <param name="ColumnIndex"> The column index </param>
+        /// <returns> Dictionary<string, ListViewGroup> </returns>
         private Dictionary<string, ListViewGroup> CreateGroupFilter(string ColumnIndex)
         {
             Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
@@ -564,6 +572,10 @@ namespace Mercure.Controller
             return ListViewGroup;
         }
 
+        /// <summary>
+        /// Group by subFamily
+        /// </summary>
+        /// <returns> Dictionary<string, ListViewGroup> </returns>
         private Dictionary<string, ListViewGroup> GroupSubFamily()
         {
             Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
@@ -578,6 +590,10 @@ namespace Mercure.Controller
             return ListViewGroup;
         }
 
+        /// <summary>
+        /// Group by groupBrand
+        /// </summary>
+        /// <returns> Dictionary<string, ListViewGroup> </returns>
         private Dictionary<string, ListViewGroup> GroupBrand()
         {
             Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
@@ -592,6 +608,10 @@ namespace Mercure.Controller
             return ListViewGroup;
         }
 
+        /// <summary>
+        /// Group by quantity
+        /// </summary>
+        /// <returns> Dictionary<string, ListViewGroup> </returns>
         private Dictionary<string, ListViewGroup> GroupQuantity()
         {
             Dictionary<string, ListViewGroup> ListViewGroup = new Dictionary<string, ListViewGroup>();
