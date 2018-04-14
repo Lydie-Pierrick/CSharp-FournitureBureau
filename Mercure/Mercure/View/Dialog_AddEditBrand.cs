@@ -25,6 +25,7 @@ namespace Mercure.View
             InitializeComponent();
             TextRefBrand.Text = RefBrand.ToString();
             TextBox.Text = NameBrand;
+            ControllerManagement = new ControllerManagement();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
@@ -34,7 +35,10 @@ namespace Mercure.View
             {
                 if (Dialog_Basic.ModifyOrAdd == 0)
                 {
-                    if (!ControllerManagement.ModifyBrand(int.Parse(TextRefBrand.Text), TextBox.Text))
+                    int RefBrand = int.Parse(TextRefBrand.Text);
+                    string BrandName =  TextBox.Text;
+
+                    if (!ControllerManagement.ModifyBrand(RefBrand, BrandName))
                     {
                         MessageBox.Show("Fail to modify the brand ! ");
                     }

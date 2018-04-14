@@ -155,7 +155,9 @@ namespace Mercure.Controller
 
         public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, string FamilyName)
         {
-            int RefFamily = DaoFurniture.GetFamilyIdOfSubFamily(SubFamilyName);
+            int RefFamily = DaoFurniture.GetFamilyIdByName(FamilyName);
+            if (RefFamily == 0)
+                return false;
             return DaoFurniture.ModifySubFamily(RefSubFamily, SubFamilyName, RefFamily);
         }
     }

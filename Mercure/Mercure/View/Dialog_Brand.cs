@@ -58,6 +58,8 @@ namespace Mercure.View
 
         protected override void Add()
         {
+            base.Add();
+
             Dialog_AddEditBrand Dialog_AddEditBrand = new Dialog_AddEditBrand();
             Dialog_AddEditBrand.ShowDialog(this);
         }

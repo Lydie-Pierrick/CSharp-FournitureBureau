@@ -59,6 +59,7 @@ namespace Mercure.View
 
         protected override void Add()
         {
+            base.Add();
             Dialog_AddEditSubFamily Dialog_AddEditSubFamily = new Dialog_AddEditSubFamily();
             Dialog_AddEditSubFamily.ShowDialog(this);
         }
