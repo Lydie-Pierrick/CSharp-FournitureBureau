@@ -136,7 +136,10 @@ namespace Mercure.DAO
             QueryInsertArticle.Parameters.AddWithValue("@RefRefSousFamille", idSubFamily);
             QueryInsertArticle.Parameters.AddWithValue("@RefMarque", idBrand);
             QueryInsertArticle.Parameters.AddWithValue("@RefPrixHT", Article.GetSetPriceHT);
-            QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", 1);
+            if(Article.GetSetQuantity == 0)
+                QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", 1);
+            else
+                QueryInsertArticle.Parameters.AddWithValue("@RefQuantite", Article.GetSetQuantity);
 
             CountInsertRowArticle += QueryInsertArticle.ExecuteNonQuery();
         }
