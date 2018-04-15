@@ -76,5 +76,12 @@ namespace Mercure.View
                 Dialog_AddEditBrand.ShowDialog(this);
             }
         }
+
+        protected override void ListViewBasic_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            base.ListViewBasic_ColumnClick(sender, e);
+
+            ControllerManagement.RefreshListViewBrand();
+        }
     }
 }

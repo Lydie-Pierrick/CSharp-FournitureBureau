@@ -97,5 +97,11 @@ namespace Mercure.View
                 IsChoosen = true;
             }
         }
+
+        protected virtual void ListViewBasic_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            ListViewBasic.Sort();
+            this.ListViewBasic.ListViewItemSorter = new ListViewItemComparator(e.Column, ListViewBasic.Sorting);
+        }
     }
 }

@@ -118,6 +118,7 @@
             this.ListViewBasic.TabIndex = 2;
             this.ListViewBasic.UseCompatibleStateImageBehavior = false;
             this.ListViewBasic.View = System.Windows.Forms.View.Details;
+            this.ListViewBasic.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewBasic_ColumnClick);
             this.ListViewBasic.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ListViewBasic_KeyDown);
             this.ListViewBasic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ListViewBasic_MouseClick);
             this.ListViewBasic.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListViewBasic_MouseDoubleClick);
