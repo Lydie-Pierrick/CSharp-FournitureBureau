@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Mercure
+﻿namespace Mercure
 {
     class Article
     {
+        private string RefArticle;
+        private string Description;
+        private string Brand;
+        private string Family;
+        private string SubFamily;
+        private string PriceHT;
+        private int Quantity;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -33,14 +36,6 @@ namespace Mercure
             GetSetPriceHT = PriceHT;
             GetSetQuantity = Quantity;
         }
-
-        private string RefArticle;
-        private string Description;
-        private string Brand;
-        private string Family;
-        private string SubFamily;
-        private string PriceHT;
-        private int Quantity;
 
         /// <summary>
         /// Getter Setter of reference of article

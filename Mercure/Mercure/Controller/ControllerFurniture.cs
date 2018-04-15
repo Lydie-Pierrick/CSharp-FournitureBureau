@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
-using System.Data.SQLite;
-using Mercure.Controller;
 using Mercure.DAO;
 using Mercure.Model;
-using System.Data.SqlClient;
 using System.Threading;
-using System.Globalization;
 
 namespace Mercure.Controller
 {
@@ -27,11 +18,8 @@ namespace Mercure.Controller
         private Thread ThreadUpdateStatus;
         private Thread ThreadUpdateProgressText;
 
-        private const string RefArticleColumn = "0";
-        private const string DescriptionColumn = "1";
         private const string BrandColumn = "2";
         private const string SubFamilyColumn = "3";
-        private const string PriceColumn = "4";
         private const string QuantityColumn = "5";
 
         /// <summary>

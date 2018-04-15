@@ -1,32 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
-using System.Xml;
 using System.Data.SQLite;
 using Mercure.Controller;
 using Mercure.Model;
-using System.Data.SqlClient;
 
 namespace Mercure.DAO
 {
     class DaoFurniture
     {
-        private List<String> ListNameTables;
-
-        private static int LastRefBrand = 0;
-        private static int LastRefFamily = 0;
-        private static int LastRefSubFamily= 0;
-
-        public DaoFurniture()
-        {
-            ListNameTables = GetAllNameTables();
-        }
-
         // --- Create or modify section
 
         /// <summary>
@@ -250,6 +232,7 @@ namespace Mercure.DAO
             // Check family syntax
             Brand Brand;
             Brand = ControllerFurniture.CheckBrandSyntax(BrandName);
+            int LastRefBrand = 0;
 
             // Create if it does not exist
             if (Brand == null)
@@ -374,6 +357,7 @@ namespace Mercure.DAO
             // Check family syntax
             Family Family;
             Family = ControllerFurniture.CheckFamilySyntax(FamilyName);
+            int LastRefFamily = 0;
 
             if (Family == null)
             {
@@ -442,6 +426,7 @@ namespace Mercure.DAO
             // Check SubFamily syntax
             SubFamily SubFamily;
             SubFamily = ControllerFurniture.CheckSubFamilySyntax(SubFamilyName);
+            int LastRefSubFamily = 0;
 
             // Create if it does not exist
             if (SubFamily == null)
@@ -494,6 +479,7 @@ namespace Mercure.DAO
         public bool DeleteAllEntriesTables()
         {
             int countResetTable = 0;
+            List<String> ListNameTables = GetAllNameTables(); ;
 
             foreach (String tableName in ListNameTables)
             {
