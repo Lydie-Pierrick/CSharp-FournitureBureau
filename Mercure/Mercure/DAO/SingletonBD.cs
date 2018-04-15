@@ -11,12 +11,16 @@ public class SingletonBD
     private static SingletonBD Instance;
     private static SQLiteConnection M_dbConnection;
 
+    /// <summary>
+    /// Default constructor
+    /// </summary>
     private SingletonBD() {
         InitDB();
     }
 
-
-    // Getter Instance BD Singleton
+    /// <summary>
+    /// Getter Instance BD Singleton
+    /// </summary>
     public static SingletonBD GetInstance
     {
         get
@@ -29,11 +33,18 @@ public class SingletonBD
         }
     }
 
+    /// <summary>
+    /// Get DataBase
+    /// </summary>
+    /// <returns> The DB connected </returns>
     public SQLiteConnection GetDB()
     {
         return M_dbConnection;
     }
 
+    /// <summary>
+    /// Initialise the DataBase
+    /// </summary>
     private static void InitDB()
     {
         try
@@ -50,11 +61,17 @@ public class SingletonBD
         }
     }
 
+    /// <summary>
+    /// Open DB
+    /// </summary>
     public static void Open()
     {
         InitDB();
     }
 
+    /// <summary>
+    /// Close DB
+    /// </summary>
     public static void Close()
     {
         try
@@ -67,7 +84,6 @@ public class SingletonBD
         catch (Exception e)
         {
             MessageBox.Show("Error database ! " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-        
+        }   
     }
 }

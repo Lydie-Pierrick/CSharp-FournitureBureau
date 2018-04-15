@@ -11,13 +11,21 @@ namespace Mercure.Controller
 {
     class ControllerManagement
     {
-        private DaoFurniture DaoFurniture; 
+        private DaoFurniture DaoFurniture;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ControllerManagement()
         {
             DaoFurniture = new DaoFurniture();
         }
 
+        /// <summary>
+        /// Add a brand to ListView
+        /// </summary>
+        /// <param name="Brand"> A Brand object </param>
+        /// <returns> A line of the information of a brand </returns>
         public ListViewItem AddBrandToListView(Brand Brand)
         {
             ListViewItem Line = new ListViewItem(Brand.GetSetIdBrand.ToString());
@@ -26,6 +34,9 @@ namespace Mercure.Controller
             return Line;
         }
 
+        /// <summary>
+        /// Refresh the brand ListView
+        /// </summary>
         public void RefreshListViewBrand()
         {
             int NumBrand;
@@ -48,6 +59,11 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Add a family to ListView
+        /// </summary>
+        /// <param name="Family"> A Family object </param>
+        /// <returns> A line of the information of a family </returns>
         public ListViewItem AddFamilyToListView(Family Family)
         {
             ListViewItem Line = new ListViewItem(Family.GetSetIdFamily.ToString());
@@ -56,6 +72,10 @@ namespace Mercure.Controller
             return Line;
         }
 
+
+        /// <summary>
+        /// Refresh the family ListView
+        /// </summary>
         public void RefreshListViewFamily()
         {
             int NumFamily;
@@ -78,6 +98,11 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Add a subfamily to ListView
+        /// </summary>
+        /// <param name="Brand"> A subfamily object </param>
+        /// <returns> A line of the information of a subfamily </returns>
         public ListViewItem AddSubFamilyToListView(SubFamily SubFamily)
         {
             string SubFamilyName = SubFamily.GetSetSubFamilyName;
@@ -91,6 +116,9 @@ namespace Mercure.Controller
             return Line;
         }
 
+        /// <summary>
+        /// Refresh the subfamily ListView
+        /// </summary>
         public void RefreshListViewSubFamily()
         {
             int NumSubFamily;
@@ -113,46 +141,93 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// Delete a brand from DB
+        /// </summary>
+        /// <param name="RefBrand">Reference of brand </param>
+        /// <returns> The result of  DaoFurniture.DeleteBrand(RefBrand)</returns>
         public bool DeleteBrand(int RefBrand)
         {
             return DaoFurniture.DeleteBrand(RefBrand);
         }
 
+        /// <summary>
+        /// Delete a family from DB
+        /// </summary>
+        /// <param name="RefFamily">Reference of family </param>
+        /// <returns> The result of  DaoFurniture.DeleteFamily(RefFamily)</returns>
         public bool DeleteFamily(int RefFamily)
         {
             return DaoFurniture.DeleteFamily(RefFamily);
         }
 
+        /// <summary>
+        /// Delete a subfamily from DB
+        /// </summary>
+        /// <param name="RefSubFamily">Reference of subfamily </param>
+        /// <returns> The result of  DaoFurniture.DeleteSubFamily(RefSubFamily)</returns>
         public bool DeleteSubFamily(int RefSubfamily)
         {
             return DaoFurniture.DeleteSubFamily(RefSubfamily);
         }
 
+        /// <summary>
+        /// Add a brand from DB
+        /// </summary>
+        /// <param name="BrandName"> Brand name </param>
         public void AddBrand(string BrandName)
         {
             DaoFurniture.GetOrCreateBrand(BrandName);
         }
-       
+
+        /// <summary>
+        /// Add a family from DB
+        /// </summary>
+        /// <param name="FamilyName"> Family name </param>
         public void AddFamily(string FamilyName)
         {
             DaoFurniture. GetOrCreateFamily(FamilyName);
         }
 
+        /// <summary>
+        /// Add a subfamily from DB
+        /// </summary>
+        /// <param name="SubFamilyName"> Subfamily name </param>
+        /// <param name="FamilyName"> Family name </param>
         public void AddSubFamily(string SubFamilyName, string FamilyName)
         {
             DaoFurniture.GetOrCreateSubFamily(SubFamilyName, FamilyName);
         }
 
+        /// <summary>
+        /// Modify a brand in DB
+        /// </summary>
+        /// <param name="RefBrand">Reference of brand </param>
+        /// <param name="BrandName"> Brand name </param>
+        /// <returns> The result of  DaoFurniture.ModifyBrand(RefBrand, BrandName)</returns>
         public bool ModifyBrand(int RefBrand, string BrandName)
         {
             return DaoFurniture.ModifyBrand(RefBrand, BrandName);
         }
 
+        /// <summary>
+        /// Modify a family in DB
+        /// </summary>
+        /// <param name="RefFamily">Reference of family </param>
+        /// <param name="FamilyName"> Family name </param>
+        /// <returns> The result of  DaoFurniture.ModifyFamily(RefFamily, FamilyName)</returns>
         public bool ModifyFamily(int RefFamily, string FamilyName)
         {
             return DaoFurniture.ModifyFamily(RefFamily, FamilyName);
         }
 
+        /// <summary>
+        /// Modify a subfamily in DB
+        /// </summary>
+        /// <param name="RefSubFamily">Reference of subfamily </param>
+        /// <param name="SubFamilyName"> Subfamily name </param>
+        /// <param name="FamilyName"> Family name </param>
+        /// <returns> The result of  DaoFurniture.ModifySubFamily(RefSubFamily, SubFamilyName, RefFamily)</returns>
         public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, string FamilyName)
         {
             int RefFamily = DaoFurniture.GetFamilyIdByName(FamilyName);

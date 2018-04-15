@@ -747,6 +747,11 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Get the family ID by family name
+        /// </summary>
+        /// <param name="FamilyName"> Family name </param>
+        /// <returns> The family ID or 0 if this family doesn't exist </returns>
         public int GetFamilyIdByName(string FamilyName)
         { 
             SQLiteCommand QueryGetFamilyId = new SQLiteCommand();
@@ -765,6 +770,11 @@ namespace Mercure.DAO
             }
         }
 
+        /// <summary>
+        /// Delete a brand
+        /// </summary>
+        /// <param name="RefBrand"> The ref of brand to delete </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool DeleteBrand(int RefBrand)
         {
             SQLiteCommand QueryGetCounterArticle = new SQLiteCommand();
@@ -792,6 +802,11 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Delete a family
+        /// </summary>
+        /// <param name="RefFamily"> The ref of family to delete </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool DeleteFamily(int RefFamily)
         {
             // revoir
@@ -820,6 +835,11 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Delete a subfamily
+        /// </summary>
+        /// <param name="RefSubFamily"> The ref of subfamily to delete </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool DeleteSubFamily(int RefSubFamily)
         {
             SQLiteCommand QueryGetCounterArticle = new SQLiteCommand();
@@ -847,6 +867,12 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Modify a brand in DB
+        /// </summary>
+        /// <param name="RefBrand">Reference of brand </param>
+        /// <param name="BrandName"> Brand name </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool ModifyBrand(int RefBrand, string BrandName)
         {
             SQLiteCommand QueryModify = new SQLiteCommand();
@@ -862,6 +888,12 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Modify a family in DB
+        /// </summary>
+        /// <param name="RefFamily">Reference of family </param>
+        /// <param name="FamilyName"> family name </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool ModifyFamily(int RefFamily, string FamilyName)
         {
             SQLiteCommand QueryDelete = new SQLiteCommand();
@@ -877,6 +909,13 @@ namespace Mercure.DAO
                 return false;
         }
 
+        /// <summary>
+        /// Modify a subfamily in DB
+        /// </summary>
+        /// <param name="RefSubFamily">Reference of subfamily </param>
+        /// <param name="SubFamilyName"> Subfamily name </param>
+        /// <param name="RefFamily"> Ref of family </param>
+        /// <returns> True if successful or false if failed </returns>
         public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, int RefFamily)
         {
             SQLiteCommand QueryModify = new SQLiteCommand();

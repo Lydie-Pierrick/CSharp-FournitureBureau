@@ -10,12 +10,27 @@ namespace Mercure.Model
         private int IdBrand;
         private string NameBrand;
 
-        public Brand(int getSetIdBrand, string getSetNameBrand)
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Brand()
         {
-            GetSetIdBrand = getSetIdBrand;
-            GetSetNameBrand = getSetNameBrand;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="IdBrand"> Brand ID </param>
+        /// <param name="NameBrand"> Brand name</param>
+        public Brand(int IdBrand, string NameBrand)
+        {
+            GetSetIdBrand = IdBrand;
+            GetSetNameBrand = NameBrand;
+        }
+
+        /// <summary>
+        /// Getter Setter of brand ID
+        /// </summary>
         public int GetSetIdBrand
         {
             get
@@ -29,6 +44,10 @@ namespace Mercure.Model
             }
         }
 
+
+        /// <summary>
+        /// Getter Setter of brand name
+        /// </summary>
         public string GetSetNameBrand
         {
             get
@@ -42,6 +61,10 @@ namespace Mercure.Model
             }
         }
 
+        /// <summary>
+        /// Override ToString()
+        /// </summary>
+        /// <returns> Brand name </returns>
         public override string ToString()
         {
             return NameBrand;

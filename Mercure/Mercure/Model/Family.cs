@@ -10,12 +10,27 @@ namespace Mercure.Model
         private int IdFamily;
         private string FamilyName;
 
-        public Family(int getSetIdFamily, string getSetFamilyName)
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public Family()
         {
-            GetSetIdFamily = getSetIdFamily;
-            GetSetFamilyName = getSetFamilyName;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="IdBrand"> Family ID </param>
+        /// <param name="NameBrand"> Family name</param>
+        public Family(int IdFamily, string FamilyName)
+        {
+            GetSetIdFamily = IdFamily;
+            GetSetFamilyName = FamilyName;
+        }
+
+        /// <summary>
+        /// Getter Setter of family ID
+        /// </summary>
         public int GetSetIdFamily
         {
             get
@@ -29,6 +44,9 @@ namespace Mercure.Model
             }
         }
 
+        /// <summary>
+        /// Getter Setter of family name
+        /// </summary>
         public string GetSetFamilyName
         {
             get
@@ -42,6 +60,10 @@ namespace Mercure.Model
             }
         }
 
+        /// <summary>
+        /// Override ToString()
+        /// </summary>
+        /// <returns> Family name </returns>
         public override string ToString()
         {
             return FamilyName;

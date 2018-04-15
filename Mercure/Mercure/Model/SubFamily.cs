@@ -10,12 +10,27 @@ namespace Mercure.Model
         private int IdSubFamily;
         private string SubFamilyName;
 
-        public SubFamily(int idSubFamily, string subFamilyName)
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public SubFamily()
         {
-            IdSubFamily = idSubFamily;
-            SubFamilyName = subFamilyName;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="IdSubFamily"> Subfamily ID </param>
+        /// <param name="NameBrand"> Subfamily name</param>
+        public SubFamily(int IdSubFamily, string SubFamilyName)
+        {
+            GetSetIdSubFamily = IdSubFamily;
+            GetSetSubFamilyName = SubFamilyName;
+        }
+
+        /// <summary>
+        /// Getter Setter of subfamily ID
+        /// </summary>
         public int GetSetIdSubFamily
         {
             get
@@ -29,6 +44,9 @@ namespace Mercure.Model
             }
         }
 
+        /// <summary>
+        /// Getter Setter of subfamily name
+        /// </summary>
         public string GetSetSubFamilyName
         {
             get
@@ -42,6 +60,10 @@ namespace Mercure.Model
             }
         }
 
+        /// <summary>
+        /// Override ToString()
+        /// </summary>
+        /// <returns> Subfamily name </returns>
         public override string ToString()
         {
             return SubFamilyName;
