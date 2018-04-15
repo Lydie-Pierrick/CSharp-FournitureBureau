@@ -79,7 +79,8 @@ namespace Mercure.View
         {           
             try
             {
-                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, TextBoxPrice.Text, int.Parse(TextBoxQuantity.Text));
+                string PriceConvert = TextBoxPrice.Text.Replace(".",",");
+                Article Article = new Article(TextBoxRefArticle.Text, TextBoxDescription.Text, ComboBoxFamily.Text, ComboBoxSubFamily.Text, ComboBoxBrand.Text, PriceConvert, int.Parse(TextBoxQuantity.Text));
 
                 if (TextBoxRefArticle.Enabled == true)
                 {

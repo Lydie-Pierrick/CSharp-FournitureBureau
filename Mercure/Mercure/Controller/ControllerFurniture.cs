@@ -97,6 +97,10 @@ namespace Mercure.Controller
             }
         }
 
+        /// <summary>
+        /// The action to write each article into DB
+        /// </summary>
+        /// <param name="Article"> The Index of node</param>
         private void CheckArticle(Article Article)
         {
             if (Article.GetSetDescription == "")
@@ -322,6 +326,12 @@ namespace Mercure.Controller
         {
             try
             {
+                string PriceHT = Article.GetSetPriceHT;
+                if(!PriceHT.Contains(","))
+                {
+                    Article.GetSetPriceHT = string.Concat(PriceHT, ",00");
+                }
+
                 DaoFurniture.CreateOrModifyArticle(Article, ActionEdit);
             }
             catch (Exception Exception)

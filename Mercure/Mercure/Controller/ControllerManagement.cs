@@ -11,8 +11,11 @@ namespace Mercure.Controller
 {
     class ControllerManagement
     {
-        private DaoFurniture DaoFurniture; 
+        private DaoFurniture DaoFurniture;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ControllerManagement()
         {
             DaoFurniture = new DaoFurniture();

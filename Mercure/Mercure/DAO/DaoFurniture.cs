@@ -22,11 +22,8 @@ namespace Mercure.DAO
         private static int LastRefFamily = 0;
         private static int LastRefSubFamily= 0;
 
-        private static SQLiteConnection M_dbConnection;
-
         public DaoFurniture()
         {
-            M_dbConnection = SingletonBD.GetInstance.GetDB();
             ListNameTables = GetAllNameTables();
         }
 
@@ -43,7 +40,7 @@ namespace Mercure.DAO
                 int QuantiteArticle = 0;
 
                 SQLiteCommand QueryGetQuantiteArticle = new SQLiteCommand();
-                QueryGetQuantiteArticle.Connection = M_dbConnection;
+                QueryGetQuantiteArticle.Connection = SingletonBD.GetInstance.GetDB();
 
                 // Get article if it exists
                 QueryGetQuantiteArticle.CommandText = "SELECT Quantite FROM Articles WHERE RefArticle = @RefArticle;";
@@ -82,16 +79,17 @@ namespace Mercure.DAO
                 int QuantiteArticle = 0;
 
                 SQLiteCommand QueryGetQuantiteArticle = new SQLiteCommand();
-                QueryGetQuantiteArticle.Connection = M_dbConnection;
+                QueryGetQuantiteArticle.Connection = SingletonBD.GetInstance.GetDB();
 
                 // Get article if it exists
                 QueryGetQuantiteArticle.CommandText = "SELECT Quantite FROM Articles WHERE RefArticle = @RefArticle;";
                 QueryGetQuantiteArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
                 SQLiteDataReader GetQuantiteArticleReader = QueryGetQuantiteArticle.ExecuteReader();
 
+                GetQuantiteArticleReader.Read();
+
                 if (GetQuantiteArticleReader.HasRows)
                 {
-                    GetQuantiteArticleReader.Read();
                     QuantiteArticle = GetQuantiteArticleReader.GetInt32(0);
 
                     if (!ActionEdit)
@@ -124,7 +122,7 @@ namespace Mercure.DAO
 
             // Insert new brand
             SQLiteCommand QueryInsertArticle = new SQLiteCommand();
-            QueryInsertArticle.Connection = M_dbConnection;
+            QueryInsertArticle.Connection = SingletonBD.GetInstance.GetDB();
 
             QueryInsertArticle.CommandText = "INSERT INTO Articles (RefArticle, Description, RefSousFamille, RefMarque, PrixHT, Quantite) VALUES (@RefArticle, @RefDescription, @RefRefSousFamille, @RefMarque, @RefPrixHT, @RefQuantite);";
             QueryInsertArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
@@ -152,7 +150,7 @@ namespace Mercure.DAO
 
             // Insert new brand
             SQLiteCommand QueryModifyArticle = new SQLiteCommand();
-            QueryModifyArticle.Connection = M_dbConnection;
+            QueryModifyArticle.Connection = SingletonBD.GetInstance.GetDB();
 
             QueryModifyArticle.CommandText = "UPDATE Articles SET Description = @RefDescription, RefSousFamille = @RefRefSousFamille, RefMarque = @RefMarque, PrixHT = @RefPrixHT, Quantite = @RefQuantite WHERE RefArticle = @RefArticle;";
             QueryModifyArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
@@ -177,7 +175,7 @@ namespace Mercure.DAO
 
             // Insert new brand
             SQLiteCommand QueryModifyArticle = new SQLiteCommand();
-            QueryModifyArticle.Connection = M_dbConnection;
+            QueryModifyArticle.Connection = SingletonBD.GetInstance.GetDB();
 
             QueryModifyArticle.CommandText = "UPDATE Articles SET Quantite = @RefQuantite WHERE RefArticle = @RefArticle;";
             QueryModifyArticle.Parameters.AddWithValue("@RefArticle", Article.GetSetRefArticle);
@@ -198,7 +196,7 @@ namespace Mercure.DAO
 
             SQLiteCommand QueryGetBrand = new SQLiteCommand();
             QueryGetBrand.CommandText = "SELECT RefMarque FROM Marques WHERE Nom = @Nom;";
-            QueryGetBrand.Connection = M_dbConnection;
+            QueryGetBrand.Connection = SingletonBD.GetInstance.GetDB();
             QueryGetBrand.Parameters.AddWithValue("@Nom", Brand);
 
             SQLiteDataReader GetBrandReader = QueryGetBrand.ExecuteReader();
@@ -252,14 +250,14 @@ namespace Mercure.DAO
             if (Brand == null)
             {
                 SQLiteCommand QueryTestExist = new SQLiteCommand();
-                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.Connection = SingletonBD.GetInstance.GetDB();
                 QueryTestExist.CommandText = "SELECT COUNT(*) FROM Marques;";
                 SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
                 TestExistReader.Read();
                 if (TestExistReader.GetInt32(0) != 0)
                 {
                     SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
                     QueryLastInsertId.CommandText = "SELECT MAX(RefMarque) FROM Marques;";
                     SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
                     LastIdReader.Read();
@@ -272,7 +270,7 @@ namespace Mercure.DAO
 
                 // Insert new brand
                 SQLiteCommand QueryInsertBrand = new SQLiteCommand();
-                QueryInsertBrand.Connection = M_dbConnection;
+                QueryInsertBrand.Connection = SingletonBD.GetInstance.GetDB();
 
                 QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
                 QueryInsertBrand.Parameters.AddWithValue("@RefMarque", ++LastRefBrand);
@@ -293,7 +291,7 @@ namespace Mercure.DAO
         private int GetFamilyId(string FamilyName)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
-            QueryGetFamily.Connection = M_dbConnection;
+            QueryGetFamily.Connection = SingletonBD.GetInstance.GetDB();
 
             // Get family if it exists
             int IdFamily = 0;
@@ -341,7 +339,7 @@ namespace Mercure.DAO
         public int GetFamilyIdOfSubFamily(string SubFamily)
         {
             SQLiteCommand QueryGetFamily = new SQLiteCommand();
-            QueryGetFamily.Connection = M_dbConnection;
+            QueryGetFamily.Connection = SingletonBD.GetInstance.GetDB();
 
             // Get family if it exists
             int IdFamily = 0;
@@ -375,14 +373,14 @@ namespace Mercure.DAO
             if (Family == null)
             {
                 SQLiteCommand QueryTestExist = new SQLiteCommand();
-                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.Connection = SingletonBD.GetInstance.GetDB();
                 QueryTestExist.CommandText = "SELECT COUNT(*) FROM Familles;";
                 SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
                 TestExistReader.Read();
                 if (TestExistReader.GetInt32(0) != 0)
                 {
                     SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
                     QueryLastInsertId.CommandText = "SELECT MAX(RefFamille) FROM Familles;";
                     SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
                     LastIdReader.Read();
@@ -394,7 +392,7 @@ namespace Mercure.DAO
                 }
 
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
-                QueryCreateModify.Connection = M_dbConnection;
+                QueryCreateModify.Connection = SingletonBD.GetInstance.GetDB();
 
                 // Insert new family
                 QueryCreateModify.CommandText = "INSERT INTO Familles (RefFamille, Nom) VALUES (@RefFamille, @RefNom);";
@@ -445,14 +443,14 @@ namespace Mercure.DAO
             {
 
                 SQLiteCommand QueryTestExist = new SQLiteCommand();
-                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.Connection = SingletonBD.GetInstance.GetDB();
                 QueryTestExist.CommandText = "SELECT COUNT(*) FROM SousFamilles;";
                 SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
                 TestExistReader.Read();
                 if (TestExistReader.GetInt32(0) != 0)
                 {
                     SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
                     QueryLastInsertId.CommandText = "SELECT MAX(RefSousFamille) FROM SousFamilles;";
                     SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
                     LastIdReader.Read();
@@ -467,7 +465,7 @@ namespace Mercure.DAO
                 int IdFamily = GetOrCreateFamily(FamilyName);
 
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
-                QueryCreateModify.Connection = M_dbConnection;
+                QueryCreateModify.Connection = SingletonBD.GetInstance.GetDB();
 
                 // Insert new sub family
                 QueryCreateModify.CommandText = "INSERT INTO SousFamilles (RefSousFamille, RefFamille, Nom) VALUES (@RefSousFamille, @RefFamille, @RefNom);";
@@ -495,7 +493,7 @@ namespace Mercure.DAO
             foreach (String tableName in ListNameTables)
             {
                 SQLiteCommand Delete = new SQLiteCommand();
-                Delete.Connection = M_dbConnection;
+                Delete.Connection = SingletonBD.GetInstance.GetDB();
                 Delete.CommandText = "DELETE FROM " + tableName + ";";
                 Delete.ExecuteNonQuery();
 
@@ -519,7 +517,7 @@ namespace Mercure.DAO
             List<string> List = new List<string>();
 
             SQLiteCommand NameTableCommand = new SQLiteCommand();
-            NameTableCommand.Connection = M_dbConnection;
+            NameTableCommand.Connection = SingletonBD.GetInstance.GetDB();
 
             NameTableCommand.CommandText = "SELECT name FROM sqlite_master WHERE type='table';";
             SQLiteDataReader NameTableReader = NameTableCommand.ExecuteReader();
@@ -561,7 +559,7 @@ namespace Mercure.DAO
                 string Description = ArticlesReader.GetString(1);
                 int RefBrand = ArticlesReader.GetInt32(3);
                 int RefFamily = 0;
-                int RefSubFamily =  ArticlesReader.GetInt32(2);                
+                int RefSubFamily =  ArticlesReader.GetInt32(2);
                 string PriceHT = ArticlesReader.GetString(4);
                 int Quantity =  ArticlesReader.GetInt32(5);
 
@@ -736,7 +734,7 @@ namespace Mercure.DAO
         public bool DeleteArticle(string RefArticle)
         {
             SQLiteCommand QueryDelete = new SQLiteCommand();
-            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.Connection = SingletonBD.GetInstance.GetDB();
             QueryDelete.CommandText = "DELETE FROM Articles WHERE RefArticle = @RefArticle;";
             QueryDelete.Parameters.AddWithValue("@RefArticle", RefArticle);
             int NumberRow = QueryDelete.ExecuteNonQuery();
@@ -752,7 +750,7 @@ namespace Mercure.DAO
             SQLiteCommand QueryGetFamilyId = new SQLiteCommand();
             QueryGetFamilyId.CommandText = "SELECT RefFamille FROM Familles WHERE Nom = @FamilyName;";
             QueryGetFamilyId.Parameters.AddWithValue("@FamilyName", FamilyName);
-            QueryGetFamilyId.Connection = M_dbConnection;
+            QueryGetFamilyId.Connection = SingletonBD.GetInstance.GetDB();
             SQLiteDataReader FamilyIdReader = QueryGetFamilyId.ExecuteReader();
 
             if (FamilyIdReader.Read())
@@ -770,7 +768,7 @@ namespace Mercure.DAO
             SQLiteCommand QueryGetCounterArticle = new SQLiteCommand();
             QueryGetCounterArticle.CommandText = "SELECT COUNT(*) FROM Articles WHERE RefMarque = @RefBrand;";
             QueryGetCounterArticle.Parameters.AddWithValue("@RefBrand", RefBrand);
-            QueryGetCounterArticle.Connection = M_dbConnection;
+            QueryGetCounterArticle.Connection = SingletonBD.GetInstance.GetDB();
             SQLiteDataReader CounterReader = QueryGetCounterArticle.ExecuteReader();
 
             if (CounterReader.Read())
@@ -781,7 +779,7 @@ namespace Mercure.DAO
             }
 
             SQLiteCommand QueryDelete = new SQLiteCommand();
-            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.Connection = SingletonBD.GetInstance.GetDB();
             QueryDelete.CommandText = "DELETE FROM Marques WHERE RefMarque = @RefBrand;";
             QueryDelete.Parameters.AddWithValue("@RefBrand", RefBrand);
             int NumberRow = QueryDelete.ExecuteNonQuery();
@@ -798,7 +796,7 @@ namespace Mercure.DAO
             SQLiteCommand QueryGetAllSubFamily = new SQLiteCommand();
             QueryGetAllSubFamily.CommandText = "SELECT RefSousFamille FROM SousFamilles WHERE RefFamille = @RefFamily;";
             QueryGetAllSubFamily.Parameters.AddWithValue("@RefFamily", RefFamily);
-            QueryGetAllSubFamily.Connection = M_dbConnection;
+            QueryGetAllSubFamily.Connection = SingletonBD.GetInstance.GetDB();
             SQLiteDataReader SubFamilyReader = QueryGetAllSubFamily.ExecuteReader();
 
             while (SubFamilyReader.Read())
@@ -809,8 +807,8 @@ namespace Mercure.DAO
             }
 
             SQLiteCommand QueryDelete = new SQLiteCommand();
-            QueryDelete.Connection = M_dbConnection;
-            QueryDelete.CommandText = "DELETE FROM Famille WHERE RefFamille = @RefFamily;";
+            QueryDelete.Connection = SingletonBD.GetInstance.GetDB();
+            QueryDelete.CommandText = "DELETE FROM Familles WHERE RefFamille = @RefFamily;";
             QueryDelete.Parameters.AddWithValue("@RefFamily", RefFamily);
             int NumberRow = QueryDelete.ExecuteNonQuery();
 
@@ -825,7 +823,7 @@ namespace Mercure.DAO
             SQLiteCommand QueryGetCounterArticle = new SQLiteCommand();
             QueryGetCounterArticle.CommandText = "SELECT COUNT(*) FROM Articles WHERE RefSousFamille = @RefSubFamily;";
             QueryGetCounterArticle.Parameters.AddWithValue("@RefSubFamily", RefSubFamily);
-            QueryGetCounterArticle.Connection = M_dbConnection;
+            QueryGetCounterArticle.Connection = SingletonBD.GetInstance.GetDB();
             SQLiteDataReader CounterReader = QueryGetCounterArticle.ExecuteReader();
 
             if (CounterReader.Read())
@@ -836,8 +834,8 @@ namespace Mercure.DAO
             }
 
             SQLiteCommand QueryDelete = new SQLiteCommand();
-            QueryDelete.Connection = M_dbConnection;
-            QueryDelete.CommandText = "DELETE FROM SousFamille WHERE RefSousFamille = @RefSubFamily;";
+            QueryDelete.Connection = SingletonBD.GetInstance.GetDB();
+            QueryDelete.CommandText = "DELETE FROM SousFamilles WHERE RefSousFamille = @RefSubFamily;";
             QueryDelete.Parameters.AddWithValue("@RefSubFamily", RefSubFamily);
             int NumberRow = QueryDelete.ExecuteNonQuery();
 
@@ -850,7 +848,7 @@ namespace Mercure.DAO
         public bool ModifyBrand(int RefBrand, string BrandName)
         {
             SQLiteCommand QueryModify = new SQLiteCommand();
-            QueryModify.Connection = M_dbConnection;
+            QueryModify.Connection = SingletonBD.GetInstance.GetDB();
             QueryModify.CommandText = "UPDATE Marques SET Nom = @BrandName WHERE RefMarque= @RefBrand;";
             QueryModify.Parameters.AddWithValue("@RefBrand", RefBrand);
             QueryModify.Parameters.AddWithValue("@BrandName", BrandName);
@@ -865,7 +863,7 @@ namespace Mercure.DAO
         public bool ModifyFamily(int RefFamily, string FamilyName)
         {
             SQLiteCommand QueryDelete = new SQLiteCommand();
-            QueryDelete.Connection = M_dbConnection;
+            QueryDelete.Connection = SingletonBD.GetInstance.GetDB();
             QueryDelete.CommandText = "UPDATE Familles SET Nom = @FamilyName WHERE RefFamille= @RefFamily;";
             QueryDelete.Parameters.AddWithValue("@RefFamily", RefFamily);
             QueryDelete.Parameters.AddWithValue("@FamilyName", FamilyName);
@@ -880,7 +878,7 @@ namespace Mercure.DAO
         public bool ModifySubFamily(int RefSubFamily, string SubFamilyName, int RefFamily)
         {
             SQLiteCommand QueryModify = new SQLiteCommand();
-            QueryModify.Connection = M_dbConnection;
+            QueryModify.Connection = SingletonBD.GetInstance.GetDB();
             QueryModify.CommandText = "UPDATE SousFamilles SET Nom = @SubFamilyName, RefFamille = @RefFamily WHERE RefSousFamille= @RefSubFamily;";
             QueryModify.Parameters.AddWithValue("@RefFamily", RefFamily);
             QueryModify.Parameters.AddWithValue("@SubFamilyName", SubFamilyName);
