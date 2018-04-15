@@ -95,9 +95,14 @@ namespace Mercure.DAO
                     if (!ActionEdit)
                     {
                         Article.GetSetQuantity += QuantiteArticle;
+                        ModifyArticleQuantity(Article);
+                    }
+                    else
+                    {
+                        ModifyArticle(Article);
                     }
 
-                    ModifyArticleQuantity(Article);
+                    
                 }
                 else
                 {
