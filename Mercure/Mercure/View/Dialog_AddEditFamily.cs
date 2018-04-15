@@ -13,11 +13,13 @@ namespace Mercure.View
     public partial class Dialog_AddEditFamily : Form
     {
         private ControllerManagement ControllerManagement;
+        private ControllerFurniture ControllerFurniture;
 
         public Dialog_AddEditFamily()
         {
             InitializeComponent();
             ControllerManagement = new ControllerManagement();
+            ControllerFurniture = new ControllerFurniture();
         }
 
         public Dialog_AddEditFamily(int RefFamily, string NameFamily)
@@ -26,6 +28,7 @@ namespace Mercure.View
             TextRefFamily.Text = RefFamily.ToString();
             TextBox.Text = NameFamily;
             ControllerManagement = new ControllerManagement();
+            ControllerFurniture = new ControllerFurniture();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
@@ -57,6 +60,7 @@ namespace Mercure.View
                 }
                 
                 ControllerManagement.RefreshListViewFamily();
+                ControllerFurniture.RefreshListView(-1);
             }
             catch (Exception Exception)
             {

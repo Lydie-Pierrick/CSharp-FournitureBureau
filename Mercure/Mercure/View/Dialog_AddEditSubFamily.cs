@@ -14,11 +14,13 @@ namespace Mercure.View
     public partial class Dialog_AddEditSubFamily : Form
     {
         private ControllerManagement ControllerManagement;
+        private ControllerFurniture ControllerFurniture;
+
         public Dialog_AddEditSubFamily()
         {
             InitializeComponent();
             ControllerManagement = new ControllerManagement();
-
+            ControllerFurniture = new ControllerFurniture();
             SetComboBox();
         }
 
@@ -32,6 +34,7 @@ namespace Mercure.View
             Combobox.SelectedIndex = Combobox.FindStringExact(NameFamily);
             TextBox.Text = NameSubFamily;
             ControllerManagement = new ControllerManagement();
+            ControllerFurniture = new ControllerFurniture();
         }
 
         void SetComboBox()
@@ -78,6 +81,7 @@ namespace Mercure.View
                 }
                 
                 ControllerManagement.RefreshListViewSubFamily();
+                ControllerFurniture.RefreshListView(-1);
             }
             catch (Exception Exception)
             {

@@ -251,16 +251,23 @@ namespace Mercure.DAO
             // Create if it does not exist
             if (Brand == null)
             {
-                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                QueryLastInsertId.Connection = SingletonBD.GetInstance.GetDB();
-
-                //QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM Marques;";
-                QueryLastInsertId.CommandText = "SELECT MAX(RefMarque) FROM Marques;";
-                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
-
-                while (LastInsertReader.Read())
+                SQLiteCommand QueryTestExist = new SQLiteCommand();
+                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.CommandText = "SELECT COUNT(*) FROM Marques;";
+                SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
+                TestExistReader.Read();
+                if (TestExistReader.GetInt32(0) != 0)
                 {
-                    LastRefBrand = LastInsertReader.GetInt16(0);
+                    SQLiteCommand QueryLastInsertId = new SQLiteCommand();
+                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.CommandText = "SELECT MAX(RefMarque) FROM Marques;";
+                    SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
+                    LastIdReader.Read();
+                    LastRefBrand = LastIdReader.GetInt32(0);
+                }
+                else
+                {
+                    LastRefBrand = 0;
                 }
 
                 // Insert new brand
@@ -268,15 +275,13 @@ namespace Mercure.DAO
                 QueryInsertBrand.Connection = M_dbConnection;
 
                 QueryInsertBrand.CommandText = "INSERT INTO Marques (RefMarque, Nom) VALUES (@RefMarque, @RefNom);";
-                QueryInsertBrand.Parameters.AddWithValue("@RefMarque", LastRefBrand + 1);
+                QueryInsertBrand.Parameters.AddWithValue("@RefMarque", ++LastRefBrand);
                 QueryInsertBrand.Parameters.AddWithValue("@RefNom", BrandName);
                 QueryInsertBrand.ExecuteNonQuery();
 
-                LastRefBrand++;
-
                 return LastRefBrand;
             }
-
+          
             return Brand.GetSetIdBrand;
         }
 
@@ -369,23 +374,23 @@ namespace Mercure.DAO
 
             if (Family == null)
             {
-                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                QueryLastInsertId.Connection = M_dbConnection;
-
-                // Get last id for autoincrement
-                QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM Familles;";
-                //QueryLastInsertId.CommandText = "SELECT MAX(RefFamille) FROM Familles;";
-                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
-
-                LastInsertReader.Read();
-
-                if (!LastInsertReader.HasRows)
+                SQLiteCommand QueryTestExist = new SQLiteCommand();
+                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.CommandText = "SELECT COUNT(*) FROM Familles;";
+                SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
+                TestExistReader.Read();
+                if (TestExistReader.GetInt32(0) != 0)
                 {
-                    LastRefFamily = 0;
+                    SQLiteCommand QueryLastInsertId = new SQLiteCommand();
+                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.CommandText = "SELECT MAX(RefFamille) FROM Familles;";
+                    SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
+                    LastIdReader.Read();
+                    LastRefFamily = LastIdReader.GetInt32(0);
                 }
                 else
                 {
-                    LastRefFamily = LastInsertReader.GetInt32(0);
+                    LastRefFamily = 0;
                 }
 
                 SQLiteCommand QueryCreateModify = new SQLiteCommand();
@@ -393,11 +398,9 @@ namespace Mercure.DAO
 
                 // Insert new family
                 QueryCreateModify.CommandText = "INSERT INTO Familles (RefFamille, Nom) VALUES (@RefFamille, @RefNom);";
-                QueryCreateModify.Parameters.AddWithValue("@RefFamille", LastRefFamily + 1);
+                QueryCreateModify.Parameters.AddWithValue("@RefFamille", ++LastRefFamily);
                 QueryCreateModify.Parameters.AddWithValue("@RefNom", FamilyName);
                 QueryCreateModify.ExecuteNonQuery();
-
-                LastRefFamily++;
 
                 return LastRefFamily;
             }
@@ -440,22 +443,24 @@ namespace Mercure.DAO
             // Create if it does not exist
             if (SubFamily == null)
             {
-                SQLiteCommand QueryLastInsertId = new SQLiteCommand();
-                QueryLastInsertId.Connection = M_dbConnection;
 
-                QueryLastInsertId.CommandText = "SELECT COUNT(*) FROM SousFamilles;";
-               // QueryLastInsertId.CommandText = "SELECT MAX(RefSousFamille) FROM SousFamilles;";
-                SQLiteDataReader LastInsertReader = QueryLastInsertId.ExecuteReader();
-
-                LastInsertReader.Read();
-
-                if (!LastInsertReader.HasRows)
+                SQLiteCommand QueryTestExist = new SQLiteCommand();
+                QueryTestExist.Connection = M_dbConnection;
+                QueryTestExist.CommandText = "SELECT COUNT(*) FROM SousFamilles;";
+                SQLiteDataReader TestExistReader = QueryTestExist.ExecuteReader();
+                TestExistReader.Read();
+                if (TestExistReader.GetInt32(0) != 0)
                 {
-                    LastRefSubFamily = 0;
+                    SQLiteCommand QueryLastInsertId = new SQLiteCommand();
+                    QueryLastInsertId.Connection = M_dbConnection;
+                    QueryLastInsertId.CommandText = "SELECT MAX(RefSousFamille) FROM SousFamilles;";
+                    SQLiteDataReader LastIdReader = QueryLastInsertId.ExecuteReader();
+                    LastIdReader.Read();
+                    LastRefSubFamily = LastIdReader.GetInt32(0);
                 }
                 else
                 {
-                    LastRefSubFamily = LastInsertReader.GetInt32(0);
+                    LastRefSubFamily = 0;
                 }
 
                 // Get Family for this SubFamily

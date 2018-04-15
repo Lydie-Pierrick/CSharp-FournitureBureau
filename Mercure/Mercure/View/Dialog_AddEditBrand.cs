@@ -13,11 +13,13 @@ namespace Mercure.View
     public partial class Dialog_AddEditBrand : Form
     {
         private ControllerManagement ControllerManagement;
+        private ControllerFurniture ControllerFurniture;
 
         public Dialog_AddEditBrand()
         {
             InitializeComponent();
             ControllerManagement =new ControllerManagement();
+            ControllerFurniture = new ControllerFurniture();
         }
 
         public Dialog_AddEditBrand(int RefBrand, string NameBrand)
@@ -26,11 +28,11 @@ namespace Mercure.View
             TextRefBrand.Text = RefBrand.ToString();
             TextBox.Text = NameBrand;
             ControllerManagement = new ControllerManagement();
+            ControllerFurniture = new ControllerFurniture();
         }
 
         private void BtnOK_Click(object sender, EventArgs e)
         {
-            // Revoir
             try
             {
                 if (Dialog_Basic.ModifyOrAdd == 0)
@@ -61,6 +63,7 @@ namespace Mercure.View
                 }
 
                 ControllerManagement.RefreshListViewBrand();
+                ControllerFurniture.RefreshListView(-1);
             }
             catch (Exception Exception)
             {
