@@ -146,7 +146,7 @@
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
+        private new System.Windows.Forms.ContextMenuStrip ContextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
